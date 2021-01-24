@@ -12,17 +12,17 @@
             <h1>Logg inn som gjestebruker med PIN-kode:</h1>
         </header>
 
-        <form method="post" action="">
+        <form method="post" action="LEGGEINNNESTESIDE!!!">                                                  
             <label for="guestPincode">Pin kode:</label><br>
             <input type="text" id="guestPincode" name="guestPincode"><br><br>
             <input type="submit" value="Logg inn" name="submit">
         </form>
     
         <?php
-        function display(){
+        function checkIfPinExists(){
             $input = $_POST['guestPincode'];
-            $mysqli = new mysqli(SERVER, DBUSER, DBPASS, DATABASE);                         // !!! trenger finne alert løsning
-            $result = $mysqli->query("SELECT id FROM mytable WHERE city = 'c7'");           // !!! trenger finne alert løsning
+            $mysqli = new mysqli(SERVER, DBUSER, DBPASS, DATABASE);                         // !!! database
+            $result = $mysqli->query("SELECT id FROM mytable WHERE city = 'c7'");           // !!! spørring
             if($result->num_rows == 0) {
                 // row not found
                 //alert("Fag med kode: " + $input + " eksisterer ikke.");           !!! trenger finne alert løsning
@@ -33,7 +33,7 @@
         }
         if(isset($_POST['submit']))
         {
-           display();
+            checkIfPinExists();
            $mysqli->close();
         }            
         ?>
