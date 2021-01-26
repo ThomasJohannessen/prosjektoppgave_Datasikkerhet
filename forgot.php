@@ -9,11 +9,11 @@
 		
 		<form action = "" method = "post" action="forgot.php">
 			<label>Email  :</label>
-    		<input type="text" name="email"/>
-    		<br>
-    		<br>
-    		<input type="submit" name="send" value=" Send "/>
-    		<br>
+    			<input type="text" name="email"/>
+    			<br>
+    			<br>
+    			<input type="submit" name="send" value=" Send "/>
+    			<br>
 		</form>
 <?php
 
