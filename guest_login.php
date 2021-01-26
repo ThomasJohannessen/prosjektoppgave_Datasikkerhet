@@ -25,7 +25,8 @@
             $result = $mysqli->query("SELECT id FROM mytable WHERE city = 'c7'");           // !!! spørring
             if($result->num_rows == 0) {
                 // row not found
-                //alert("Fag med kode: " + $input + " eksisterer ikke.");           !!! trenger finne alert løsning
+                echo '<script>alert("Det eksisterer ingen fag med denne koden.")</script>'; 
+                //echo '<script>alert("Fag med kode: " + $input + " eksisterer ikke.")</script>'; 
             } 
             else {
                 setcookie("guest_pin", $input);          
