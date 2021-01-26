@@ -1,2 +1,5 @@
 Her legger vi inn kommandoer vi sender til serveren fom 22.01:
 **************************************************************
+
+sudo apt-get install sendmail
+sudo sendmailconfig (answer Yes to everything)
