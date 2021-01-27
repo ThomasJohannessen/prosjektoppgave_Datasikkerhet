@@ -12,32 +12,41 @@
             <h1>Logg inn som gjestebruker med PIN-kode:</h1>
         </header>
 
-        <form method="post" action="LEGGEINNNESTESIDE!!!">                                                  
+        <form method="post">                                                  
             <label for="guestPincode">Pin kode:</label><br>
             <input type="text" id="guestPincode" name="guestPincode"><br><br>
-            <input type="submit" value="Logg inn" name="submit">
+            <input type="submit" value="Logg inn" name="submitBtn">
         </form>
     
         <?php
         function checkIfPinExists(){
             $input = $_POST['guestPincode'];
-            $mysqli = new mysqli(SERVER, DBUSER, DBPASS, DATABASE);                         // !!! database
-            $result = $mysqli->query("SELECT id FROM mytable WHERE city = 'c7'");           // !!! spørring
-            if($result->num_rows == 0) {
-                // row not found
-                echo '<script>alert("Det eksisterer ingen fag med denne koden.")</script>'; 
-                //echo '<script>alert("Fag med kode: " + $input + " eksisterer ikke.")</script>'; 
-            } 
-            else {
-                setcookie("guest_pin", $input);          
+            $mysqli = new mysqli('localhost', 'DBuser', 'DBpassord', 'datasikkerhet_prosjekt');                         // !!! database
+            if ($mysqli -> connect_errno) {
+                echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
+                exit();
             }
+            
+            $result = $mysqli->query("SELECT * FROM emne");
+            $row = $result -> fetch_array(MYSQLI_ASSOC);
+
+            unset($_COOKIE['guest_pin']);
+
+            if($input == $row["emnePIN"]){
+                setcookie("guest_pin", $input,time()+10); 
+            }
+
+            else
+                echo '<script>alert("Det eksisterer ingen fag med denne koden.")</script>'; 
+
+            $mysqli->close(); 
+            $result -> free_result();
+            $_POST = array();
+
         }
-        if(isset($_POST['submit']))
-        {
-            checkIfPinExists();
-           $mysqli->close();
-        }            
+        if(isset($_POST['submitBtn'])) {
+           checkIfPinExists();
+        }           
         ?>
     </body>
 </html>
-
