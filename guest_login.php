@@ -30,10 +30,8 @@
             $result = $mysqli->query("SELECT * FROM emne");
             $row = $result -> fetch_array(MYSQLI_ASSOC);
 
-            unset($_COOKIE['guest_pin']);
-
             if($input == $row["emnePIN"]){
-                setcookie("guest_pin", $input,time()+10); 
+                setcookie("guest_pin", $input,time()+3600); 
             }
 
             else
