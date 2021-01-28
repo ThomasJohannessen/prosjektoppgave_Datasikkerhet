@@ -3,7 +3,7 @@ class Database{
   
     // specify your own database credentials
     private $host = "localhost";
-    private $db_name = "api_db";
+    private $db_name = "datasikkerhet_prosjekt";
     private $username = "DBuser";
     private $password = "DBpassord";
     public $mysqli;

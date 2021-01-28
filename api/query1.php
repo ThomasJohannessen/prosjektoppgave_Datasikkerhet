@@ -9,7 +9,7 @@ $connection = $db->getConnection();
 
 //**************************
 
-$table_name = "brukere";
+$table_name = "emne";
 
 $query = "SELECT * FROM " . $table_name . " p ";
 
