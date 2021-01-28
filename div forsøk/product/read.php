@@ -33,8 +33,7 @@ if($num>0){
         // this will make $row['name'] to
         // just $name only
         extract($row);
-        //print_r(array_values($row));
-       // echo "</br>";
+
   
         $product_item=array(
             "id" => $id,

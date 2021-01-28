@@ -6,21 +6,17 @@ class Database{
     private $db_name = "api_db";
     private $username = "DBuser";
     private $password = "DBpassord";
-    public $conn;
+    public $mysqli;
   
     // get the database connection
     public function getConnection(){
-  
-        $this->conn = null;
-  
-        try{
-            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
-            $this->conn->exec("set names utf8");
-        }catch(PDOException $exception){
-            echo "Connection error: " . $exception->getMessage();
+
+        $this->mysqli = new mysqli($this->host, $this->username, $this->password, $this->db_name);
+        if($this->mysqli->connect_errno){
+            echo "Connection Failed";
         }
-  
-        return $this->conn;
+        return $this->mysqli;
     }
 }
 ?>
+
