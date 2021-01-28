@@ -1,17 +1,13 @@
 <?php 
 
-$json_file = file_get_contents("http://localhost/nett/query.php");
-
-echo $json_file;
+$json_file = file_get_contents("http://localhost/nettsider/api/query.php");
 $json_decoded = json_decode($json_file);
-echo "<br>";
-echo print_r($json_decoded);
-echo "<br>";
-echo "<br>";
-echo $json_decoded->medlemmer[0]->born;
-echo "<br>";
-echo "Name = ", $json_decoded->medlemmer[0]->name, "<br>Age = ", $json_decoded->medlemmer[0]->age, "<br>Born = ", $json_decoded->medlemmer[0]->born, "<br>Died = ", $json_decoded->medlemmer[0]->died;
-$obj = $json_decoded->medlemmer[0];
-echo "<br>";
-echo "Name = ", $obj->name, "<br>Age = ", $obj->age, "<br>Born = ", $obj->born, "<br>Died = ", $obj->died;
+$obj = $json_decoded[0];
+echo "
+BrukerID = ", $obj->BrukerID, "<br>
+Navn = ", $obj->Navn, "<br>
+Epost = ", $obj->Epost, "<br>
+Brukertype = ", $obj->Brukertype, "<br>
+Passord = ", $obj->Passord, "<br>
+Brukerstatus = ", $obj->Brukerstatus;
 ?>
