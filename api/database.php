@@ -1,12 +1,14 @@
 <?php
 class Database{
   
+    // specify your own database credentials
     private $host = "localhost";
-    private $db_name = "datasikkerhet_prosjekt";                 // !!! endre database
+    private $db_name = "api_db";
     private $username = "DBuser";
     private $password = "DBpassord";
     public $conn;
   
+    // get the database connection
     public function getConnection(){
   
         $this->conn = null;
