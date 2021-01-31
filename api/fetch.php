@@ -1,18 +1,16 @@
 <?php 
 
-$json_file = file_get_contents("http://localhost/nett/api-final/api_hentSvar.php");
+$json_file = file_get_contents("http://localhost/nett/query.php");
 
 echo $json_file;
 $json_decoded = json_decode($json_file, true);
 echo "<br>";
 echo print_r($json_decoded);
 echo "<br>";
+echo "decoded ";
+echo $json_decoded;
 echo "<br>";
-foreach (array_values($json_decoded) as $array) {
-    foreach($array as $key=>$value) {
-        echo "<br>";
-        echo "$key : $value";
-    }
-    
- }
+/*foreach ($json_decoded as $k => $v) {
+    echo $k, ' : ', $v;
+ }*/
 ?>
