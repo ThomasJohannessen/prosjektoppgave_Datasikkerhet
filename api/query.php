@@ -1,31 +1,24 @@
-<?php
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json; charset=UTF-8"); 
-
+<?php 
+header("Content-Type: application/json");
 include "database.php";
 
 $db = new Database();
-
-$table_name = "products";
-
-$connection = $db->getConnection();
-$query = "SELECT * FROM " . $table_name . " p ";
+$connection = $db->get_Connection();
+$query = 'SELECT * FROM brukere WHERE Navn LIKE "Michal";'; 
 $result = $connection->query($query);
 
 $json_array = array();
-  
 if($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        extract($row);
+        //echo "Name = ", $row["name"], ", Age = ", $row["age"], ", Born = ", $row["born"], ", Died = ", $row["died"], "<br>";
         array_push($json_array, $row);
     }
 }
 else {
-        http_response_code(404);
-  
-        echo json_encode(
-            array("message" => "No products found.")
-        );
+    echo "No results found";
 }
-echo json_encode($json_array);
+$json_array = json_encode($json_array);
+echo $json_array;
+$db->close_Connection();
+//echo json_decode($json_array)[1]->name;
 ?>

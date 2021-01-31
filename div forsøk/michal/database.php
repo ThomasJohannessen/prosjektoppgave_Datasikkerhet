@@ -2,9 +2,9 @@
 
 class Database {
     private $db_host = "localhost";
-    private $db_name = "crysis";
-    private $db_username = "root";
-    private $db_password = "";
+    private $db_name = "datasikkerhet_prosjekt";
+    private $db_username = "root"; //placeholder
+    private $db_password = ""; //placeholder
     private $mysqli;
 
     public function get_Connection() {
@@ -14,6 +14,15 @@ class Database {
             exit();
         }
         return $this->mysqli;
+    }
+    
+    public function close_Connection() {
+        if($this->mysqli) {
+            $this->mysqli->close();
+        }
+        else {
+            echo "No connection";
+        }
     }
 }
 
