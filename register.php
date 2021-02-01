@@ -30,7 +30,7 @@
         $study_path = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["study_path"])));
         $year = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["year"])));
         $subject_id = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["subject"])));
-        $image = $_FILES["photo"]["name"];
+        $image = $mysqli -> real_escape_string(trim(htmlspecialchars($_FILES["photo"]["name"])));
 
         if (emptyFields($name, $email, $password, $password_confirmed, $user_type, $study_path, $year, $subject_id, $image) !== false) {
             header("location: register.php?error=missingfields");
