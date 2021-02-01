@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<body>
-		<! -- change to correct page -->
 		<form action="index.php">
     			<input type="submit" value="Home" />
 		</form>
@@ -13,13 +12,13 @@
     			<input type="text" name="email"/>
     			<br>
 			<label>Old password  :</label>
-    			<input type="text" name="old"/>
+    			<input type="password" name="old"/>
     			<br>
 			<label>New password  :</label>
-    			<input type="text" name="new1"/>
+    			<input type="password" name="new1"/>
     			<br>
     			<label>Retype new password  :</label>
-    			<input type="text" name="new2"/>
+    			<input type="password" name="new2"/>
     			<br>
     			<br>
     			<input type="submit" name="change" value=" Change "/>
@@ -29,29 +28,34 @@
 
 	if(isset($_POST['change']))
 	{
+		session_start();
 		$email = htmlspecialchars(trim($_POST['email']));
 		
-		session_start();
-		if ($_SESSION['user_email'] === '$email') 
+		if ($_SESSION['user_email'] == '$email') 
 		{
 			$old = htmlspecialchars(trim($_POST['old']));
 			$new1 = htmlspecialchars(trim($_POST['new1']));
 			$new2 = htmlspecialchars(trim($_POST['new2']));
 
-			include "dbconnection.php";
+			include "database.php";
 		
-			$emailChecker = "SELECT BrukerID, Passord, Epost FROM brukere WHERE Epost='$email'";
+			$emailChecker = "SELECT * FROM brukere WHERE Epost='$email'";
 		
 			$resultFromEmailCheck = $conn->query($emailChecker);
 		
 			if (mysqli_num_rows($resultFromEmailCheck) > 0) 
-			{ 
+			{
+				$row = $resultFromEmailCheck->fetch_assoc();
+				$verify = password_verify($old, $row['Passord']);
+				
 				if ($new1 === $old)
 					echo "The new password can't be the same as the old one!";
 				else if ($new1 !== $new2)
 					echo "The two new passwords don't match!";
-				else
-					passwordUpdater($old, $new1, $conn);
+				else if ($verify)
+					change($email, $new1, $conn);
+				else if (!$verify)
+					echo "The old password is wrong!";
 			}
 			else
 				echo "The email doesn't exist in the system!";
@@ -60,32 +64,12 @@
 			echo "Can't change another user's password. Please write your own email!";
 	}
 	
-	function passwordUpdater($old, $new1, $conn)
-	{
-		include "dbconnection.php";
-
-		$sql = "SELECT BrukerID, Passord, Epost FROM brukere WHERE BINARY Passord='$old'";
-		
-		$result = $conn->query($sql);
-		
-		
-		if (mysqli_num_rows($result) > 0) 
-			change($old, $new1, $conn);
-		else 
- 		{
-  			echo "<script>
-				alert('The old password is incorrect!');
-			</script>";
-		}
-		
-				
-	}
-	
-
-	function change($old, $new1, $conn)
+	function change($email, $new1, $conn)
 	{
 		
-		$sqlUpdate = "UPDATE brukere SET Passord='$new1' WHERE Passord='$old'";
+		$hashed = password_hash($new1, PASSWORD_DEFAULT);
+		
+		$sqlUpdate = "UPDATE brukere SET Passord='$hashed' WHERE Epost='$email'";
 
 		if ($conn->query($sqlUpdate) === FALSE)
   			echo "Error updating password: " . $conn->error;

@@ -1,9 +1,8 @@
 <?php
-
 	$host = "localhost";
-    	$username = "DBuser";
-    	$password = "DBpassord";
-	$db_name = "datasikkerhet_prosjekt"; 
+	$username = "admin";
+	$password = "password";
+	$db_name = "linuxconfig";
 	
 	$conn = new mysqli($host, $username, $password, $db_name);
 

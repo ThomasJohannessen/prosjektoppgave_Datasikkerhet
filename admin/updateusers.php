@@ -6,7 +6,6 @@
 	<body>
 
 		<h2>Users</h2>
-		
 		<form action="approve.php">
     			<input type="submit" value="Approve Teacher Status" />
 		</form>
@@ -22,10 +21,10 @@
 
 			<?php
 				session_start();
-				if($_SESSION['user_type'] === 1)
+				if($_SESSION['user_type'] == 1)
    				{
    				
-					include "dbconnection.php";
+					include "../database.php";
 
 					$records = mysqli_query($conn,"select * from brukere");
 
