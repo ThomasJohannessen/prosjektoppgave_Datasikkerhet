@@ -1,1 +1,1 @@
-
+Dette er funksjonene for studenten. Studentside.php lar studenter velge fag som de ønsker stille spørsmål til foreleser. Meldingfeed.php viser alle svarte spørsmål, evt kan sortere etter emnekoder (Denne funksjonen har ikke blitt lagt inn enda!). 
