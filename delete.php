@@ -1,16 +1,21 @@
 <?php
+	session_start();
+	if($_SESSION['user_type'] === 1)
+   	{
+		include "dbconnection.php";
 
-	include "dbconnection.php";
+		$id = htmlspecialchars(trim($_GET['id']));
 
-	$id = $_GET['id'];
+		$del = mysqli_query($conn,"delete from brukere where BrukerID = '$id'");
 
-	$del = mysqli_query($conn,"delete from brukere where BrukerID = '$id'");
-
-	if($del)
-	{
-   		mysqli_close($conn);
-    		header("location:updateusers.php");
-    		exit;	
-	} else
- 		echo "Error deleting user"; 	
+		if($del)
+		{
+   			mysqli_close($conn);
+    			header("location:updateusers.php");
+    			exit;	
+		} else
+ 			echo "Error deleting user";
+ 	}
+ 	else
+    		echo "Begone peasant. Admin only!";
 ?>

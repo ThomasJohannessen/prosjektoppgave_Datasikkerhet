@@ -23,7 +23,7 @@
 	
 	function doesEmailExistInDatabase()
 	{
-		$email = trim($_POST['email']);
+		$email = htmlspecialchars(trim($_POST['email']));
 		
 		include "dbconnection.php";
 		

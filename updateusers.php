@@ -21,13 +21,16 @@
   			</tr>
 
 			<?php
+				session_start();
+				if($_SESSION['user_type'] === 1)
+   				{
+   				
+					include "dbconnection.php";
 
-				include "dbconnection.php";
+					$records = mysqli_query($conn,"select * from brukere");
 
-				$records = mysqli_query($conn,"select * from brukere");
-
-				while($data = mysqli_fetch_array($records))
-				{
+					while($data = mysqli_fetch_array($records))
+					{
 			?>
   			<tr>
     				<td><?php echo $data['BrukerID']; ?></td>
@@ -37,7 +40,10 @@
     				<td><a href="delete.php?id=<?php echo $data['BrukerID']; ?>">Delete</a></td>
   			</tr>	
 			<?php
+					}
 				}
+    				else
+    					echo "Begone peasant. Admin only!";
 			?>
 		</table>
 

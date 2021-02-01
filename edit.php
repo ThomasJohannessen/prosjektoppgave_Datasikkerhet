@@ -1,29 +1,34 @@
 <?php
+	session_start();
+	if($_SESSION['user_type'] === 1)
+   	{
+		include "dbconnection.php";
 
-	include "dbconnection.php";
+		$id = htmlspecialchars(trim($_GET['id']));
 
-	$id = $_GET['id'];
+		$qry = mysqli_query($conn,"select * from brukere where BrukerID='$id'");
 
-	$qry = mysqli_query($conn,"select * from brukere where BrukerID='$id'");
+		$data = mysqli_fetch_array($qry);
 
-	$data = mysqli_fetch_array($qry);
-
-	if(isset($_POST['update']))
-	{
-    		$name = $_POST['name'];
-    		$email = $_POST['email'];
+		if(isset($_POST['update']))
+		{
+    			$name = htmlspecialchars(trim($_POST['name']));
+    			$email = htmlspecialchars(trim($_POST['email']));
 	
-    		$edit = mysqli_query($conn,"update brukere set Navn='$name', Epost='$email' where BrukerID='$id'");
+    			$edit = mysqli_query($conn,"update brukere set Navn='$name', Epost='$email' where BrukerID='$id'");
 	
-    		if($edit)
-    		{
-        		mysqli_close($conn); 
-        		header("location:updateusers.php"); 
-        		exit;
-    		}
-    	else
-        	echo mysqli_error();  	
+    			if($edit)
+    			{
+        			mysqli_close($conn); 
+        			header("location:updateusers.php"); 
+        			exit;
+    			}
+    		else
+        		echo mysqli_error();  	
+		}
 	}
+	else
+		echo "Begone peasant. Admin only!";
 ?>
 
 <h3>Update Data</h3>

@@ -16,23 +16,31 @@
   			</tr>
 
 			<?php
+				session_start();
+				if($_SESSION['user_type'] === 1)
+   				{
+   					include "dbconnection.php";
 
-				include "dbConn.php";
+					$records = mysqli_query($conn,"select * from brukere where (Brukertype='2' and Brukerstatus = '0')");
 
-				$records = mysqli_query($conn,"select * from brukere where (Brukertype=2 and Brukerstatus = 0)");
-
-				while($data = mysqli_fetch_array($records))
-				{
-			?>
-  			<tr>
-    				<td><?php echo $data['BrukerID']; ?></td>
-    				<td><?php echo $data['Navn']; ?></td>
-    				<td><?php echo $data['Epost']; ?></td>    
-    				<td><a href="commitapproval.php?id=<?php echo $data['BrukerID']; ?>">Approve</a></td>
-  			</tr>	
-			<?php
+					while($data = mysqli_fetch_array($records))
+					{
+				?>
+  				<tr>
+    					<td><?php echo $data['BrukerID']; ?></td>
+    					<td><?php echo $data['Navn']; ?></td>
+    					<td><?php echo $data['Epost']; ?></td>    
+    					<td><a href="commitapproval.php?id=<?php echo $data['BrukerID']; ?>">Approve</a></td>
+  				</tr>	
+				<?php
+					}
 				}
-			?>
+   				else
+   					echo "Begone peasant. Admin only!";
+				?>
+
+   				
+				
 		</table>
 
 	</body>

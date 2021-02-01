@@ -9,6 +9,9 @@
 		<br>
 		
 		<form action = "" method = "post" action="forgot.php">
+			<label>Confirm email  :</label>
+    			<input type="text" name="email"/>
+    			<br>
 			<label>Old password  :</label>
     			<input type="text" name="old"/>
     			<br>
@@ -26,23 +29,42 @@
 
 	if(isset($_POST['change']))
 	{
-		$old = trim($_POST['old']);
-		$new1 = trim($_POST['new1']);
-		$new2 = trim($_POST['new2']);
+		$email = htmlspecialchars(trim($_POST['email']));
 		
-		if ($new1 === $old)
-			echo "The new password can't be the same as the old one!";
-		else if ($new1 !== $new2)
-			echo "The two new passwords don't match!";
+		session_start();
+		if ($_SESSION['user_email'] === '$email') 
+		{
+			$old = htmlspecialchars(trim($_POST['old']));
+			$new1 = htmlspecialchars(trim($_POST['new1']));
+			$new2 = htmlspecialchars(trim($_POST['new2']));
+
+			include "dbconnection.php";
+		
+			$emailChecker = "SELECT BrukerID, Passord, Epost FROM brukere WHERE Epost='$email'";
+		
+			$resultFromEmailCheck = $conn->query($emailChecker);
+		
+			if (mysqli_num_rows($resultFromEmailCheck) > 0) 
+			{ 
+				if ($new1 === $old)
+					echo "The new password can't be the same as the old one!";
+				else if ($new1 !== $new2)
+					echo "The two new passwords don't match!";
+				else
+					passwordUpdater($old, $new1, $conn);
+			}
+			else
+				echo "The email doesn't exist in the system!";
+		}
 		else
-			passwordUpdater($old, $new1);
+			echo "Can't change another user's password. Please write your own email!";
 	}
 	
-	function passwordUpdater($old, $new1)
+	function passwordUpdater($old, $new1, $conn)
 	{
 		include "dbconnection.php";
 
-		$sql = "SELECT BrukerID, Passord, Epost FROM brukere WHERE Passord='$old'";
+		$sql = "SELECT BrukerID, Passord, Epost FROM brukere WHERE BINARY Passord='$old'";
 		
 		$result = $conn->query($sql);
 		
