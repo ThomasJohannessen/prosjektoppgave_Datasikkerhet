@@ -52,10 +52,7 @@
             header("location: register.php?error=usertypenotsupported");
             exit();
         }
-        if (fileVerification($email) !== false) {
-            header("location: register.php?error=imageerror");
-            exit();
-        }
+
 
         createUser($name, $email, $password, $user_type, $study_path, $year, $subject_id, $image);
 
@@ -64,6 +61,10 @@
     function emptyFields($name, $email, $password, $password_confirmed, $user_type, $study_path, $year, $subject_id, $image) {
         if ($user_type === "foreleser") {
             if (empty($name) || empty($email) || empty($password) || empty($password_confirmed) || empty($user_type) || empty($user_type) || empty($subject_id) || empty($image)) {
+                if (fileVerification($email) !== false) {
+                    header("location: register.php?error=imageerror");
+                    exit();
+                }
                 $res = true;
             } else {
                 $res = false;
@@ -130,7 +131,8 @@
         return $res;
     }
 
-    function fileVerification ($filenameAsEmail) {
+    function fileVerification () {
+        //$filenameAsEmail
         // Check if file was uploaded without errors
         if(isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0){
             $allowed = array("jpg" => "image/jpg", "jpeg" => "image/jpeg", "gif" => "image/gif", "png" => "image/png");
