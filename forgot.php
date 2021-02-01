@@ -25,7 +25,7 @@
 	{
 		$email = htmlspecialchars(trim($_POST['email']));
 		
-		include "dbconnection.php";
+		include "database.php";
 		
 		$sql = "SELECT BrukerID, Passord FROM brukere WHERE Epost='$email'";
 		
