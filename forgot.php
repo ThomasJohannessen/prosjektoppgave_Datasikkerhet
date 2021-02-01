@@ -25,7 +25,7 @@
 	{
 		$email = htmlspecialchars(trim($_POST['email']));
 		
-		include "database.php";
+		include "dbconnection.php";
 		
 		$sql = "SELECT BrukerID, Passord FROM brukere WHERE Epost='$email'";
 		
@@ -56,10 +56,11 @@
 	
 		$retval = mail ($email,"Forgotten password!",$password,$header);
 		
+		$hashed = password_hash($password, PASSWORD_DEFAULT);
 		
 		if( $retval == true )
 		{	
-			$sqlUpdate = "UPDATE brukere SET Passord='$password' WHERE Epost='$email'";
+			$sqlUpdate = "UPDATE brukere SET Passord='$hashed' WHERE Epost='$email'";
 
 			if ($conn->query($sqlUpdate) === FALSE)
   				echo "Error updating record: " . $conn->error;
@@ -67,7 +68,7 @@
   			{
   				echo "<script>
 					alert('Email sent successfully, remember to check the spam folder!');
-					window.location.href='login.php';
+					window.location.href='index.php';
 				</script>";
 			}
 		}
