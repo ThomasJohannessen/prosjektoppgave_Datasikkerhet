@@ -2,7 +2,7 @@
 
 
 function logout () {
-    $_POST = array();
-    header("location: register.php");
+    session_destroy();
+    header("location: ../index.php");
     exit();
 }

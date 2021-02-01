@@ -17,10 +17,10 @@
 
 			<?php
 				session_start();
-				if($_SESSION['user_type'] === 1)
+				if($_SESSION['user_type'] == 1)
    				{
 
-					include "dbconnection.php";
+					include "../database.php";
 
 					$records = mysqli_query($conn,"select * from rapportering");
 

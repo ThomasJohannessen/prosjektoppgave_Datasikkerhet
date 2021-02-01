@@ -1,6 +1,6 @@
 <?php 
 
-include "database.php";
+include "../database.php";
 
 $conn = mysqli_connect($db, $username, $password, $dbname);
 
@@ -15,7 +15,7 @@ if(!mysqli_select_db($conn, $dbname)) {
 $avsenderID = rand(0, 40);
 $foreleserID = rand(0,9999);
 
-$melding = $_POST['melding'];
+$melding = $_POST['question'];
 
 if ($melding == ""){
     header("refresh:0.01; url=studentside.php");
@@ -29,6 +29,6 @@ $insert = "INSERT INTO meldingersporsmal (avsenderID, melding, emnekode, foreles
 mysqli_query($conn, $insert);
 
 
-header("refresh:0.01; url=studentside.php");
+header("refresh:.01; url=studentside.php");
 
 ?>

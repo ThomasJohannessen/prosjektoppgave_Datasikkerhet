@@ -25,7 +25,7 @@
 	{
 		$email = htmlspecialchars(trim($_POST['email']));
 		
-		include "dbconnection.php";
+		include "database.php";
 		
 		$sql = "SELECT BrukerID, Passord FROM brukere WHERE Epost='$email'";
 		
@@ -67,7 +67,7 @@
   			{
   				echo "<script>
 					alert('Email sent successfully, remember to check the spam folder!');
-					window.location.href='index.php';
+					window.location.href='login.php';
 				</script>";
 			}
 		}

@@ -9,23 +9,19 @@
 </head>
 <body>
 <?php
-    //functions.php
-    $mysqli = new mysqli('localhost', 'root', '', 'oblig1');
 
-    //Print error message if no connection
-    if($mysqli->connect_error) {
-        die($mysqli->connect_errno. ": ".$mysqli->connect_error);
-    }
+    include "database.php";
+    
 
     session_start();
 
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $email = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
-        $password = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["password"])));
+        $email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
+        $password = $conn -> real_escape_string(trim(htmlspecialchars($_POST["password"])));
 
         $sql_register = "SELECT `Navn`, `Brukertype`, `EmneID`, `Studieretning`, `Brukerstatus` FROM `brukere` WHERE `Epost`= '" . $email . "' AND `Passord` = '" . $password . "'";
-        $register_user = mysqli_query($mysqli, $sql_register);
+        $register_user = mysqli_query($conn, $sql_register);
 
         if (emptyInputLogin($email, $password) !== false) {
             header("location: ../login.php?error=emptyinput");
@@ -44,18 +40,18 @@
     }
 
     function mailTaken($email) {
-        global $mysqli;
+        global $conn;
 
         $sql_user_exists = "SELECT * FROM `brukere` WHERE `Epost`= '" . $email . "'";
 
-        $stmt = mysqli_stmt_init($mysqli);
+        $stmt = mysqli_stmt_init($conn);
 
         if (!mysqli_stmt_prepare($stmt, $sql_user_exists)) {
-            header("location: register.php?stmtfailed");
+            header("location: register.php?error=stmtfailed");
             exit();
         }
 
-        $user_exists = mysqli_query($mysqli, $sql_user_exists);
+        $user_exists = mysqli_query($conn, $sql_user_exists);
 
         if ($row = mysqli_fetch_assoc($user_exists)) {
             return $row;
@@ -93,8 +89,21 @@
                 $_SESSION["user_type"] = $mailTaken["Brukertype"];
                 $_SESSION["study_path"] = $mailTaken["Studieretning"];
 
-                header("location: login.php?error=none");
-                exit();
+                if ($_SESSION['user_type'] == 3){
+
+                    header("location: student/studentside.php");
+                    exit();
+                }
+
+                else if ($_SESSION['user_type'] == 2){
+                    header("location: foreleser/index.php");
+                    exit();
+                }
+
+                else if ($_SESSION['user_type'] == 1){
+                    header("location: admin/updateusers.php");
+                    exit();
+                }
             }
         }
     }
@@ -108,7 +117,8 @@
 
     <input type="submit" value="Submit">
 </form><br>
-<a href="guest_login.php">Logg inn som gjest</a>
+<a href="gjest/gjestfeed.php">Logg inn som gjest</a>
+<a href="forgot.php">Forgot password</a>
 <?php
     if(isset($_GET["error"])) {
         if($_GET["error"] == "emptyinput") {

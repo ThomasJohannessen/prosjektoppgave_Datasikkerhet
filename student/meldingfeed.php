@@ -9,10 +9,11 @@
 <body>
 
 <nav ><ul class="navbar">
-<li><a href="meldingfeed.php">Feed</a></li>
 <li><a href="studentside.php">Student - POV</a></li>
-<li><a href="../foreleser/index.php">Foreleser - POV</a></li>
-<li><a href="gjestfeed.php">Gjest - POV</a></li></ul>
+<form method="post"> 
+        <input type="submit" name="logout" class="button" value="Logout" /> 
+    </form> 
+    <a href="../change.php">Change password</a>
 </nav>
 
 

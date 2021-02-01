@@ -9,10 +9,8 @@
 <body>
 
 <nav ><ul class="navbar">
-<li><a href="../student/meldingfeed.php">Feed</a></li>
-<li><a href="../student/studentside.php">Student - POV</a></li>
-<li><a href="../foreleser/index.php">Foreleser - POV</a></li>
-<li><a href="gjestfeed.php">Gjest - POV</a></li></ul>
+<li><a href="../login.php">Login</a></li>
+<li><a href="../register.php">Registrer</a></li>
 </nav>
 
 <h1>Tast inn en firesifret pinkode</h1>

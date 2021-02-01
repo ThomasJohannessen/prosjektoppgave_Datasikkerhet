@@ -10,13 +10,9 @@
 <body>
 
 <?php
-    //functions.php
-    $mysqli = new mysqli('localhost', 'root', '', 'oblig1');
+  
+    include "database.php";
 
-    //Print error message if no connection
-    if($mysqli->connect_error) {
-        die($mysqli->connect_errno. ": ".$mysqli->connect_error);
-    }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $status = "";

@@ -12,9 +12,10 @@
 
 <nav ><ul class="navbar"> 
 <li><a href="meldingfeed.php">Feed</a></li>
-<li><a href="studentside.php">Student - POV</a></li>
-<li><a href="../foreleser/index.php">Foreleser - POV</a></li>
-<li><a href="../gjest/gjestfeed.php">Gjest - POV</a></li></ul>
+<form method="post"> 
+        <input type="submit" name="logout" class="button" value="Logout" /> 
+    </form> 
+    <a href="../change.php">Change password</a>
 </nav>
 
     <?php
@@ -24,6 +25,11 @@
     $conn = mysqli_connect($db, $username, $password, $dbname); 
     $sql = "SELECT distinct emnekode FROM emne;";
     $results = mysqli_query($conn, $sql);
+
+    if (isset($_POST['logout'])){
+        include "../functions.php";
+        logout();
+    }
 
     ?>
 

@@ -19,32 +19,35 @@
         </form>
     
         <?php
+
+        include "database.php";
+
         function checkIfPinExists(){
+            global $conn;
             $input = $_POST['guestPincode'];
-            $mysqli = new mysqli('localhost', 'DBuser', 'DBpassord', 'datasikkerhet_prosjekt');                         // !!! database
-            if ($mysqli -> connect_errno) {
-                echo "Failed to connect to MySQL: " . $mysqli -> connect_error;
-                exit();
-            }
             
-            $result = $mysqli->query("SELECT * FROM emne");
+            $result = $conn->query("SELECT * FROM emne");
             $row = $result -> fetch_array(MYSQLI_ASSOC);
 
             if($input == $row["emnePIN"]){
-                setcookie("guest_pin", $input,time()+3600); 
+                //setcookie("guest_pin", $input,time()+3600); 
+                $_SESSION['emnePIN'] = $input;
             }
 
             else
                 echo '<script>alert("Det eksisterer ingen fag med denne koden.")</script>'; 
 
-            $mysqli->close(); 
+            $conn->close(); 
             $result -> free_result();
             $_POST = array();
 
         }
         if(isset($_POST['submitBtn'])) {
            checkIfPinExists();
-        }           
+           header("location: gjest/gjestfeed.php");
+            exit();
+        }
+
         ?>
     </body>
 </html>

@@ -13,13 +13,13 @@
     			<input type="text" name="email"/>
     			<br>
 			<label>Old password  :</label>
-    			<input type="text" name="old"/>
+    			<input type="password" name="old"/>
     			<br>
 			<label>New password  :</label>
-    			<input type="text" name="new1"/>
+    			<input type="password" name="new1"/>
     			<br>
     			<label>Retype new password  :</label>
-    			<input type="text" name="new2"/>
+    			<input type="password" name="new2"/>
     			<br>
     			<br>
     			<input type="submit" name="change" value=" Change "/>
@@ -29,16 +29,16 @@
 
 	if(isset($_POST['change']))
 	{
+		session_start();
 		$email = htmlspecialchars(trim($_POST['email']));
 		
-		session_start();
-		if ($_SESSION['user_email'] === '$email') 
+		if ($_SESSION['user_email'] == '$email') 
 		{
 			$old = htmlspecialchars(trim($_POST['old']));
 			$new1 = htmlspecialchars(trim($_POST['new1']));
 			$new2 = htmlspecialchars(trim($_POST['new2']));
 
-			include "dbconnection.php";
+			include "database.php";
 		
 			$emailChecker = "SELECT BrukerID, Passord, Epost FROM brukere WHERE Epost='$email'";
 		
