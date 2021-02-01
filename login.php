@@ -108,7 +108,7 @@
 
     <input type="submit" value="Submit">
 </form><br>
-<a href="guestlogin.php">Logg inn som gjest</a>
+<a href="guest_login.php">Logg inn som gjest</a>
 <?php
     if(isset($_GET["error"])) {
         if($_GET["error"] == "emptyinput") {
