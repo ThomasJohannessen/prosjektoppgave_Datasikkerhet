@@ -25,7 +25,7 @@
 
     include "../database.php";
 
-    $conn = mysqli_connect($db, $username, $password, $dbname); 
+    global $conn;
     $sql = "SELECT distinct emnekode FROM emne;";
     $results = mysqli_query($conn, $sql);
 
