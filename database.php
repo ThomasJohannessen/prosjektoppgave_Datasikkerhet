@@ -3,7 +3,7 @@
 $db = "localhost";
 $username = "root";
 $password = "";
-$dbname = "test";
+$dbname = "datasikkerhet_prosjekt";
 
 $conn = mysqli_connect($db, $username, $password, $dbname);
 
