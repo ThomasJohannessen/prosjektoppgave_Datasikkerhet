@@ -14,19 +14,12 @@ else{
     echo"connected to server";
 
 
-$sql = "SELECT * FROM emne";
-
-$results = mysqli_query($conn, $sql);
-
-while($row = mysqli_fetch_array($results)) {
-    echo  $row['emnenavn'];
-
-    $showtables= mysqli_query($conn,"SHOW TABLES FROM database_name");
-
-    while($table = mysqli_fetch_array($showtables)) { // go through each row that was returned in $result
-        echo($table[0] . "<br>");    // print the table that was returned on that row.
+    $db_list = mysqli_list_dbs($conn);
+    while ($db = mysqli_fetch_object($db_list))
+    {
+        echo $db->Database . "<br />";
     }
-}
+    mysqli_close($conn);
 }
 
 
