@@ -9,7 +9,7 @@
 <body>
 
 <nav ><ul class="navbar">
-<li><a href="../login.php">Login</a></li>
+<li><a href="../login.php">Log inn</a></li>
 <li><a href="../register.php">Registrer</a></li>
 </nav>
 
@@ -53,6 +53,8 @@ if (isset($_POST['sendbtn'])){
      
     
     $result = $conn->query($sql);
+
+    echo "<h2>Dette er siden til faget $pinkode</h2>";
       
     if ($result->num_rows > 0) {
       while($row = $result->fetch_assoc()) {
@@ -61,7 +63,7 @@ if (isset($_POST['sendbtn'])){
     
               <div id="div-feed">
                 <?php
-                  echo "<b>Emnekode - </b>" . $row["emnekode"] . "<br>" . "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] ;
+                  echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] ;
                 ?>
                 <form method="post" action="update.php" name="comment" id="kommentarForm">
                     <input type="text" placeholder="Kommentar" name="comment" autocomplete="off">

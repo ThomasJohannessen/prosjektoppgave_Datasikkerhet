@@ -10,23 +10,34 @@
 </head>
 <body>
 <nav ><ul class="navbar">
-<form method="post"> 
-        <input type="submit" name="logout" class="button" value="Logout" /> 
+<li><a href="../change.php">Change password</a></li>
+    <form method="post"> 
+        <input type="submit" name="logout" class="button" value="Logout" id="logout"/> 
 </form> 
-<a href="../change.php">Change password</a>
+</ul>
 </nav>
 
 <?php
-
-include "../database.php" ;
 
 if (isset($_POST['logout'])){
   include "../functions.php";
   logout();
 }
 
+session_start();
+$foreleserID = $_SESSION['brukerID'];
+
+
+if ($_SESSION["user_type"] == 3 || $_SESSION["user_type"] == 1){
+  echo "DU ER IKKE EN FORELESER";
+  exit();
+}
+
+else {
+
+include "../database.php" ;
+
 $conn = mysqli_connect($db, $username, $password, $dbname);
-// $sql = "SELECT * FROM meldingersporsmal JOIN meldingersvar ON meldingersporsmal.sporsmalID = meldingersvar.svarID where meldingersvar.svar = ' ';";
 $sql = "SELECT * FROM meldingersporsmal where svar is null";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -77,18 +88,19 @@ if ($result->num_rows > 0) {
         if (empty($svar)){
           
           header("refresh:0.01; url=index.php");
+          exit();
           
         }
 
         else {
 
-          $sql2 = "UPDATE meldingersporsmal SET svar = '$svar' WHERE sporsmalID = $messageID;";
+          $sql2 = "UPDATE meldingersporsmal SET svar = '$svar', foreleserID='$foreleserID' WHERE sporsmalID = $messageID;";
           if (!mysqli_query($conn, $sql2)){
             echo "Incorrect id";
           }
 
 
-          header("refresh:0.5; url=index.php");
+          header("refresh:0.01; url=index.php");
           exit;
 
         }
@@ -106,6 +118,8 @@ if ($result->num_rows > 0) {
     }
 
   } 
+
+}
 
 
 

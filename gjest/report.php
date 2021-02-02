@@ -25,7 +25,8 @@ else {
 
     mysqli_query($conn, $insert);
 
-    header("refresh:0.01; url=gjestfeed.php");    
+    header("refresh:0.01; url=gjestfeed.php");  
+    exit();  
 
 }
 

@@ -28,6 +28,7 @@ $insert = "INSERT INTO kommentarer (sporsmalID, kommentar) VALUES ('$sporsmalID'
 mysqli_query($conn, $insert);
 
 header("refresh:0; url=gjestfeed.php");
+exit();
 
 }
 

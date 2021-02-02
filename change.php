@@ -80,7 +80,6 @@
   		else
   		{	
 			if ($_SESSION['user_type'] == 3){
-
 				header("location: student/studentside.php");
 				exit();
 			}
