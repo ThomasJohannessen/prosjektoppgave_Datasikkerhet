@@ -35,7 +35,7 @@
 <h3>Update Data</h3>
 
 <form method="POST">
-	<input type="text" name="name" value="<?php echo $data['Navn'][0] ?>" placeholder="New Name" Required>
-  	<input type="text" name="email" value="<?php echo $data['Epost'][0] ?>" placeholder="New Email" Required>
+	<input type="text" name="name" value="<?php echo $data['Navn'] ?>" placeholder="New Name" Required>
+  	<input type="text" name="email" value="<?php echo $data['Epost'] ?>" placeholder="New Email" Required>
   	<input type="submit" name="update" value="Update">
 </form>

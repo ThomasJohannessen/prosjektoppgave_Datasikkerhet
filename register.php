@@ -18,15 +18,15 @@
         $status = "";
         $hashed_password = "";
 
-        $name = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["name"])));
-        $email = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
-        $password = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["password"])));
-        $password_confirmed = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["password-confirmed"])));
-        $user_type = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["user_type"])));
-        $study_path = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["study_path"])));
-        $year = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["year"])));
-        $subject_id = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["subject"])));
-        $image = $mysqli -> real_escape_string(trim(htmlspecialchars($_FILES["photo"]["name"])));
+        $name = $conn -> real_escape_string(trim(htmlspecialchars($_POST["name"])));
+        $email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
+        $password = $conn -> real_escape_string(trim(htmlspecialchars($_POST["password"])));
+        $password_confirmed = $conn -> real_escape_string(trim(htmlspecialchars($_POST["password-confirmed"])));
+        $user_type = $conn -> real_escape_string(trim(htmlspecialchars($_POST["user_type"])));
+        $study_path = $conn -> real_escape_string(trim(htmlspecialchars($_POST["study_path"])));
+        $year = $conn -> real_escape_string(trim(htmlspecialchars($_POST["year"])));
+        $subject_id = $conn -> real_escape_string(trim(htmlspecialchars($_POST["subject"])));
+        $image = $conn -> real_escape_string(trim(htmlspecialchars($_FILES["photo"]["name"])));
 
         if (emptyFields($name, $email, $password, $password_confirmed, $user_type, $study_path, $year, $subject_id, $image) !== false) {
             header("location: register.php?error=missingfields");
@@ -97,18 +97,18 @@
     }
 
     function mailTaken($email) {
-        global $mysqli;
+        global $conn;
 
         $sql_user_exists = "SELECT * FROM `brukere` WHERE `Epost`= '" . $email . "'";
 
-        $stmt = mysqli_stmt_init($mysqli);
+        $stmt = mysqli_stmt_init($conn);
 
         if (!mysqli_stmt_prepare($stmt, $sql_user_exists)) {
             header("location: register.php?stmtfailed");
             exit();
         }
 
-        $user_exists = mysqli_query($mysqli, $sql_user_exists);
+        $user_exists = mysqli_query($conn, $sql_user_exists);
 
         if ($row = mysqli_fetch_assoc($user_exists)) {
             return $row;
@@ -162,7 +162,7 @@
     }
 
     function createUser($name, $email, $password, &$user_type, $study_path, $year, $subject_id, $image) {
-        global $mysqli;
+        global $conn;
 
         if ($user_type === "foreleser") {
             $user_type = 2;
@@ -177,7 +177,7 @@
         }
 
         $sql_register = "INSERT INTO `brukere`(`BrukerID`, `Navn`, `Epost`, `Bilde`, `Kull`, `Brukertype`, `Passord`, `EmneID`, `Studieretning`, `Brukerstatus`) VALUES (0, '" . $name . "', '" . $email . "', '" . $image . "', " . $year . ", " . $user_type . ", '" . password_hash($password, PASSWORD_DEFAULT) . "', " . $subject_id . ", '" . $study_path . "', " . $status . ")";
-        $register_user = mysqli_query($mysqli, $sql_register);
+        $register_user = mysqli_query($conn, $sql_register);
         if ($register_user) {
             header("location: register.php?error=none");
             exit();
@@ -219,7 +219,7 @@
             <?php
                 $sql = "SELECT * FROM emne";
 
-                $results = mysqli_query($mysqli, $sql);
+                $results = mysqli_query($conn, $sql);
 
                 while($row = mysqli_fetch_array($results)) {
                     echo "<option value='" . $row['emnePIN'] . "'>" . $row['emnekode'] . " " . $row['emnenavn'] . "</option>";

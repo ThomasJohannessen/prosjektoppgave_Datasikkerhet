@@ -78,10 +78,22 @@
 		if ($conn->query($sqlUpdate) === FALSE)
   			echo "Error updating password: " . $conn->error;
   		else
-  		{
-  			echo "<script>
-				alert('Password update OK!');
-			</script>";
+  		{	
+			if ($_SESSION['user_type'] == 3){
+
+				header("location: student/studentside.php");
+				exit();
+			}
+
+			else if ($_SESSION['user_type'] == 2){
+				header("location: foreleser/index.php");
+				exit();
+			}
+
+			else if ($_SESSION['user_type'] == 1){
+				header("location: admin/updateusers.php");
+				exit();
+			}
 		}
 		
 		$conn->close();
