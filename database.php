@@ -1,6 +1,6 @@
 <?php
 
-$db = "158.39.188.201/localhost";
+$db = "localhost";
 $username = "root";
 $password = "";
 $dbname = "datasikkerhet_prosjekt";
@@ -14,10 +14,6 @@ else{
     echo"connected to server";
 
 
-    $db_list = mysql_list_dbs($conn);
-    while ($db = mysql_fetch_object($db_list)) {
-        echo $db->Database . "<br />";
-    }
 }
 
 
