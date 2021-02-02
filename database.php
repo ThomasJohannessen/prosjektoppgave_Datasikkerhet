@@ -1,6 +1,6 @@
 <?php
 
-$db = "localhost";
+$db = "158.39.188.201/localhost";
 $username = "root";
 $password = "";
 $dbname = "datasikkerhet_prosjekt";
