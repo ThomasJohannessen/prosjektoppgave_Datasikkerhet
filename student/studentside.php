@@ -11,14 +11,17 @@
 <body>
 
 <nav ><ul class="navbar"> 
-<li><a href="meldingfeed.php">Feed</a></li>
-<form method="post"> 
-        <input type="submit" name="logout" class="button" value="Logout" /> 
+    <li><a href="meldingfeed.php">Feed</a></li>
+    <li><a href="../change.php">Change password</a></li>
+    <form method="post"> 
+        <input type="submit" name="logout" class="button" value="Logout" id="logout"/> 
     </form> 
-    <a href="../change.php">Change password</a>
+</ul>
 </nav>
 
     <?php
+
+    session_start();
 
     include "../database.php";
 
@@ -47,8 +50,6 @@
                     }
                 ?>
         </select>  
-                     <br>
-                    <input type="text" name="messageID" placeholder="StudentID" class="student-input">
                     <br>
                     <input type="text" name="question" placeholder="Question" class="student-input">
                     <br>

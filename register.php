@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Start</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -188,59 +189,62 @@
     }
 ?>
 
-<h1>Register</h1>
-<form method="post" action="" enctype="multipart/form-data">
-    <label for="name">Username:</label><br>
-    <input type="test" name="name"><br><br>
+<div id="div-feed">
+    <h1>Register</h1>
+    <form method="post" action="" enctype="multipart/form-data">
+        <label for="name">Username:</label><br>
+        <input type="test" name="name"><br><br>
 
-    <label for="email">Email:</label><br>
-    <input type="email" name="email"><br><br>
+        <label for="email">Email:</label><br>
+        <input type="email" name="email"><br><br>
 
-    <label for="password">Password:</label><br>
-    <input type="password" name="password"><br><br>
+        <label for="password">Password:</label><br>
+        <input type="password" name="password"><br><br>
 
-    <label for="password-confirmed">Repeat password:</label><br>
-    <input type="password" name="password-confirmed"><br><br>
+        <label for="password-confirmed">Repeat password:</label><br>
+        <input type="password" name="password-confirmed"><br><br>
 
-    <label for="user_type">Type bruker:</label><br>
-    <input type="radio" id="student" name="user_type" value="student">
+        <label for="user_type">Type bruker:</label><br>
+        <input type="radio" id="student" name="user_type" value="student">
+        <label for="student" id="label-student">Student</label>
+        <br>
+        <input type="radio" id="foreleser" name="user_type" value="foreleser">
+        <label for="foreleser">Foreleser</label><br><br>
 
-    <label for="student">Student</label>
-    <input type="radio" id="foreleser" name="user_type" value="foreleser">
-    <label for="foreleser">Foreleser</label><br><br>
+        <section id="foreleser_cont">
+            <h3>Foreleser</h3>
+            <label for="photo">Select image:</label><br>
+            <input type="file" id="photo" name="photo" accept="image/*"><br><br>
 
-    <section id="foreleser_cont">
-        <h3>Foreleser</h3>
-        <label for="photo">Select image:</label><br>
-        <input type="file" id="photo" name="photo" accept="image/*"><br><br>
+            <label for="subject">Hvilket fag foreleser du i?</label>
+            <select id="subject" name="subject">
+                <?php
+                    $sql = "SELECT * FROM emne";
 
-        <label for="subject">Hvilket fag foreleser du i?</label>
-        <select id="subject" name="subject">
-            <?php
-                $sql = "SELECT * FROM emne";
+                    $results = mysqli_query($conn, $sql);
 
-                $results = mysqli_query($conn, $sql);
+                    while($row = mysqli_fetch_array($results)) {
+                        echo "<option value='" . $row['emnePIN'] . "'>" . $row['emnekode'] . " " . $row['emnenavn'] . "</option>";
+                    }
+                ?>
 
-                while($row = mysqli_fetch_array($results)) {
-                    echo "<option value='" . $row['emnePIN'] . "'>" . $row['emnekode'] . " " . $row['emnenavn'] . "</option>";
-                }
-            ?>
+            </select>
+        </section>
 
-        </select>
-    </section>
+        <section id="student_cont">
+            <h3>Student</h3>
+                <label for="study_path">Studieretning: </label><br>
+                <input type="text" name="study_path"><br><br>
 
-    <section id="student_cont">
-        <h3>Student</h3>
-            <label for="study_path">Studieretning: </label><br>
-            <input type="text" name="study_path"><br><br>
+                <label for="year">Kull: </label><br>
+                <input type="text" name="year"><br><br>
+        </section>
 
-            <label for="year">Kull: </label><br>
-            <input type="text" name="year"><br><br>
-    </section>
+        <input type="submit" value="Submit">
+        <br>
 
-    <input type="submit" value="Submit">
-
-</form>
+    </form>
+</div>
 
 <?php
     if(isset($_GET["error"])) {

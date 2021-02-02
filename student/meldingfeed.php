@@ -10,10 +10,10 @@
 
 <nav ><ul class="navbar">
 <li><a href="studentside.php">Student - POV</a></li>
-<form method="post"> 
-        <input type="submit" name="logout" class="button" value="Logout" /> 
+<li><a href="../change.php">Change password</a></li>
+    <form method="post"> 
+        <input type="submit" name="logout" class="button" value="Logout" id="logout"/> 
     </form> 
-    <a href="../change.php">Change password</a>
 </nav>
 
 
@@ -22,6 +22,11 @@
     <?php
 
     include "../database.php";
+
+    if (isset($_POST['logout'])){
+      include "../functions.php";
+      logout();
+  }
 
     $conn = mysqli_connect($db, $username, $password, $dbname);
     $sql = "SELECT * FROM meldingersporsmal where svar is not null order by sporsmalID desc;";
