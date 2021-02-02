@@ -6,6 +6,10 @@ if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
     exit();
 }
+else
+{
+    echo "Connected to DB";
+}
 
 $query = "SELECT * FROM brukere";
 
@@ -19,6 +23,7 @@ if ($result = $mysqli->query($query)) {
     /* free result set */
     $result->close();
 }
+
 
 /* close connection */
 $mysqli->close();
