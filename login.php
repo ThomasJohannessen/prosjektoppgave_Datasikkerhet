@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <?php
@@ -83,6 +84,7 @@
             } else {
                 session_start();
 
+                $_SESSION["brukerID"] = $mailTaken["BrukerID"];
                 $_SESSION["user_email"] = $mailTaken["Epost"];
                 $_SESSION["username"] = $mailTaken["Navn"];
                 $_SESSION["subject_id"] = $mailTaken["EmneID"];
@@ -90,7 +92,6 @@
                 $_SESSION["study_path"] = $mailTaken["Studieretning"];
 
                 if ($_SESSION['user_type'] == 3){
-
                     header("location: student/studentside.php");
                     exit();
                 }
@@ -108,17 +109,21 @@
         }
     }
     ?>
-<form method="post" action="">
-    <label for="email">Email:</label><br>
-    <input type="email" name="email"><br><br>
 
-    <label for="password">Password:</label><br>
-    <input type="password" name="password"><br><br>
+    <div id="div-feed">
+        <form method="post" action="">
+            <label for="email">Email:</label><br>
+            <input type="email" name="email"><br><br>
 
-    <input type="submit" value="Submit">
-</form><br>
-<a href="gjest/gjestfeed.php">Logg inn som gjest</a>
-<a href="forgot.php">Forgot password</a>
+            <label for="password">Password:</label><br>
+            <input type="password" name="password"><br><br>
+
+            <input type="submit" value="Submit" class="student-input">
+        </form><br>
+    </div>
+
+<a href="gjest/gjestfeed.php" class="homescreen-choice">Logg inn som gjest</a>
+<a href="forgot.php" class="homescreen-choice">Forgot password</a>
 <?php
     if(isset($_GET["error"])) {
         if($_GET["error"] == "emptyinput") {

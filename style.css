@@ -2,7 +2,7 @@ body {
     text-align: center;
     margin-top: 20px;
     font-size: 20px;
-    background-color: rgb(45, 100, 182);
+    background-color: rgb(67, 123, 206);
 }
 
 input {
@@ -91,6 +91,11 @@ button {
     border: black 5px solid;
 }
 
+#logout {
+    font-size: 15px;
+    width: 80px;
+}
+
 /*  
 Gjestebruker  
 */
@@ -119,12 +124,38 @@ Gjestebruker
 Admin 
 */
 
-#reported-questions  {
+#reported-questions {
     background-color: white;
-    margin-left: 35%;
-    margin-right: 35%;
+    margin-left: 25%;
+    margin-right: 25%;
     margin-bottom: 20px;
-    padding: 10px;
+    padding: 5px;
     border: black 5px solid;
 }
+
+#reported-questions td {
+    padding: 3px;
+}
+
+/*
+Login og registrer
+*/
+
+.homescreen-choice {
+    color: black;
+    margin-left: 20px;
+    background-color: white;
+    border: black 2px solid;
+    padding: 8px;
+    text-decoration: none;
+}
+
+#student {
+    width: 30px;
+}
+
+#foreleser {
+    width: 30px;
+}
+
 
