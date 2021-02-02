@@ -18,15 +18,15 @@
         $status = "";
         $hashed_password = "";
 
-        $name = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["name"])));
-        $email = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
-        $password = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["password"])));
-        $password_confirmed = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["password-confirmed"])));
-        $user_type = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["user_type"])));
-        $study_path = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["study_path"])));
-        $year = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["year"])));
-        $subject_id = $mysqli -> real_escape_string(trim(htmlspecialchars($_POST["subject"])));
-        $image = $mysqli -> real_escape_string(trim(htmlspecialchars($_FILES["photo"]["name"])));
+        $name = $conn -> real_escape_string(trim(htmlspecialchars($_POST["name"])));
+        $email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
+        $password = $conn -> real_escape_string(trim(htmlspecialchars($_POST["password"])));
+        $password_confirmed = $conn -> real_escape_string(trim(htmlspecialchars($_POST["password-confirmed"])));
+        $user_type = $conn -> real_escape_string(trim(htmlspecialchars($_POST["user_type"])));
+        $study_path = $conn -> real_escape_string(trim(htmlspecialchars($_POST["study_path"])));
+        $year = $conn -> real_escape_string(trim(htmlspecialchars($_POST["year"])));
+        $subject_id = $conn -> real_escape_string(trim(htmlspecialchars($_POST["subject"])));
+        $image = $conn -> real_escape_string(trim(htmlspecialchars($_FILES["photo"]["name"])));
 
         if (emptyFields($name, $email, $password, $password_confirmed, $user_type, $study_path, $year, $subject_id, $image) !== false) {
             header("location: register.php?error=missingfields");
@@ -219,7 +219,7 @@
             <?php
                 $sql = "SELECT * FROM emne";
 
-                $results = mysqli_query($mysqli, $sql);
+                $results = mysqli_query($conn, $sql);
 
                 while($row = mysqli_fetch_array($results)) {
                     echo "<option value='" . $row['emnePIN'] . "'>" . $row['emnekode'] . " " . $row['emnenavn'] . "</option>";
