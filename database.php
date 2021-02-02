@@ -15,11 +15,9 @@ else{
 
 
     $db_list = mysqli_list_dbs($conn);
-    while ($db = mysqli_fetch_object($db_list))
-    {
+    while ($db = mysqli_fetch_object($db_list)) {
         echo $db->Database . "<br />";
     }
-    mysqli_close($conn);
 }
 
 
