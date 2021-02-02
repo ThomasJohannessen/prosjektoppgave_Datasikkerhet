@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli("localhost", "root", "", "datasikkerhet_prosjekt");
+$mysqli = new mysqli("localhost", "softsec", "password", "datasikkerhet_prosjekt");
 
 /* check connection */
 if (mysqli_connect_errno()) {
