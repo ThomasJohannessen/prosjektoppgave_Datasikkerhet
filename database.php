@@ -10,7 +10,18 @@ $conn = mysqli_connect($db, $username, $password, $dbname);
 if($conn->connect_error) {
     die($conn->connect_errno. ": ".$conn->connect_error);
 }
-else echo"connected to server";
+else{
+    echo"connected to server";
+
+
+$sql = "SELECT * FROM emne";
+
+$results = mysqli_query($conn, $sql);
+
+while($row = mysqli_fetch_array($results)) {
+    echo  $row['emnenavn'];
+}
+}
 
 
 ?>
