@@ -32,6 +32,11 @@ if (isset($_POST['sendbtn'])){
     switch($pinkode) {
         case 3333 : $pinkode = "ITF888";
     break;
+        case 1111 : $pinkode = "";
+    break;
+        case 2222 : $pinkode = "";
+    break;
+        case 4444 : $pinkode = "";
     default;
     break;
     }

@@ -20,6 +20,11 @@
 
 include "../database.php" ;
 
+if (isset($_POST['logout'])){
+  include "../functions.php";
+  logout();
+}
+
 $conn = mysqli_connect($db, $username, $password, $dbname);
 // $sql = "SELECT * FROM meldingersporsmal JOIN meldingersvar ON meldingersporsmal.sporsmalID = meldingersvar.svarID where meldingersvar.svar = ' ';";
 $sql = "SELECT * FROM meldingersporsmal where svar is null";

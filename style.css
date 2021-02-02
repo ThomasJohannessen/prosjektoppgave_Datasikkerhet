@@ -115,3 +115,16 @@ Gjestebruker
     font-size: 15px;
 }
 
+/* 
+Admin 
+*/
+
+#reported-questions  {
+    background-color: white;
+    margin-left: 35%;
+    margin-right: 35%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: black 5px solid;
+}
+

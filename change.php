@@ -26,12 +26,13 @@
 		</form>
 <?php
 
+	session_start();
 	if(isset($_POST['change']))
 	{
-		session_start();
+		
 		$email = htmlspecialchars(trim($_POST['email']));
 		
-		if ($_SESSION['user_email'] == '$email') 
+		if ($_SESSION['user_email'] == $email) 
 		{
 			$old = htmlspecialchars(trim($_POST['old']));
 			$new1 = htmlspecialchars(trim($_POST['new1']));
@@ -50,6 +51,9 @@
 				
 				if ($new1 === $old)
 					echo "The new password can't be the same as the old one!";
+				else if(empty($new2) || empty($new1)){
+					echo "Fields cant be empty";
+				}
 				else if ($new1 !== $new2)
 					echo "The two new passwords don't match!";
 				else if ($verify)

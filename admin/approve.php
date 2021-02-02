@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html>
 	<head>
-  		<title>Approve Teacher Status</title>
+		  <title>Approve Teacher Status</title>
+		  <link rel="stylesheet" href="../style.css">
 	</head>
 	<body>
+
+	<nav ><ul class="navbar">
+		<li><a href="updateusers.php">Update users</a></li>
+		<li><a href="reported.php">Reported questions</a></li>
+		<form method="post"> 
+       		<input type="submit" name="logout" class="button" value="Logout" /> 
+		</form> 
+	</nav>
 
 		<h2>Requests To Become Teacher</h2>
 
@@ -16,6 +25,12 @@
   			</tr>
 
 			<?php
+
+				if (isset($_POST['logout'])){
+					include "../functions.php";
+					logout();
+				}
+
 				session_start();
 				if($_SESSION['user_type'] == 1)
    				{
