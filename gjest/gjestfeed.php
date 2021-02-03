@@ -30,18 +30,18 @@ if (isset($_POST['sendbtn'])){
     $pinkode = $_POST['pinkode'];
 
     switch($pinkode) {
-        case 3333 : $pinkode = "ITF888";
+        case 1032 : $pinkode = "ITF885";
     break;
-        case 1111 : $pinkode = "";
+        case 1033 : $pinkode = "ITF886";
     break;
-        case 2222 : $pinkode = "";
+        case 1034 : $pinkode = "ITF887";
     break;
-        case 4444 : $pinkode = "";
+        case 1035 : $pinkode = "ITF888";
     default;
     break;
     }
     
-    if ($pinkode == "KANYWE" || $pinkode === "STOPID19" || $pinkode == "ITF888"){
+    if ($pinkode == "ITF885" || $pinkode === "ITF886" || $pinkode == "ITF887" || $pinkode == "ITF888"){
        
         $conn = mysqli_connect($db, $username, $password, $dbname);
         $sql = "SELECT * FROM meldingersporsmal where emnekode = '$pinkode' order by emnekode asc;";

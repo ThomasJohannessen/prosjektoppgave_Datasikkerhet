@@ -38,7 +38,7 @@ else {
 include "../database.php" ;
 
 $conn = mysqli_connect($db, $username, $password, $dbname);
-$sql = "SELECT * FROM meldingersporsmal where svar is null";
+$sql = "SELECT * FROM meldingersporsmal where svar is null;";
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
   }
