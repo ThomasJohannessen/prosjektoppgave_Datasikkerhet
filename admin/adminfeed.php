@@ -11,6 +11,7 @@
     <nav ><ul class="navbar">
 		<li><a href="approve.php">Approve users</a></li>
 		<li><a href="reported.php">Reported questions</a></li>
+        
 		<form method="post"> 
        		<input type="submit" name="logout" class="button" value="Logout" /> 
 		</form> 
@@ -24,7 +25,8 @@
 
     $pinkode = $_POST['pinkode'];  
         
-    $sql = "SELECT * FROM meldinger;";
+   //$sql = "SELECT * FROM meldinger;";
+   $sql = "SELECT meldinger.avsenderID, meldinger.melding, meldinger.svar, meldinger.avsenderID, brukere.Epost, brukere.BrukerID FROM meldinger FULL JOIN brukere ON meldinger.avsenderID=brukere.BrukerID";
         
     $result = $conn->query($sql);
         
@@ -33,7 +35,7 @@
                 ?>
                 <div id="div-feed">
                     <?php
-                    echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] ;
+                    echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["Epost"]. "<br>";
                     ?>
                 </div>
             <?php     

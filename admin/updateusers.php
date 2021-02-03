@@ -15,11 +15,6 @@
 		</form> 
 	</nav>
 
-		<h2>Users</h2>
-		<form action="approve.php">
-    			<input type="submit" value="Approve Teacher Status" />
-		</form>
-
 		<table border="2">
   			<tr>
     				<td>User ID</td>

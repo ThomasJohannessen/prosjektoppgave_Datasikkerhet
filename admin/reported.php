@@ -6,6 +6,7 @@
 	</head>
 	<body>
 	<nav ><ul class="navbar">
+		<li><a href="adminfeed.php">Messages feed</a></li>
 		<li><a href="approve.php">Approve users</a></li>
 		<li><a href="updateusers.php">Edit users</a></li>
 		<form method="post"> 
