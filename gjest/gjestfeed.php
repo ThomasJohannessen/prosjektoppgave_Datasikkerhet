@@ -58,7 +58,7 @@
                 exit;
         }    
         
-        $sql = "SELECT * FROM meldingersporsmal WHERE emnekode = '$emneKode' order by emnekode asc;";
+        $sql = "SELECT * FROM meldinger WHERE emnekode = '$emneKode' order by emnekode asc;";
         
         $result = $conn->query($sql);
 
