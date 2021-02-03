@@ -41,7 +41,7 @@
                 <div id="div-feed">
                     <?php
                     echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["Navn"]. "<br>";
-                    $sql_image = "SELECT `Bilde` FROM `brukere` WHERE `foreleserID`= '" . $row["foreleserID"] . "'";
+                    $sql_image = "SELECT `Bilde` FROM `brukere` WHERE `BrukerID`= '" . $row["foreleserID"] . "'";
                     $image = mysqli_query($conn, $sql_image);
                     echo "<img src=\"uploads/" . $image["Bilde"] . "\" alt=\"foreleser\">";
                     ?>
