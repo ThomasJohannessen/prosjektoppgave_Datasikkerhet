@@ -30,20 +30,18 @@ if (isset($_POST['sendbtn'])){
     $pinkode = $_POST['pinkode'];
 
     switch($pinkode) {
-        case 1032 : $pinkode = "ITF885";
+        case 1032 : $emnekode = "ITF885";
     break;
-        case 1033 : $pinkode = "ITF886";
+        case 1033 : $emnekode = "ITF886";
     break;
-        case 1034 : $pinkode = "ITF887";
+        case 1034 : $emnekode = "ITF887";
     break;
-        case 1035 : $pinkode = "ITF888";
+        case 1035 : $emnekode = "ITF888";
     break;
     }
-    
-    if ($pinkode == "KANYWE" || $pinkode === "STOPID19" || $pinkode == "ITF888"){
       
     global $conn; 
-    $sql = "SELECT * FROM meldingersporsmal where emnekode = '$pinkode' order by emnekode asc;";
+    $sql = "SELECT * FROM meldingersporsmal where emnekode = '$emnekode' order by emnekode asc;";
   
     
     if ($conn->connect_error) {
@@ -53,7 +51,7 @@ if (isset($_POST['sendbtn'])){
     
     $result = $conn->query($sql);
 
-    echo "<h2>Dette er siden til faget $pinkode</h2>";
+    echo "<h2>Dette er siden til faget $emnekode</h2>";
       
     if ($result->num_rows > 0) {
       while($row = $result->fetch_assoc()) {
