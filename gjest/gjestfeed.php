@@ -37,6 +37,7 @@
 
         if ($pinkode > 9999 || $pinkode < 1000){
             echo "<h2>Jeg sa firesifret pin....</h2>";
+            exit;
         }
 
         switch($pinkode) {
@@ -53,7 +54,8 @@
                 $emneKode = "ITF888";
                 break;
             default:
-                echo "<h2>Tast inn riktig firesifret pin!</h2>"; 
+                echo "<h2>Denne pin-koden eksisterer ikke!</h2>";
+                exit;
         }    
         
         $sql = "SELECT * FROM meldingersporsmal WHERE emnekode = '$emneKode' order by emnekode asc;";
