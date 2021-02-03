@@ -25,7 +25,8 @@
 
     $pinkode = $_POST['pinkode'];  
         
-    $sql = "SELECT * FROM meldinger;";
+   //$sql = "SELECT * FROM meldinger;";
+   $sql = "SELECT meldinger.avsenderID, meldinger.melding, meldinger.svar, meldinger.avsenderID, brukere.Epost, brukere.BrukerID FROM meldinger FULL JOIN brukere ON meldinger.avsenderID=brukere.BrukerID";
         
     $result = $conn->query($sql);
         
@@ -34,7 +35,7 @@
                 ?>
                 <div id="div-feed">
                     <?php
-                    echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["avsenderID"]. "<br>";
+                    echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["Epost"]. "<br>";
                     ?>
                 </div>
             <?php     
