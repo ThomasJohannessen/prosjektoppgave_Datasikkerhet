@@ -29,19 +29,31 @@
 
     global $conn; 
 
+    
+
     if (isset($_POST['sendbtn'])){
 
         $pinkode = $_POST['pinkode'];
 
+        if ($pinkode > 9999 || $pinkode < 1000){
+            echo "<h2>Jeg sa firesifret pin....</h2>";
+        }
+
         switch($pinkode) {
-            case 1032 : $emneKode = "ITF885";
-        break;
-            case 1033 : $emneKode = "ITF886";
-        break;
-            case 1034 : $emneKode = "ITF887";
-        break;
-            case 1035 : $emneKode = "ITF888";
-        break;
+            case 1032 : 
+                $emneKode = "ITF885";
+                break;
+            case 1033 : 
+                $emneKode = "ITF886";
+                break;
+            case 1034 : 
+                $emneKode = "ITF887";
+                break;
+            case 1035 : 
+                $emneKode = "ITF888";
+                break;
+            default:
+                echo "<h2>Tast inn riktig firesifret pin!</h2>"; 
         }    
         
         $sql = "SELECT * FROM meldingersporsmal WHERE emnekode = '$emneKode' order by emnekode asc;";
@@ -73,13 +85,6 @@
                     
             }
         }
-    }    
-    else if ($pinkode > 9999 || $pinkode < 1000){
-        echo "<h2>Jeg sa firesifret pin....</h2>";
-    }
-
-    else {
-        echo "<h2>Tast inn riktig firesifret pin!</h2>";
     }    
     ?>
 </body>
