@@ -18,6 +18,7 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $status = "";
         $hashed_password = "";
+        $rand_filename = rand(100000,1000000);
 
         $name = $conn -> real_escape_string(trim(htmlspecialchars($_POST["name"])));
         $email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
@@ -29,7 +30,7 @@
         $subject_id = $conn -> real_escape_string(trim(htmlspecialchars($_POST["subject"])));
         $image = $conn -> real_escape_string(trim(htmlspecialchars($_FILES["photo"]["name"])));
 
-        if (emptyFields($name, $email, $password, $password_confirmed, $user_type, $study_path, $year, $subject_id, $image) !== false) {
+        if (emptyFields($name, $email, $password, $password_confirmed, $user_type, $study_path, $year, $subject_id, $image, $rand_filename) !== false) {
             header("location: register.php?error=missingfields");
             exit();
         }
@@ -51,19 +52,20 @@
         }
 
 
-        createUser($name, $email, $password, $user_type, $study_path, $year, $subject_id, $image);
+
+        createUser($name, $email, $password, $user_type, $study_path, $year, $subject_id, $rand_filename);
 
     }
 
-    function emptyFields($name, $email, $password, $password_confirmed, $user_type, $study_path, $year, $subject_id, $image) {
+    function emptyFields($name, $email, $password, $password_confirmed, $user_type, $study_path, $year, $subject_id, $image, $rand_filename) {
         if ($user_type === "foreleser") {
             if (empty($name) || empty($email) || empty($password) || empty($password_confirmed) || empty($user_type) || empty($user_type) || empty($subject_id) || empty($image)) {
-                if (fileVerification($email) !== false) {
+                $res = true;
+            } else {
+                if (fileVerification($rand_filename) !== false) {
                     header("location: register.php?error=imageerror");
                     exit();
                 }
-                $res = true;
-            } else {
                 $res = false;
             }
         } elseif ($user_type === "student") {
@@ -128,7 +130,7 @@
         return $res;
     }
 
-    function fileVerification () {
+    function fileVerification ($rand_filename) {
         //$filenameAsEmail
         // Check if file was uploaded without errors
         if(isset($_FILES["photo"]) && $_FILES["photo"]["error"] == 0){
@@ -148,16 +150,16 @@
             // Verify MYME type of the file
             if(in_array($filetype, $allowed)){
                 // Check whether file exists before uploading it
-                if(file_exists("upload/" . $filename)){
+                if(file_exists("uploads/" . $filename)){
                     echo $filename . " already exists.";
-                } else{
-                    move_uploaded_file($_FILES["photo"]["tmp_name"], "upload/" . $filename);
+                } else {
+                    move_uploaded_file($_FILES["photo"]["tmp_name"], "uploads/" . $rand_filename . "." . $ext);
                     return false;
                 }
-            } else{
+            } else {
                 return true;
             }
-        } else{
+        } else {
             return true;
         }
     }
@@ -268,6 +270,9 @@
         }
         elseif ($_GET["error"] == "imageerror") {
             echo "<p>Feil ved bilde opplastning</p>";
+        }
+        elseif ($_GET["error"] == "filesaved") {
+            echo "<p>Fil lagret</p>";
         }
         elseif ($_GET["error"] == "none") {
             echo "<p>Du er nå registrert</p>";
