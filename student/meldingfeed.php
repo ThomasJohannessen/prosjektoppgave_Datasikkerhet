@@ -52,6 +52,7 @@
               <div id="div-feed">
                 <?php
                   echo "<b>Emnekode - </b>" . $row["emnekode"] . "<br>" . "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] ;
+                  echo "<img src=\"uploads/" . $_SESSION["image_path"] . "\" alt=\"foreleser\">";
                 ?>
             </div>
 
