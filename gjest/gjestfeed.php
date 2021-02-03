@@ -41,7 +41,7 @@ if (isset($_POST['sendbtn'])){
     }
     
     if ($pinkode == "KANYWE" || $pinkode === "STOPID19" || $pinkode == "ITF888"){
-      */   
+      
     global $conn; 
     $sql = "SELECT * FROM meldingersporsmal where emnekode = '$pinkode' order by emnekode asc;";
   
