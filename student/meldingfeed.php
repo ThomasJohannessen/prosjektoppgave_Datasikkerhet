@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="../style.css?v=<?php echo time(); ?>">
 </head>
 <body>
-
-<nav ><ul class="navbar">
+<nav><ul class="navbar">
 <li><a href="studentside.php">Student - POV</a></li>
 <li><a href="../change.php">Change password</a></li>
     <form method="post"> 
@@ -16,57 +15,45 @@
     </form> 
 </nav>
 
-
-
-    
-    <?php
-
+<?php
     include "../database.php";
 
     session_start();
-    
+
     if (isset($_POST['logout'])){
       include "../functions.php";
       logout();
-  }
+    }
 
     global $conn;
+
     $sql = "SELECT * FROM meldinger where svar is not null order by sporsmalID desc;";
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
-      }
-    
+    }
+
     $result = $conn->query($sql);
 
-    ?>
-
-  
-
-    <?php
-      
     if ($result->num_rows > 0) {
-          
-      while($row = $result->fetch_assoc()) {
+        while($row = $result->fetch_assoc()) {
 
-    ?>
+?>
+    <div id="div-feed">
+        <?php
+            echo "<b>Emnekode - </b>" . $row["emnekode"] . "<br>" . "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] ;
 
-              <div id="div-feed">
-                <?php
-                  echo "<b>Emnekode - </b>" . $row["emnekode"] . "<br>" . "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] ;
-                  echo "<img src=\"uploads/" . $_SESSION["image_path"] . "\" alt=\"foreleser\">";
-                ?>
-            </div>
+            $sql_image = "SELECT `Bilde` FROM `brukere` WHERE `foreleserID`= '" . $row["foreleserID"] . "'";
+            $image = mysqli_query($conn, $sql_image);
 
-          <?php
-            
-          }
-      }
-
-
-
-
-    ?>
-
+            if ($row = mysqli_fetch_assoc($image)) {
+                echo "<img src=\"uploads/" . $image["Bilde"] . "\" alt=\"foreleser\">";
+            }
+        ?>
+    </div>
+<?php
+        }
+    }
+?>
 </body>
 </html>
