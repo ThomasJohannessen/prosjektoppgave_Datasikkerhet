@@ -14,7 +14,7 @@ if ($melding == ""){
 }
 $emnekode = $_POST['emnekode'];
 
-$insert = "INSERT INTO meldinger (avsenderID, melding, emnekode) VALUES ('$avsenderID', '$melding', '$emnekode');";
+$insert = "INSERT INTO `meldinger` (`avsenderID`, `melding`,`emnekode`) VALUES ('$avsenderID', '$melding', '$emnekode')";
 
 
 mysqli_query($conn, $insert);

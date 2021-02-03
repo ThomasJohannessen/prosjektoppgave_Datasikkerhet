@@ -26,14 +26,14 @@
     include "../database.php";
 
     global $conn;
-    $sql = "SELECT distinct emnekode FROM emne;";
+
+    $sql = "SELECT distinct emnekode FROM emne";
     $results = mysqli_query($conn, $sql);
 
     if (isset($_POST['logout'])){
         include "../functions.php";
         logout();
     }
-
     ?>
 
 
