@@ -23,6 +23,8 @@
 
     include "../database.php";
 
+    session_start();
+    
     if (isset($_POST['logout'])){
       include "../functions.php";
       logout();
