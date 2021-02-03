@@ -111,14 +111,15 @@
     ?>
 
     <div id="div-feed">
+        <h1>Logg inn</h1>
         <form method="post" action="">
-            <label for="email">Email:</label><br>
+            <label for="email">E-mail:</label><br>
             <input type="email" name="email"><br><br>
 
-            <label for="password">Password:</label><br>
+            <label for="password">Passord:</label><br>
             <input type="password" name="password"><br><br>
 
-            <input type="submit" value="Submit" class="student-input">
+            <input type="submit" value="Send inn" class="student-input">
         </form><br>
     </div>
 
@@ -130,7 +131,7 @@
             echo "<p>Alle felter må fylles</p>";
         }
         elseif ($_GET["error"] == "wronglogin") {
-            echo "<p>Velg et passende email</p>";
+            echo "<p>Feil logg inn</p>";
         }
         elseif ($_GET["error"] == "notapprovedaccount") {
             echo "<p>Kontoen din er under behandling. Vennligst prøv igjen senere eller logg inn som gjest.</p>";

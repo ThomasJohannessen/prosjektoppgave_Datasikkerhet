@@ -29,6 +29,7 @@
         $year = $conn -> real_escape_string(trim(htmlspecialchars($_POST["year"])));
         $subject_id = $conn -> real_escape_string(trim(htmlspecialchars($_POST["subject"])));
         $image = $conn -> real_escape_string(trim(htmlspecialchars($_FILES["photo"]["name"])));
+        $ext = pathinfo($image, PATHINFO_EXTENSION);
 
         if (emptyFields($name, $email, $password, $password_confirmed, $user_type, $study_path, $year, $subject_id, $image, $rand_filename) !== false) {
             header("location: register.php?error=missingfields");
@@ -53,7 +54,7 @@
 
 
 
-        createUser($name, $email, $password, $user_type, $study_path, $year, $subject_id, $rand_filename);
+        createUser($name, $email, $password, $user_type, $study_path, $year, $subject_id, $rand_filename . "." . $ext);
 
     }
 
