@@ -7,7 +7,8 @@
 	<body>
 
 	<nav ><ul class="navbar">
-		<li><a href="updateusers.php">Update users</a></li>
+		<li><a href="adminfeed.php">Messages feed</a></li>
+		<li><a href="updateusers.php">Edit users</a></li>
 		<li><a href="reported.php">Reported questions</a></li>
 		<form method="post"> 
        		<input type="submit" name="logout" class="button" value="Logout" /> 

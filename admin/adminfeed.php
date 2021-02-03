@@ -11,6 +11,7 @@
     <nav ><ul class="navbar">
 		<li><a href="approve.php">Approve users</a></li>
 		<li><a href="reported.php">Reported questions</a></li>
+        
 		<form method="post"> 
        		<input type="submit" name="logout" class="button" value="Logout" /> 
 		</form> 
@@ -33,7 +34,7 @@
                 ?>
                 <div id="div-feed">
                     <?php
-                    echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] ;
+                    echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["avsenderID"]. "<br>";
                     ?>
                 </div>
             <?php     
