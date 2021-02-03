@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feefd</title>
+    <title>Feed</title>
     <link rel="stylesheet" href="../style.css?v=<?php echo time(); ?>">
 </head>
 <body>
@@ -25,6 +25,8 @@
 
 include "../database.php" ;
 
+global $conn; 
+
 if (isset($_POST['sendbtn'])){
 
     $pinkode = $_POST['pinkode'];
@@ -38,17 +40,10 @@ if (isset($_POST['sendbtn'])){
     break;
         case 1035 : $emnekode = "ITF888";
     break;
-    }
-      
-    global $conn; 
-    $sql = "SELECT * FROM meldingersporsmal where emnekode = '$emnekode' order by emnekode asc;";
-  
+    }    
     
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-      }
+    $sql = "SELECT * FROM meldingersporsmal WHERE emnekode = '$emnekode' order by emnekode asc;";
      
-    
     $result = $conn->query($sql);
 
     echo "<h2>Dette er siden til faget $emnekode</h2>";
