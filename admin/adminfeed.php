@@ -30,23 +30,27 @@
 
     $pinkode = $_POST['pinkode'];  
         
-   $sql = "SELECT `avsenderID`, `melding`, `svar`, `Bilde`, `Navn`, `foreleserID` FROM meldinger, brukere WHERE meldinger.avsenderID = brukere.BrukerID";
+   $sql = "SELECT `avsenderID`, `melding`, `svar`, `Bilde`, `Navn`, `foreleserID` FROM meldinger, brukere WHERE meldinger.avsenderID = brukere.BrukerID OR meldinger.foreleserID = brukere.BrukerID";
       
     $result = $conn->query($sql);
         
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-
-                ?>
-                <div id="div-feed">
-                    <?php
-                    echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["Navn"]. "<br>";
-                    $sql_image = "SELECT `Bilde` FROM `brukere` WHERE `BrukerID`= '" . $row["foreleserID"] . "'";
-                    $image = mysqli_query($conn, $sql_image);
-                    echo "<img src=\"uploads/" . $image["Bilde"] . "\" alt=\"foreleser\">";
+                if(empty($row["Bilde"])){
+                    continue;
+                }
+                else {
                     ?>
-                </div>
-            <?php     
+                    <div id="div-feed">
+                        <?php
+                        echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["Navn"]. "<br>";
+                        $sql_image = "SELECT `Bilde` FROM `brukere` WHERE `BrukerID`= '" . $row["foreleserID"] . "'";
+                        $image = mysqli_query($conn, $sql_image);
+                        echo "<img src=\"uploads/" . $image["Bilde"] . "\" alt=\"foreleser\">";
+                        ?>
+                    </div>
+                <?php   
+                }  
             }
         }   
     ?>
