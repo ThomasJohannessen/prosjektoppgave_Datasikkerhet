@@ -43,10 +43,7 @@
                     echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["Navn"]. "<br>";
                     $sql_image = "SELECT `Bilde` FROM `brukere` WHERE `foreleserID`= '" . $row["foreleserID"] . "'";
                     $image = mysqli_query($conn, $sql_image);
-
-                    if ($row = mysqli_fetch_assoc($image)) {
-                        echo "<img src=\"uploads/" . $image["Bilde"] . "\" alt=\"foreleser\">";
-                    }
+                    echo "<img src=\"uploads/" . $image["Bilde"] . "\" alt=\"foreleser\">";
                     ?>
                 </div>
             <?php     
