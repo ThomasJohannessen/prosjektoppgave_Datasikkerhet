@@ -37,11 +37,8 @@ else {
 
 include "../database.php" ;
 
-$conn = mysqli_connect($db, $username, $password, $dbname);
-$sql = "SELECT * FROM meldingersporsmal where svar is null";
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-  }
+global $conn;
+$sql = "SELECT * FROM meldinger where svar is null";
 
 $result = $conn->query($sql);
   
@@ -94,7 +91,7 @@ if ($result->num_rows > 0) {
 
         else {
 
-          $sql2 = "UPDATE meldingersporsmal SET svar = '$svar', foreleserID='$foreleserID' WHERE sporsmalID = $messageID;";
+          $sql2 = "UPDATE meldinger SET svar = '$svar', foreleserID='$foreleserID' WHERE sporsmalID = $messageID;";
           if (!mysqli_query($conn, $sql2)){
             echo "Incorrect id";
           }

@@ -28,8 +28,8 @@
       logout();
   }
 
-    $conn = mysqli_connect($db, $username, $password, $dbname);
-    $sql = "SELECT * FROM meldingersporsmal where svar is not null order by sporsmalID desc;";
+    global $conn;
+    $sql = "SELECT * FROM meldinger where svar is not null order by sporsmalID desc;";
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
