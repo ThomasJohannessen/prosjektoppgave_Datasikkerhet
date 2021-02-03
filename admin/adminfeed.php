@@ -21,22 +21,32 @@
 
     include "../database.php" ;
 
+    if (isset($_POST['logout'])){
+        include "../functions.php";
+        logout();
+      }
+
     global $conn; 
 
     $pinkode = $_POST['pinkode'];  
         
-   //$sql = "SELECT * FROM meldinger;";
-   $sql = "SELECT `avsenderID`, `melding`, `svar`, `Bilde`, `Navn` FROM meldinger, brukere WHERE meldinger.avsenderID = brukere.BrukerID";
+   $sql = "SELECT `avsenderID`, `melding`, `svar`, `Bilde`, `Navn`, `foreleserID` FROM meldinger, brukere WHERE meldinger.avsenderID = brukere.BrukerID";
       
     $result = $conn->query($sql);
         
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
+
                 ?>
                 <div id="div-feed">
                     <?php
                     echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["Navn"]. "<br>";
-                    echo "<img src=\"uploads/" . $row["Bilde"] . "\" alt=\"foreleser\">";
+                    $sql_image = "SELECT `Bilde` FROM `brukere` WHERE `foreleserID`= '" . $row["foreleserID"] . "'";
+                    $image = mysqli_query($conn, $sql_image);
+
+                    if ($row = mysqli_fetch_assoc($image)) {
+                        echo "<img src=\"uploads/" . $image["Bilde"] . "\" alt=\"foreleser\">";
+                    }
                     ?>
                 </div>
             <?php     
