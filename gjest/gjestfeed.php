@@ -30,22 +30,21 @@ if (isset($_POST['sendbtn'])){
     $pinkode = $_POST['pinkode'];
 
     switch($pinkode) {
-        case 3333 : $pinkode = "ITF888";
+        case 1032 : $pinkode = "ITF885";
     break;
-        case 1111 : $pinkode = "";
+        case 1033 : $pinkode = "ITF886";
     break;
-        case 2222 : $pinkode = "";
+        case 1034 : $pinkode = "ITF887";
     break;
-        case 4444 : $pinkode = "";
-    default;
+        case 1035 : $pinkode = "ITF888";
     break;
     }
     
     if ($pinkode == "KANYWE" || $pinkode === "STOPID19" || $pinkode == "ITF888"){
-       
-        $conn = mysqli_connect($db, $username, $password, $dbname);
-        $sql = "SELECT * FROM meldingersporsmal where emnekode = '$pinkode' order by emnekode asc;";
-    
+      */   
+    global $conn; 
+    $sql = "SELECT * FROM meldingersporsmal where emnekode = '$pinkode' order by emnekode asc;";
+  
     
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
