@@ -27,7 +27,8 @@
 
     include "../database.php" ;
 
-    global $conn; 
+    $db = new Database();
+    $conn = db->getConnection();
 
     
 
