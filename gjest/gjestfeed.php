@@ -27,9 +27,10 @@
 
     include "../database.php" ;
 
-    $db = new Database();
+    /*$db = new Database();
     $conn = db->get_Connection();
-
+*/
+global $conn;
     
 
     if (isset($_POST['sendbtn'])){
