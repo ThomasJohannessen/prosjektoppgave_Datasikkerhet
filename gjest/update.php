@@ -1,7 +1,6 @@
 <?php 
 
 include "../database.php";
-include "../foreleser/index.php";
 
 global $conn;
 
