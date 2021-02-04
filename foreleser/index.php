@@ -60,6 +60,8 @@
               </form>
             </div>
 <?php
+    $db = new Database();
+    $conn = $db->get_Connection();
   if (isset($_POST['logout'])){
       include "../functions.php";
       logout();

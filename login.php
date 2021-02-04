@@ -15,7 +15,8 @@
 
     session_start();
     include "database.php";
-        
+    $db = new Database();
+    $conn = $db->get_Connection();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $db = new Database();

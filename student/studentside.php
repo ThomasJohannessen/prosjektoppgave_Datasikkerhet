@@ -1,8 +1,6 @@
 <?php
-
     session_start();
-    if($_SESSION['user_type'] == 3)
-   	{
+    if($_SESSION['user_type'] == 3){
 
         include "../database.php";
 
@@ -24,6 +22,7 @@
             array_push($arrayRow, $row["Bilde"], $row["emnekode"]);
             array_push($array, $arrayRow);
         }
+    }
     else
         echo "Students only!";
 

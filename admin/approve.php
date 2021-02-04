@@ -36,9 +36,9 @@
 				session_start();
 				if($_SESSION['user_type'] == 1)
    				{
-					   include "../database.php";
-					   $db = new Database();
-					   $conn = $db->get_Connection();
+					include "../database.php";
+					$db = new Database();
+					$conn = $db->get_Connection();
 
 					$records = mysqli_query($conn,"select * from brukere where (Brukertype='2' and Brukerstatus = '0')");
 
