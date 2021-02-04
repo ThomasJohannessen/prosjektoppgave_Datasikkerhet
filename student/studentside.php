@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,32 +32,25 @@
     if (isset($_POST['logout'])){
         include "../functions.php";
         logout();
-    
+    }
     ?>
 
 
     <main>
+        <div id="foreleser-spørsmål">
+            <form action="insert.php" method="POST" autocomplete="off">
 
-    <div id="foreleser-spørsmål">
-
-    <form action="insert.php" method="POST" autocomplete="off">
-
-        <select name="emnekode" id="emnevalg">
-                <?php
-                    while($row = mysqli_fetch_array($results)) {
-                        echo "<option name='" . $row["emnekode"] . "'>" . $row['emnekode'] . "</option>";
-                    }
-                ?>
-        </select>  
-                    <br>
-                    <input type="text" name="question" placeholder="Question" class="student-input">
-                    <br>
-                    <input type="submit" value="Send" id="send-question">
-
-    </form>
-    </div>
-
+                <select name="emnekode" id="emnevalg">
+                    <?php
+                        while($row = mysqli_fetch_array($results)) {
+                            echo "<option name='" . $row["emnekode"] . "'>" . $row['emnekode'] . "</option>";
+                        }
+                    ?>
+                </select><br>  
+                        <input type="text" name="question" placeholder="Question" class="student-input"><br>
+                        <input type="submit" value="Send" id="send-question">
+            </form>         
+        </div>
     </main>
-
 </body>
 </html>
