@@ -3,15 +3,7 @@
 include "../database.php";
 include "../foreleser/index.php";
 
-$conn = mysqli_connect($db, $username, $password, $dbname);
-
-if (!$conn) {
-    echo "Not connected to server";
-}
-
-if(!mysqli_select_db($conn, $dbname)) {
-    echo "Database not selected";
-}
+global $conn;
 
 $kommentar = $_POST['comment'];
 $sporsmalID = $_POST['messageID'];
