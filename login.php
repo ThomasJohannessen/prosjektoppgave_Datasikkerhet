@@ -90,7 +90,6 @@
                 $_SESSION["subject_id"] = $mailTaken["EmneID"];
                 $_SESSION["user_type"] = $mailTaken["Brukertype"];
                 $_SESSION["study_path"] = $mailTaken["Studieretning"];
-                $_SESSION["image_path"] = $mailTaken["Bilde"];
 
                 if ($_SESSION['user_type'] == 3){
                     header("location: student/studentside.php");

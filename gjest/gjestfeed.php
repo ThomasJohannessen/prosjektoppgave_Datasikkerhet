@@ -58,7 +58,6 @@
                 exit;
         }    
         
-        //$sql = "SELECT * FROM meldinger WHERE emnekode = '$emneKode' order by emnekode asc;";
         $sql = "SELECT `sporsmalID`, `melding`, `svar`, `Bilde`, `foreleserID` FROM meldinger, brukere WHERE emnekode = '$emneKode' AND meldinger.foreleserID = brukere.BrukerID";
         
         $result = $conn->query($sql);

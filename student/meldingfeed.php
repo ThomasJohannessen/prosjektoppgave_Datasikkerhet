@@ -19,6 +19,7 @@
     include "../database.php";
 
     session_start();
+    $brukerId = $_SESSION['brukerID'];
 
     if (isset($_POST['logout'])){
       include "../functions.php";
@@ -27,11 +28,8 @@
 
     global $conn;
 
-    $sql = "SELECT * FROM meldinger where svar is not null order by sporsmalID desc;";
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    //$sql = "SELECT * FROM meldinger where svar is not null order by sporsmalID desc;";
+    $sql = "SELECT `melding`, `svar`, `Bilde`, `foreleserID` FROM meldinger, brukere WHERE `avsenderID` = $brukerId AND meldinger.foreleserID = brukere.BrukerID";
 
     $result = $conn->query($sql);
 
@@ -42,6 +40,7 @@
     <div id="div-feed">
         <?php
             echo "<b>Emnekode - </b>" . $row["emnekode"] . "<br>" . "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] ;
+            echo "<img src=\"http://158.39.188.201/steg1/prosjektoppgave_Datasikkerhet/uploads/" . $row["Bilde"] . "\" alt=\"foreleser\">";
 
             $sql_image = "SELECT `Bilde` FROM `brukere` WHERE `foreleserID`= '" . $row["foreleserID"] . "'";
             $image = mysqli_query($conn, $sql_image);
