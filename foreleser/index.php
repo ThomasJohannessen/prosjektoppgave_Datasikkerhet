@@ -11,6 +11,7 @@
 <body>
 <nav ><ul class="navbar">
 <li><a href="../change.php">Change password</a></li>
+<li><a href="foreleserfeed.php">Messages feed</a></li>
     <form method="post"> 
         <input type="submit" name="logout" class="button" value="Logout" id="logout"/> 
 </form> 
