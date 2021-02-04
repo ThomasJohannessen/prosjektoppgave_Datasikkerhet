@@ -27,7 +27,7 @@
 
     global $conn;
 
-    $sql = "SELECT distinct emnekode FROM emne";
+    $sql = "SELECT `emnekode`, `Bilde` FROM emne, brukere WHERE emne.emnePIN = brukere.EmneID";
     $results = mysqli_query($conn, $sql);
 
     if (isset($_POST['logout'])){

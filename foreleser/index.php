@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nb">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,6 +26,7 @@ if (isset($_POST['logout'])){
 
 session_start();
 $foreleserID = $_SESSION['brukerID'];
+$emneID = $_SESSION['subject_id'];
 
 
 if ($_SESSION["user_type"] == 3 || $_SESSION["user_type"] == 1){
@@ -38,7 +39,13 @@ else {
 include "../database.php" ;
 
 global $conn;
-$sql = "SELECT * FROM meldinger where svar is null";
+$sql_emneID = "SELECT emnekode FROM emne where emnePIN = $emneID"; 
+
+$resultEmneId = $conn->query($sql_emneID);
+
+echo $resultEmneId;
+
+$sql = "SELECT * FROM meldinger where svar is null AND emnekode = $resultEmneId";
 
 $result = $conn->query($sql);
   

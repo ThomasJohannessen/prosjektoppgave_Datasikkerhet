@@ -8,7 +8,7 @@
 </head>
 <body>
 <nav><ul class="navbar">
-<li><a href="studentside.php">Student - POV</a></li>
+<li><a href="studentside.php">Skriv spørsmål</a></li>
 <li><a href="../change.php">Change password</a></li>
     <form method="post"> 
         <input type="submit" name="logout" class="button" value="Logout" id="logout"/> 

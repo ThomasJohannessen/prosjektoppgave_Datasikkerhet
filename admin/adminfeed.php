@@ -26,31 +26,37 @@
         logout();
       }
 
-    global $conn; 
+    session_start();
+    if($_SESSION['user_type'] == 1){
+        global $conn; 
 
-    $pinkode = $_POST['pinkode'];  
+        $pinkode = $_POST['pinkode'];  
+            
+    $sql = "SELECT `avsenderID`, `melding`, `svar`, `Bilde`, `Navn`, `foreleserID` FROM meldinger, brukere WHERE meldinger.avsenderID = brukere.BrukerID OR meldinger.foreleserID = brukere.BrukerID";
         
-   $sql = "SELECT `avsenderID`, `melding`, `svar`, `Bilde`, `Navn`, `foreleserID` FROM meldinger, brukere WHERE meldinger.avsenderID = brukere.BrukerID OR meldinger.foreleserID = brukere.BrukerID";
-      
-    $result = $conn->query($sql);
-        
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                if(empty($row["Bilde"])){
-                    continue;
-                }
-                else {
-                    ?>
-                    <div id="div-feed">
-                        <?php
-                        echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["Navn"]. "<br>";
-                        echo "<img src=\"http://158.39.188.201/steg1/prosjektoppgave_Datasikkerhet/uploads/" . $row["Bilde"] . "\" alt=\"foreleser\">";
+        $result = $conn->query($sql);
+            
+            if ($result->num_rows > 0) {
+                while($row = $result->fetch_assoc()) {
+                    if(empty($row["Bilde"])){
+                        continue;
+                    }
+                    else {
                         ?>
-                    </div>
-                <?php   
-                }  
-            }
-        }   
+                        <div id="div-feed">
+                            <?php
+                            echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["Navn"]. "<br>";
+                            echo "<img src=\"http://158.39.188.201/steg1/prosjektoppgave_Datasikkerhet/uploads/" . $row["Bilde"] . "\" alt=\"foreleser\">";
+                            ?>
+                        </div>
+                    <?php   
+                    }  
+                }
+        } 
+    }
+    else{
+        echo "Begone peasant. Admin only!";
+    }
     ?>
 </body>
 </html>
