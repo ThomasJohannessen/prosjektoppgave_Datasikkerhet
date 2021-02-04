@@ -9,7 +9,7 @@
 <body>
 
     <nav ><ul class="navbar">
-        <li><a href="../login.php">Log inn</a></li>
+        <li><a href="../login.php">Logg inn</a></li>
         <li><a href="../register.php">Registrer</a></li>
     </nav>
 
