@@ -47,7 +47,7 @@
                             <?php
                             echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["Navn"]. "<br>";
                             echo "<img src=\"http://158.39.188.201/steg1/prosjektoppgave_Datasikkerhet/uploads/" . $row["Bilde"] . "\" alt=\"foreleser\">";
-                            echo "<a href="deletemessage.php?id=<?php echo row['sporsmalID']; ?>">Delete</a>"
+                            echo "<a href="deletemessage.php?id=<?php echo $row['sporsmalID']; ?>">Delete</a>"
 	    		?>
                         </div>
                     <?php   
