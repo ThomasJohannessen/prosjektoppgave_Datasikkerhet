@@ -58,7 +58,7 @@
                 exit;
         }    
         
-        $sql = "SELECT * FROM meldinger WHERE emnekode = '$emneKode' order by emnekode asc;";
+        $sql = "SELECT `sporsmalID`, `melding`, `svar`, `Bilde`, `foreleserID` FROM meldinger, brukere WHERE emnekode = '$emneKode' AND meldinger.foreleserID = brukere.BrukerID";
         
         $result = $conn->query($sql);
 
@@ -69,7 +69,8 @@
                 ?>
                 <div id="div-feed">
                     <?php
-                    echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] ;
+                    echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] . "<br>";
+                    echo "<img src=\"http://158.39.188.201/steg1/prosjektoppgave_Datasikkerhet/uploads/" . $row["Bilde"] . "\" alt=\"foreleser\">";
                     ?>
                     <form method="post" action="update.php" name="comment" id="kommentarForm">
                         <input type="text" placeholder="Kommentar" name="comment" autocomplete="off">
