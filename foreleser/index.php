@@ -46,7 +46,7 @@ global $conn;
 $sql_emneID = "SELECT emnekode FROM emne where emnePIN = $emneID"; 
 
 
-$resultEmneId = $conn->mysql_query($sql_emneID);
+$resultEmneId = mysql_query($sql_emneID);
 $emneIdValue = mysql_fetch_object($resultEmneId);
 
 echo $emneIdValue;
