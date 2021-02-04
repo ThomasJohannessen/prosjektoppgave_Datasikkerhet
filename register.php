@@ -11,9 +11,7 @@
 <body>
 
 <?php
-  
     include "database.php";
-
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $status = "";
@@ -47,15 +45,16 @@
             header("location: register.php?error=usernametaken");
             exit();
         }
+        if (subjectTaken($subject_id) !== false) {
+            header("location: register.php?error=subjecttaken");
+            exit();
+        }
         if (notSupportedUsertype($user_type) !== false) {
             header("location: register.php?error=usertypenotsupported");
             exit();
         }
 
-
-
         createUser($name, $email, $password, $user_type, $study_path, $year, $subject_id, $rand_filename . "." . $ext);
-
     }
 
     function emptyFields($name, $email, $password, $password_confirmed, $user_type, $study_path, $year, $subject_id, $image, $rand_filename) {
@@ -88,7 +87,6 @@
             $res = false;
         }
         return $res;
-
     }
 
     function passwordsDontMatch($password, $password_confirmed) {
@@ -108,13 +106,35 @@
         $stmt = mysqli_stmt_init($conn);
 
         if (!mysqli_stmt_prepare($stmt, $sql_user_exists)) {
-            header("location: register.php?stmtfailed");
+            header("location: register.php?error=stmtfailed");
             exit();
         }
 
         $user_exists = mysqli_query($conn, $sql_user_exists);
 
         if ($row = mysqli_fetch_assoc($user_exists)) {
+            return $row;
+        } else {
+            $res = false;
+            return $res;
+        }
+    }
+
+    function subjectTaken($subject_id) {
+        global $conn;
+
+        $sql_subject_exists = "SELECT * FROM `brukere` WHERE `EmneID`= '" . $subject_id . "'";
+
+        $stmt = mysqli_stmt_init($conn);
+
+        if (!mysqli_stmt_prepare($stmt, $sql_subject_exists)) {
+            header("location: register.php?error=stmtfailed");
+            exit();
+        }
+
+        $subject_exists = mysqli_query($conn, $sql_subject_exists);
+
+        if ($row = mysqli_fetch_assoc($subject_exists)) {
             return $row;
         } else {
             $res = false;
@@ -265,6 +285,9 @@
         }
         elseif ($_GET["error"] == "usernametaken") {
             echo "<p>Epost er tatt, vennligst fyll inn feltene på nytt</p>";
+        }
+        elseif ($_GET["error"] == "subjecttaken") {
+            echo "<p>Emnet er tatt, vennligst velg et annet emne</p>";
         }
         elseif ($_GET["error"] == "usertypenotsupported") {
             echo "<p>Brukertype finnes ikke. Vennligst prøv igjen</p>";
