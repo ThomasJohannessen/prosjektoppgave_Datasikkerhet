@@ -1,30 +1,23 @@
 <?php
-    session_start();
-    if($_SESSION['user_type'] == 3){
 
-        include "../database.php";
+session_start();
+include "../database.php";
+global $conn;
+$sql = "SELECT `emnekode`, `Bilde` FROM emne, brukere WHERE emne.emnePIN = brukere.EmneID";
+$results = mysqli_query($conn, $sql);
 
-        $db = new Database();
-        $conn = $db->get_Connection();
+if (isset($_POST['logout'])){
+    include "../functions.php";
+    logout();
+}
 
-        $sql = "SELECT `emnekode`, `Bilde` FROM emne, brukere WHERE emne.emnePIN = brukere.EmneID";
-
-        $results = mysqli_query($conn, $sql);
-
-        if (isset($_POST['logout'])){
-            include "../functions.php";
-            logout();
-        }
-
-        $array = array();
-        while($row = mysqli_fetch_array($results)) {
-            $arrayRow = array();
-            array_push($arrayRow, $row["Bilde"], $row["emnekode"]);
-            array_push($array, $arrayRow);
-        }
-    }
-    else
-        echo "Students only!";
+$result2 = mysqli_query($conn, $sql);
+$array = array();
+while($row = mysqli_fetch_array($result2)) {
+    $arrayRow = array();
+    array_push($arrayRow, $row["Bilde"], $row["emnekode"]);
+    array_push($array, $arrayRow);
+}
 
 ?>
 
