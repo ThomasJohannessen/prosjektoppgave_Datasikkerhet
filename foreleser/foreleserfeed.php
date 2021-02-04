@@ -41,12 +41,7 @@
                     <?php
                     echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] ;
                     ?>
-                
-                    <form name="rapporter" action="report.php" method="post" >
-                        <input type="submit" value="REPORT" name="rapporterbtn" id="report">
-                        <input type="text" placeholder="Kommentar" name="repcomment" autocomplete="off">
-                        <input type="hidden" value="<?php echo $row["sporsmalID"]; ?>" name="sporsmalID" require readonly>
-                    </form>
+
                 </div>
             <?php
                     
