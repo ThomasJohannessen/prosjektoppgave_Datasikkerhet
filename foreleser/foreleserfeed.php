@@ -8,12 +8,13 @@
 </head>
 <body>
 
-<nav ><ul class="navbar">
-<li><a href="../change.php">Change password</a></li>
-    <form method="post"> 
-        <input type="submit" name="logout" class="button" value="Logout" id="logout"/> 
-</form> 
-</ul>
+<nav >
+    <ul class="navbar">
+        <li><a href="../change.php">Change password</a></li>
+        <form method="post"> 
+            <input type="submit" name="logout" class="button" value="Logout" id="logout"/> 
+        </form> 
+    </ul>
 </nav>
     
     <?php
@@ -27,6 +28,7 @@
 
     session_start();
     $emneID = $_SESSION['subject_id'];
+
     if($_SESSION['user_type'] == 2){
         global $conn; 
 
@@ -41,10 +43,8 @@
                     <?php
                     echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] ;
                     ?>
-
                 </div>
-            <?php
-                    
+            <?php       
             }
         }
     }    
