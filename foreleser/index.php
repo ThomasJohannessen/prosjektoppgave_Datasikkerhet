@@ -27,8 +27,6 @@ if (isset($_POST['logout'])){
 session_start();
 $foreleserID = $_SESSION['brukerID'];
 $emneID = $_SESSION['subject_id'];
-echo $emneID;
-
 
 if ($_SESSION["user_type"] == 3 || $_SESSION["user_type"] == 1){
   echo "DU ER IKKE EN FORELESER";
@@ -40,13 +38,20 @@ else {
 include "../database.php" ;
 
 global $conn;
+
+
+
+
+
 $sql_emneID = "SELECT emnekode FROM emne where emnePIN = $emneID"; 
 
-$resultEmneId = $conn->query($sql_emneID);
 
-echo $resultEmneId;
+$resultEmneId = $conn->mysql_query($sql_emneID);
+$emneIdValue = mysql_fetch_object($resultEmneId);
 
-$sql = "SELECT * FROM meldinger where svar is null AND emnekode = $resultEmneId";
+echo $emneIdValue;
+
+$sql = "SELECT * FROM meldinger where svar is null AND emnekode = $emneIdValue";
 
 $result = $conn->query($sql);
   
