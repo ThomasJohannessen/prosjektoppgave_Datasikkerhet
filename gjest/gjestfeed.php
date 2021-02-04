@@ -28,7 +28,7 @@
     include "../database.php" ;
 
     $db = new Database();
-    $conn = db->getConnection();
+    $conn = db->get_Connection();
 
     
 
