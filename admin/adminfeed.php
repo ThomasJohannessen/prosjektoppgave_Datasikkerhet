@@ -32,8 +32,8 @@
     $db = new Database();
     $conn = $db->get_Connection();
             
-    $sql = "SELECT `sporsmalID`,`avsenderID`, `melding`, `svar`, `Bilde`, `Navn`, `foreleserID` FROM meldinger, brukere WHERE meldinger.avsenderID = brukere.BrukerID OR meldinger.foreleserID = brukere.BrukerID";
-        
+    $sql = "SELECT `avsenderID`, `melding`, `svar`, `Bilde`, `Navn`, `foreleserID` FROM meldinger, brukere WHERE meldinger.avsenderID = brukere.BrukerID OR meldinger.foreleserID = brukere.BrukerID";
+         
         $result = $conn->query($sql);
             
             if ($result->num_rows > 0) {
