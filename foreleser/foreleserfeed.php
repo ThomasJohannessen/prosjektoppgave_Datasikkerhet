@@ -58,7 +58,6 @@
             }
         }
     }    
-    }
     else{
         echo "Begone peasant. Foreleser only!";
     }
