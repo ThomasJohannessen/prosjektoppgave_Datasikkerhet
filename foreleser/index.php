@@ -39,19 +39,7 @@ include "../database.php" ;
 
 global $conn;
 
-
-
-
-
-$sql_emneID = "SELECT emnekode FROM emne where emnePIN = $emneID"; 
-
-
-$resultEmneId = mysql_query($sql_emneID);
-$emneIdValue = mysql_fetch_object($resultEmneId);
-
-echo $emneIdValue;
-
-$sql = "SELECT * FROM meldinger where svar is null AND emnekode = $emneIdValue";
+$sql = "SELECT * FROM meldinger where svar is null AND emnekode = (SELECT emnekode FROM emne where emnePIN = $emneID)";
 
 $result = $conn->query($sql);
   
