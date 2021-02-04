@@ -11,6 +11,7 @@
 <nav >
     <ul class="navbar">
         <li><a href="../change.php">Change password</a></li>
+        <li><a href="index.php">Answer questions</a></li>
         <form method="post"> 
             <input type="submit" name="logout" class="button" value="Logout" id="logout"/> 
         </form> 
