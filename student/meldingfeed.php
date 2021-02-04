@@ -19,21 +19,24 @@
     include "../database.php";
 
     session_start();
-    $brukerId = $_SESSION['brukerID'];
 
-    if (isset($_POST['logout'])){
-      include "../functions.php";
-      logout();
-    }
+    if($_SESSION['user_type'] == 3)
+   	{
+        $brukerId = $_SESSION['brukerID'];
 
-    global $conn;
+        if (isset($_POST['logout'])){
+        include "../functions.php";
+        logout();
+        }
 
-    $sql = "SELECT `melding`, `svar`, `Bilde`, `foreleserID` FROM meldinger, brukere WHERE `avsenderID` = $brukerId AND meldinger.foreleserID = brukere.BrukerID";
+        global $conn;
 
-    $result = $conn->query($sql);
+        $sql = "SELECT `melding`, `svar`, `Bilde`, `foreleserID` FROM meldinger, brukere WHERE `avsenderID` = $brukerId AND meldinger.foreleserID = brukere.BrukerID";
 
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
 
 ?>
     <div id="div-feed">
