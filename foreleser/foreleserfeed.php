@@ -41,11 +41,6 @@
                     <?php
                     echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] ;
                     ?>
-                    <form method="post" action="update.php" name="comment" id="kommentarForm">
-                        <input type="text" placeholder="Kommentar" name="comment" autocomplete="off">
-                        <input type="hidden" value="<?php echo $row["sporsmalID"]; ?>" name="messageID" require readonly>
-                        <input type="submit" value="Send" name="commentbtn">
-                    </form>
                 
                     <form name="rapporter" action="report.php" method="post" >
                         <input type="submit" value="REPORT" name="rapporterbtn" id="report">
