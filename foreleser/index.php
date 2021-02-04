@@ -27,6 +27,7 @@ if (isset($_POST['logout'])){
 session_start();
 $foreleserID = $_SESSION['brukerID'];
 $emneID = $_SESSION['subject_id'];
+echo $emneID;
 
 
 if ($_SESSION["user_type"] == 3 || $_SESSION["user_type"] == 1){
