@@ -3,7 +3,8 @@
 session_start();
 if($_SESSION['user_type'] == 3){
     include "../database.php";
-    global $conn;
+    $db = new Database();
+    $conn = $db->get_Connection();
 
     $avsenderID = $_SESSION['brukerID'];
 

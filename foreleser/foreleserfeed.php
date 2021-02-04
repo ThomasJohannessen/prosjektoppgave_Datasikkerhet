@@ -31,7 +31,8 @@
     $emneID = $_SESSION['subject_id'];
 
     if($_SESSION['user_type'] == 2){
-        global $conn; 
+        $db = new Database();
+        $conn = $db->get_Connection(); 
 
         $sql = "SELECT * FROM meldinger WHERE emnekode = (SELECT emnekode FROM emne where emnePIN = $emneID);";
         

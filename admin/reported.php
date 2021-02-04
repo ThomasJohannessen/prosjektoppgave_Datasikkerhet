@@ -36,6 +36,8 @@
    				{
 
 					include "../database.php";
+					$db = new Database();
+					$conn = $db->get_Connection();
 
 					$records = mysqli_query($conn,"select * from rapportering");
 

@@ -29,7 +29,8 @@
         logout();
         }
 
-        global $conn;
+        $db = new Database();
+        $conn = $db->get_Connection();
 
         $sql = "SELECT `melding`, `svar`, `Bilde`, `foreleserID` FROM meldinger, brukere WHERE `avsenderID` = $brukerId AND meldinger.foreleserID = brukere.BrukerID";
 

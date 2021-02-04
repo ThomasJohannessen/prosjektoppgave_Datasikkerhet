@@ -3,6 +3,8 @@
 	if($_SESSION['user_type'] == 1)
    	{
 		include "../database.php";
+		$db = new Database();
+		$conn = $db->get_Connection();
    		
 		$id = htmlspecialchars(trim($_GET['id']));
 

@@ -99,7 +99,8 @@
     }
 
     function mailTaken($email) {
-        global $conn;
+        $db = new Database();
+        $conn = $db->get_Connection();
 
         $sql_user_exists = "SELECT * FROM `brukere` WHERE `Epost`= '" . $email . "'";
 
@@ -121,7 +122,8 @@
     }
 
     function subjectTaken($subject_id) {
-        global $conn;
+        $db = new Database();
+        $conn = $db->get_Connection();
 
         $sql_subject_exists = "SELECT * FROM `brukere` WHERE `EmneID`= '" . $subject_id . "'";
 
@@ -186,7 +188,8 @@
     }
 
     function createUser($name, $email, $password, &$user_type, $study_path, $year, $subject_id, $image) {
-        global $conn;
+        $db = new Database();
+        $conn = $db->get_Connection();
 
         if ($user_type === "foreleser") {
             $user_type = 2;

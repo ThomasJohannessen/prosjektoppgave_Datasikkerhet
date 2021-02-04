@@ -36,7 +36,8 @@
 
       include "../database.php" ;
 
-      global $conn;
+      $db = new Database();
+      $conn = $db->get_Connection();
 
       $sql = "SELECT * FROM meldinger where svar is null AND emnekode = (SELECT emnekode FROM emne where emnePIN = $emneID)";
 

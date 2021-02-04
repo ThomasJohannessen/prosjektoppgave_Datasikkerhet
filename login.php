@@ -41,7 +41,8 @@
     }
 
     function mailTaken($email) {
-        global $conn;
+        $db = new Database();
+        $conn = $db->get_Connection();
 
         $sql_user_exists = "SELECT * FROM `brukere` WHERE `Epost`= '" . $email . "'";
 

@@ -29,7 +29,8 @@
     session_start();
     if($_SESSION['user_type'] == 1){
         
-        global $conn; 
+    $db = new Database();
+    $conn = $db->get_Connection();
             
     $sql = "SELECT `sporsmalID`,`avsenderID`, `melding`, `svar`, `Bilde`, `Navn`, `foreleserID` FROM meldinger, brukere WHERE meldinger.avsenderID = brukere.BrukerID OR meldinger.foreleserID = brukere.BrukerID";
         

@@ -6,7 +6,8 @@
 
         include "../database.php";
 
-        global $conn;
+        $db = new Database();
+        $conn = $db->get_Connection();
 
         $sql = "SELECT `emnekode`, `Bilde` FROM emne, brukere WHERE emne.emnePIN = brukere.EmneID";
 
