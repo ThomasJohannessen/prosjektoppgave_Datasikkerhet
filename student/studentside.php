@@ -33,7 +33,7 @@
     if (isset($_POST['logout'])){
         include "../functions.php";
         logout();
-    }
+    
     ?>
 
 

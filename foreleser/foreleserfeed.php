@@ -26,11 +26,11 @@
       }
 
     session_start();
-    $emneKode = $_SESSION['subject_id'];
+    $emneID = $_SESSION['subject_id'];
     if($_SESSION['user_type'] == 2){
         global $conn; 
 
-        $sql = "SELECT * FROM meldinger WHERE emnekode = '$emneKode' order by emnekode asc;";
+        $sql = "SELECT * FROM meldinger WHERE emnekode = (SELECT emnekode FROM emne where emnePIN = $emneID);";
         
         $result = $conn->query($sql);
         
