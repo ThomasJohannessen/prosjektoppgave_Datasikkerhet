@@ -12,7 +12,8 @@
 <?php
 
     include "database.php";
-    
+    $db = new Database();
+    $conn = $db->get_Connection();
 
     session_start();
 
@@ -41,9 +42,7 @@
     }
 
     function mailTaken($email) {
-        $db = new Database();
-        $conn = $db->get_Connection();
-
+        
         $sql_user_exists = "SELECT * FROM `brukere` WHERE `Epost`= '" . $email . "'";
 
         $stmt = mysqli_stmt_init($conn);
