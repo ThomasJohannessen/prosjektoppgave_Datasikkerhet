@@ -38,11 +38,9 @@ while($row = mysqli_fetch_array($result2)) {
         let img = document.getElementById("bilde");
         let select = document.getElementById("emnevalg");
         let test = <?php echo json_encode($array); ?>;
-        console.log(test);
         for(let i = 0; i < test.length; i++) {
             if(test[i][1] == select.value){
                 img.src = "http://158.39.188.201/steg1/prosjektoppgave_Datasikkerhet/uploads/" + test[i][0];
-                console.log(test[i][0]);
                 break;
             }
         }
