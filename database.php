@@ -7,8 +7,6 @@ class Database {
     private $db_password = "bullshitbruker99"; 
     private $conn;
 
-    ALTER USER 'softsec'@'localhost' IDENTIFIED BY 'bullshitbruker99';
-
     public function get_Connection() {
         $this->conn = new mysqli($this->db_host, $this->db_username, $this->db_password, $this->db_name);
         if($this->conn->connect_errno) {
@@ -27,12 +25,4 @@ class Database {
         }
     }
 }
-
-/*
-$conn = new mysqli("localhost", "softsec", "password", "datasikkerhet_prosjekt");
-
-if($conn->connect_error) {
-    die($conn->connect_errno. ": ".$conn->connect_error);
-}
-*/
 ?>
