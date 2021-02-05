@@ -28,13 +28,12 @@
 
     session_start();
     if($_SESSION['user_type'] == 1){
-        global $conn; 
-
-        $pinkode = $_POST['pinkode'];  
-            
-    $sql = "SELECT `sporsmalID`,`avsenderID`, `melding`, `svar`, `Bilde`, `Navn`, `foreleserID` FROM meldinger, brukere WHERE meldinger.avsenderID = brukere.BrukerID OR meldinger.foreleserID = brukere.BrukerID";
         
-        $result = $conn->query($sql);
+    $db = new Database();
+    $conn = $db->get_Connection();
+            
+    $sql = "SELECT `avsenderID`, `melding`, `svar`, `Bilde`, `Navn`, `foreleserID` FROM meldinger, brukere WHERE meldinger.avsenderID = brukere.BrukerID OR meldinger.foreleserID = brukere.BrukerID";
+    $result = $conn->query($sql);
             
             if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {

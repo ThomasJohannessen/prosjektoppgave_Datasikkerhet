@@ -39,6 +39,8 @@
 			$new2 = htmlspecialchars(trim($_POST['new2']));
 
 			include "database.php";
+			$db = new Database();
+			$conn = $db->get_Connection();
 		
 			$emailChecker = "SELECT * FROM brukere WHERE Epost='$email'";
 		
@@ -70,7 +72,8 @@
 	
 	function change($email, $new1, $conn)
 	{
-		
+		$db = new Database();
+		$conn = $db->get_Connection();
 		$hashed = password_hash($new1, PASSWORD_DEFAULT);
 		
 		$sqlUpdate = "UPDATE brukere SET Passord='$hashed' WHERE Epost='$email'";

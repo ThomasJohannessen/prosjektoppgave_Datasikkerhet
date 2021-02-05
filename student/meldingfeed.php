@@ -19,22 +19,26 @@
     include "../database.php";
 
     session_start();
-    $brukerId = $_SESSION['brukerID'];
 
     if (isset($_POST['logout'])){
-      include "../functions.php";
-      logout();
+        include "../functions.php";
+        logout();
     }
+    
+    if($_SESSION['user_type'] == 3)
+   	{
+        $brukerId = $_SESSION['brukerID'];
 
-    global $conn;
+        $db = new Database();
+        $conn = $db->get_Connection();
 
-    $sql = "SELECT `melding`, `svar`, `Bilde`, `foreleserID` FROM meldinger, brukere WHERE `avsenderID` = $brukerId AND meldinger.foreleserID = brukere.BrukerID";
+        $sql = "SELECT `melding`, `svar`, `Bilde`, `foreleserID` FROM meldinger, brukere WHERE `avsenderID` = $brukerId AND meldinger.foreleserID = brukere.BrukerID";
 
-    $result = $conn->query($sql);
+        $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+            
 ?>
     <div id="div-feed">
         <?php
@@ -52,6 +56,9 @@
 <?php
         }
     }
+    }
+    else
+        echo "Du er ikke en student";
 ?>
 </body>
 </html>

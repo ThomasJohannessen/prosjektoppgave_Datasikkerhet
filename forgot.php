@@ -26,6 +26,8 @@
 		$email = htmlspecialchars(trim($_POST['email']));
 		
 		include "database.php";
+		$db = new Database();
+		$conn = $db->get_Connection();
 		
 		$sql = "SELECT BrukerID, Passord FROM brukere WHERE Epost='$email'";
 		
@@ -46,6 +48,9 @@
 
 	function generateAndSend($email, $conn)
 	{
+		$db = new Database();
+		$conn = $db->get_Connection();
+		
 		$characters = 8;
 		$validChars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     		$password = substr(str_shuffle(str_repeat($validChars,ceil($characters/strlen($validChars)) )),1,$characters);

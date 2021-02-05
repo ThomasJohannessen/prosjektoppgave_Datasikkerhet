@@ -11,13 +11,16 @@
 <body>
 <?php
 
-    include "database.php";
     
 
     session_start();
-
+    include "database.php";
+    $db = new Database();
+    $conn = $db->get_Connection();
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $db = new Database();
+        $conn = $db->get_Connection();
         $email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
         $password = $conn -> real_escape_string(trim(htmlspecialchars($_POST["password"])));
 
@@ -32,6 +35,9 @@
     }
 
     function emptyInputLogin ($email, $password) {
+        
+        $db = new Database();
+        $conn = $db->get_Connection();
         if (empty($email) || empty($password)) {
             $res = true;
         } else {
@@ -41,7 +47,8 @@
     }
 
     function mailTaken($email) {
-        global $conn;
+        $db = new Database();
+        $conn = $db->get_Connection();
 
         $sql_user_exists = "SELECT * FROM `brukere` WHERE `Epost`= '" . $email . "'";
 
@@ -63,6 +70,9 @@
     }
 
     function loginUser($email, $password) {
+        
+        $db = new Database();
+        $conn = $db->get_Connection();
         $mailTaken = mailtaken($email);
 
         if ($mailTaken === false) {

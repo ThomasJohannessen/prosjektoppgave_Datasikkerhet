@@ -2,7 +2,8 @@
 
 include "../database.php";
 
-global $conn;
+$db = new Database();
+$conn = $db->get_Connection();
 
 $kommentar = $_POST['comment'];
 $sporsmalID = $_POST['messageID'];

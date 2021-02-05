@@ -8,12 +8,14 @@
 </head>
 <body>
 
-<nav ><ul class="navbar">
-<li><a href="../change.php">Change password</a></li>
-    <form method="post"> 
-        <input type="submit" name="logout" class="button" value="Logout" id="logout"/> 
-</form> 
-</ul>
+<nav >
+    <ul class="navbar">
+        <li><a href="../change.php">Change password</a></li>
+        <li><a href="index.php">Answer questions</a></li>
+        <form method="post"> 
+            <input type="submit" name="logout" class="button" value="Logout" id="logout"/> 
+        </form> 
+    </ul>
 </nav>
     
     <?php
@@ -27,8 +29,14 @@
 
     session_start();
     $emneID = $_SESSION['subject_id'];
-    if($_SESSION['user_type'] == 2){
-        global $conn; 
+
+
+    if($_SESSION['user_type'] != 2){
+        echo "Du er ikke en foreleser!";
+    }  
+    else{
+        $db = new Database();
+        $conn = $db->get_Connection(); 
 
         $sql = "SELECT * FROM meldinger WHERE emnekode = (SELECT emnekode FROM emne where emnePIN = $emneID);";
         
@@ -41,16 +49,12 @@
                     <?php
                     echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] ;
                     ?>
-
                 </div>
-            <?php
-                    
+            <?php       
             }
         }
     }    
-    else{
-        echo "Begone peasant. Foreleser only!";
-    }
+    
     ?>
 </body>
 </html>

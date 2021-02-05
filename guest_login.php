@@ -23,7 +23,9 @@
         include "database.php";
 
         function checkIfPinExists(){
-            global $conn;
+            $db = new Database();
+            $conn = $db->get_Connection();
+            
             $input = $_POST['guestPincode'];
             
             $result = $conn->query("SELECT * FROM emne");

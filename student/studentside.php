@@ -1,15 +1,21 @@
 <?php
 
 session_start();
-include "../database.php";
-global $conn;
-$sql = "SELECT `emnekode`, `Bilde` FROM emne, brukere WHERE emne.emnePIN = brukere.EmneID";
-$results = mysqli_query($conn, $sql);
 
 if (isset($_POST['logout'])){
     include "../functions.php";
     logout();
 }
+
+if($_SESSION['user_type'] != 3){
+    echo "Du er ikke en student!";
+}
+else{
+include "../database.php";
+$db = new Database();
+$conn = $db->get_Connection();
+$sql = "SELECT `emnekode`, `Bilde` FROM emne, brukere WHERE emne.emnePIN = brukere.EmneID";
+$results = mysqli_query($conn, $sql);
 
 $result2 = mysqli_query($conn, $sql);
 $array = array();
@@ -18,7 +24,6 @@ while($row = mysqli_fetch_array($result2)) {
     array_push($arrayRow, $row["Bilde"], $row["emnekode"]);
     array_push($array, $arrayRow);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -37,15 +42,14 @@ while($row = mysqli_fetch_array($result2)) {
         let img = document.getElementById("bilde");
         let select = document.getElementById("emnevalg");
         let test = <?php echo json_encode($array); ?>;
-        console.log(test);
         for(let i = 0; i < test.length; i++) {
             if(test[i][1] == select.value){
                 img.src = "http://158.39.188.201/steg1/prosjektoppgave_Datasikkerhet/uploads/" + test[i][0];
-                console.log(test[i][0]);
                 break;
             }
         }
     } 
+
     </script>
 </head>
 <body>
@@ -87,3 +91,6 @@ while($row = mysqli_fetch_array($result2)) {
 
 </body>
 </html>
+<?php
+}
+?>
