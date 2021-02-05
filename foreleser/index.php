@@ -27,9 +27,15 @@
   $foreleserID = $_SESSION['brukerID'];
   $emneID = $_SESSION['subject_id'];
 
-  if ($_SESSION["user_type"] == 3 || $_SESSION["user_type"] == 1){
-    echo "DU ER IKKE EN FORELESER";
+  if(!isset($_SESSION["user_type"])) {
+    header("location: ../index.php");
     exit();
+  } 
+  else if (isset($_SESSION["user_type"])){
+    if($_SESSION["user_type"] !== 2) {
+      header("location: ../index.php");
+      exit();
+    }
   }
 
   else {

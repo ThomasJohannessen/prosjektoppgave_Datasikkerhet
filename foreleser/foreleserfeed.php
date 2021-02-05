@@ -30,7 +30,16 @@
     session_start();
     $emneID = $_SESSION['subject_id'];
 
-    if($_SESSION['user_type'] == 2){
+
+    if(!isset($_SESSION["user_type"])) {
+        header("location: ../index.php");
+        exit();
+    } 
+    else if ($_SESSION["user_type"] !== 2){
+        header("location: ../index.php");
+        exit();
+    }
+    else{
         $db = new Database();
         $conn = $db->get_Connection(); 
 
@@ -50,9 +59,7 @@
             }
         }
     }    
-    else{
-        echo "Begone peasant. Foreleser only!";
-    }
+    
     ?>
 </body>
 </html>
