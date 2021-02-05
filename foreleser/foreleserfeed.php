@@ -32,10 +32,12 @@
 
 
     if(!isset($_SESSION["user_type"])) {
+        session_destroy();
         header("location: ../login.php");
         exit();
     } 
     else if ($_SESSION["user_type"] !== 2){
+        session_destroy();
         header("location: ../login.php");
         exit();
     }
