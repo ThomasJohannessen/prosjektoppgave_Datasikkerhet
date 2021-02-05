@@ -27,6 +27,11 @@
   $foreleserID = $_SESSION['brukerID'];
   $emneID = $_SESSION['subject_id'];
 
+  if (isset($_POST['logout'])){
+    include "../functions.php";
+    logout();
+  }
+
   if($_SESSION['user_type'] != 2){
     echo "Du er ikke en foreleser!";
   }  
@@ -60,10 +65,7 @@
 <?php
     $db = new Database();
     $conn = $db->get_Connection();
-  if (isset($_POST['logout'])){
-      include "../functions.php";
-      logout();
-  }
+  
         if (isset($_POST['svarbtn'])){  
 
         $svar = $_POST['svar'];

@@ -20,14 +20,14 @@
 
     session_start();
 
+    if (isset($_POST['logout'])){
+        include "../functions.php";
+        logout();
+    }
+    
     if($_SESSION['user_type'] == 3)
    	{
         $brukerId = $_SESSION['brukerID'];
-
-        if (isset($_POST['logout'])){
-        include "../functions.php";
-        logout();
-        }
 
         $db = new Database();
         $conn = $db->get_Connection();
