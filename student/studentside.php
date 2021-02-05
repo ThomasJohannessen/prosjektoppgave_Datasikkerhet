@@ -24,7 +24,6 @@ while($row = mysqli_fetch_array($result2)) {
     array_push($arrayRow, $row["Bilde"], $row["emnekode"]);
     array_push($array, $arrayRow);
 }
-}
 ?>
 
 <!DOCTYPE html>
@@ -92,3 +91,6 @@ while($row = mysqli_fetch_array($result2)) {
 
 </body>
 </html>
+<?php
+}
+?>
