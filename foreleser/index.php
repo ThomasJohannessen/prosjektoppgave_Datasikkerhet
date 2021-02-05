@@ -27,7 +27,7 @@
   $foreleserID = $_SESSION['brukerID'];
   $emneID = $_SESSION['subject_id'];
 
-  if($_SESSION['user_type'] !== 2){
+  if($_SESSION['user_type'] != 2){
     echo "Du er ikke en foreleser!";
   }  
   else {
