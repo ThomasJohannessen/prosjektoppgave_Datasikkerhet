@@ -27,19 +27,9 @@
   $foreleserID = $_SESSION['brukerID'];
   $emneID = $_SESSION['subject_id'];
 
-  if(!isset($_SESSION["user_type"])) {
-    session_destroy();
-    header("location: ../login.php");
-    exit();
-  } 
-  else if (isset($_SESSION["user_type"])){
-    if($_SESSION["user_type"] !== 2) {
-      session_destroy();
-      header("location: ../login.php");
-      exit();
-    }
-  }
-
+  if($_SESSION['user_type'] !== 2){
+    echo "Du er ikke en foreleser!";
+  }  
   else {
 
       include "../database.php" ;

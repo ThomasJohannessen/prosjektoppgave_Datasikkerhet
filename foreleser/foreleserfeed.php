@@ -31,16 +31,9 @@
     $emneID = $_SESSION['subject_id'];
 
 
-    if(!isset($_SESSION["user_type"])) {
-        session_destroy();
-        header("location: ../login.php");
-        exit();
-    } 
-    else if ($_SESSION["user_type"] !== 2){
-        session_destroy();
-        header("location: ../login.php");
-        exit();
-    }
+    if($_SESSION['user_type'] !== 2){
+        echo "Du er ikke en foreleser!";
+    }  
     else{
         $db = new Database();
         $conn = $db->get_Connection(); 
