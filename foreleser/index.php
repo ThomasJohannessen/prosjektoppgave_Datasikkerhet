@@ -28,12 +28,12 @@
   $emneID = $_SESSION['subject_id'];
 
   if(!isset($_SESSION["user_type"])) {
-    header("location: ../index.php");
+    header("location: ../login.php");
     exit();
   } 
   else if (isset($_SESSION["user_type"])){
     if($_SESSION["user_type"] !== 2) {
-      header("location: ../index.php");
+      header("location: ../login.php");
       exit();
     }
   }
