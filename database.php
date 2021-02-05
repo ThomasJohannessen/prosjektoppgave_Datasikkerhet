@@ -4,8 +4,10 @@ class Database {
     private $db_host = "localhost";
     private $db_name = "datasikkerhet_prosjekt";
     private $db_username = "softsec"; 
-    private $db_password = "password"; 
+    private $db_password = "bullshitbruker99"; 
     private $conn;
+
+    ALTER USER 'softsec'@'localhost' IDENTIFIED BY 'bullshitbruker99';
 
     public function get_Connection() {
         $this->conn = new mysqli($this->db_host, $this->db_username, $this->db_password, $this->db_name);
