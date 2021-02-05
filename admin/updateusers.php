@@ -32,8 +32,10 @@
 				}
 				
 				session_start();
-				if($_SESSION['user_type'] == 1)
-   				{
+				if($_SESSION['user_type'] != 1){
+					echo "Du er ikke en Admin!";
+				}  
+				else {
    				
 					include "../database.php";
 					$db = new Database();
@@ -54,10 +56,7 @@
 			<?php
 					}
 				}
-    				else
-    					echo "Begone peasant. Admin only!";
 			?>
 		</table>
-
 	</body>
 </html>

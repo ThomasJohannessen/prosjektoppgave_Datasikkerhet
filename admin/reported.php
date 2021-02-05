@@ -53,8 +53,8 @@
 			<?php
 					}
 				}
-    				else
-    					echo "Begone peasant. Admin only!";		
+				else
+					echo "Begone peasant. Admin only!";		
 			?>
 		</table>
 	

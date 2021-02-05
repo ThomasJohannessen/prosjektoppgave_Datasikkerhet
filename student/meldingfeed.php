@@ -57,6 +57,8 @@
         }
     }
     }
+    else
+        echo "Du er ikke en student";
 ?>
 </body>
 </html>
