@@ -1,6 +1,3 @@
-<?php
-    echo "Her er det api dopkumentasjon";
-?>
 <!DOCTYPE html>
 <html lang='en'>
     <head>
