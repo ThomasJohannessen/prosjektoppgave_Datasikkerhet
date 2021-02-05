@@ -7,7 +7,7 @@ include "../database.php";
 $db_conn = new Database();
 
 $db = $db_conn->get_Connection() or die();
-$brukerid = /*PLACEHOLDER*/ //variabel for uthentet data fra app om hvem som er innlogget
+$brukerid = /*PLACEHOLDER*/ 11;//variabel for uthentet data fra app om hvem som er innlogget
 $query = 'SELECT emnekode, melding FROM meldinger WHERE avsenderID = '.$brukerid.'';
 $result = $db->query($query);
 $db_conn->close_Connection();

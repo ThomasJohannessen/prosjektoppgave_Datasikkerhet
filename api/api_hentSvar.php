@@ -6,9 +6,9 @@ include "../database.php";
 $db_conn = new Database();
 $db = $db_conn->get_Connection() or die();
 
-$sporsmalid = /*PLACEHOLDER*/ //variabel for uthentet data fra app om hvilket spørsmål det gjeleder
+$sporsmalid = /*PLACEHOLDER*/ 2;//variabel for uthentet data fra app om hvilket spørsmål det gjeleder
 
-$query = 'SELECT melding, Navn FROM meldingersvar JOIN brukere ON meldingersvar.foreleserID = brukere.BrukerID WHERE svarID = '.$sporsmalid.'';
+$query = 'SELECT melding, Navn FROM meldinger JOIN brukere ON meldinger.foreleserID = brukere.BrukerID WHERE svarID = '.$sporsmalid.'';
 
 $result = $db->query($query);
 $db_conn->close_Connection();
