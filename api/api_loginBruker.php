@@ -5,7 +5,7 @@ $db_conn = new Database();
 $db = $db_conn->get_Connection() or die();
 
 $epost = $_GET['epost'];
-$passord = $_GET['epost'];
+$passord = $_GET['passord'];
 $passord_hashed = password_hash($passord, PASSWORD_DEFAULT);
 echo $passord_hashed;
 $passord_hashed = 1;
