@@ -7,8 +7,8 @@ $epost = $_GET['epost'];
 $passord = $_GET['passord'];
 $passord_hashed = password_hash($passord, PASSWORD_DEFAULT);
 //echo $passord_hashed;
-echo $epost;
-echo "\n";
+//echo $epost;
+//echo "\n";
 
 
 
@@ -20,7 +20,7 @@ echo "\n";
 
 //$query = "SELECT BrukerID FROM `brukere` WHERE Epost = '".$epost."' AND Passord = '".password_hash($password, PASSWORD_DEFAULT)."';";
 //$query = "SELECT BrukerID FROM `brukere` WHERE Epost = '.$epost.' AND Passord = '.$passord_hashed.'";
-$query = "SELECT BrukerID FROM `brukere` WHERE Epost = '".$epost."';";
+$query = "SELECT BrukerID FROM `brukere` WHERE Epost = '".$epost."' AND Passord = '".$passord_hashed."';";
 $result = $db->query($query);
 $db_conn->close_Connection();
 
