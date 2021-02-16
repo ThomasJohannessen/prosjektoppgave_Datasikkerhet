@@ -12,7 +12,6 @@ $password_query = "SELECT Passord FROM `brukere` WHERE Epost = '".$epost."';";
 $password_result = $db->query($password_query);
 
 $query = "SELECT BrukerID FROM `brukere` WHERE Epost = '".$epost."';";
-//$query = "SELECT BrukerID, Passord FROM `brukere` WHERE Epost = '".$epost."';";
 $result = $db->query($query);
 $db_conn->close_Connection();
 
