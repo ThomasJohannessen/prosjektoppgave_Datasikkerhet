@@ -19,7 +19,7 @@ $password_hash = $passord_row["Passord"];
     
 if(($result->num_rows == 1)&&(password_verify($passord, $password_hash))) {
     $json_array = array();
-    $row = $result->fetch_assoc())
+    $row = $result->fetch_assoc();
     array_push($json_array, $row);
     $json_array = json_encode($json_array);
     echo $json_array;
