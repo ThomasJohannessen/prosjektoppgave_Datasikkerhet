@@ -2,12 +2,14 @@
 
 //app-funskjonalitet for å sjekke om bruker er pålogget
 
+header('Content-Type: application/json');
+
 include "../database.php";
 
 $db_conn = new Database();
 
 $db = $db_conn->get_Connection() or die();
-$brukerid = /*PLACEHOLDER*/ 11;//variabel for uthentet data fra app om hvem som er innlogget
+$brukerid = $_GET['epost'];
 $query = 'SELECT emnekode, melding FROM meldinger WHERE avsenderID = '.$brukerid.'';
 $result = $db->query($query);
 $db_conn->close_Connection();
