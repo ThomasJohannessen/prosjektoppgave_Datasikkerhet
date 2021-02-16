@@ -10,12 +10,16 @@ $query = "SELECT BrukerID FROM `brukere` WHERE Epost = '".$epost."' AND Passord 
 $result = $db->query($query);
 $db_conn->close_Connection();
 
-if($result->num_rows >= 1) {
-    $row = $result->fetch_assoc();
-    echo $row["BrukerID"];
-    //returnerer brukerid .. Mulig å legeg til flere ting fra db her ved behov
+$json_array = array();
+if($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        array_push($json_array, $row);
+    }
 }
 else {
     echo 0;
 }
+
+$json_array = json_encode($json_array);
+echo $json_array;
 ?>
