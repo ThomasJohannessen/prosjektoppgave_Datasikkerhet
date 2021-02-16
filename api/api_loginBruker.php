@@ -6,7 +6,7 @@ $db = $db_conn->get_Connection() or die();
 
 $epost = /*PLACEHOLDER*/ "Pia@hiof.no";//variabel for epost bruker har tastet inn i app
 $passord = /*PLACEHOLDER*/ "Nodeland1";//varaibel for passord bruker har tastet inn i app
-$passord_hashed = password_hash(passord, PASSWORD_DEFAULT);
+$passord_hashed = password_hash($passord, PASSWORD_DEFAULT);
 echo $passord_hashed;
 //$query = "SELECT BrukerID FROM `brukere` WHERE Epost = '".$epost."' AND Passord = '".password_hash($password, PASSWORD_DEFAULT)."';";
 $query = "SELECT BrukerID FROM `brukere` WHERE Epost = '.$epost.' AND Passord = '.$passord_hashed.'";
