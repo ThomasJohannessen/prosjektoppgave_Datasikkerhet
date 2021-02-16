@@ -22,6 +22,7 @@ if($result->num_rows == 0) {
     echo 0;
 } 
 else {
+    echo "Brukeren finnes";
     $row = $result->fetch_assoc();
     echo $row["BrukerID"];
     //returnerer brukerid .. Mulig å legeg til flere ting fra db her ved behov
