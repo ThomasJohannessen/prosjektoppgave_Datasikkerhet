@@ -14,8 +14,8 @@ if($result->num_rows >= 1) {
     $row = $result->fetch_assoc();
     echo $row["BrukerID"];
     //returnerer brukerid .. Mulig å legeg til flere ting fra db her ved behov
-else {
-    echo "Returnerte 0";
 }
-
+else {
+    echo 0;
+}
 ?>
