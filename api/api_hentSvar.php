@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: application/json');
+
 
 //app-funskjonalitet for å sjekke om bruker er pålogget
 
@@ -6,7 +8,7 @@ include "../database.php";
 $db_conn = new Database();
 $db = $db_conn->get_Connection() or die();
 
-$sporsmalid = /*PLACEHOLDER*/ 2;//variabel for uthentet data fra app om hvilket spørsmål det gjeleder
+$sporsmalid = $_GET['sporsmalid'];
 
 $query = 'SELECT melding, Navn FROM meldinger JOIN brukere ON meldinger.foreleserID = brukere.BrukerID WHERE svarID = '.$sporsmalid.'';
 
