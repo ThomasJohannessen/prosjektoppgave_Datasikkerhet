@@ -24,7 +24,6 @@ if(($result->num_rows == 1)&&(password_verify($passord, $password_hash))) {
     array_push($json_array, $row);
     $json_array = json_encode($json_array);
     echo $json_array;
-    echo "Fungerte. Riktig passord og 1 svar";   
 }
 else {
     echo 0;
