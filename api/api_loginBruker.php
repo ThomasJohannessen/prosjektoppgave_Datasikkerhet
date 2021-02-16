@@ -12,7 +12,8 @@ echo $epost;
 echo "\n";
 
 //$query = "SELECT BrukerID FROM `brukere` WHERE Epost = '".$epost."' AND Passord = '".password_hash($password, PASSWORD_DEFAULT)."';";
-$query = "SELECT BrukerID FROM `brukere` WHERE Epost = '.$epost.' AND Passord = '.$passord_hashed.'";
+//$query = "SELECT BrukerID FROM `brukere` WHERE Epost = '.$epost.' AND Passord = '.$passord_hashed.'";
+$query = "SELECT BrukerID FROM `brukere` WHERE Epost = '.$epost.'";
 $result = $db->query($query);
 $db_conn->close_Connection();
 
