@@ -11,15 +11,11 @@ $result = $db->query($query);
 $db_conn->close_Connection();
 
 $json_array = array();
-if($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        array_push($json_array, $row);
-    }
+if($row = $result->fetch_assoc()) {
+    $json_array = json_encode($row);
+    echo $json_array;
 }
 else {
     echo 0;
 }
-
-$json_array = json_encode($json_array);
-echo $json_array;
 ?>
