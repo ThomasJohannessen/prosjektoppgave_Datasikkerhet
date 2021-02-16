@@ -9,7 +9,7 @@ include "../database.php";
 $db_conn = new Database();
 
 $db = $db_conn->get_Connection() or die();
-$brukerid = $_GET['epost'];
+$brukerid = $_GET['brukerid'];
 $query = 'SELECT emnekode, melding FROM meldinger WHERE avsenderID = '.$brukerid.'';
 $result = $db->query($query);
 $db_conn->close_Connection();
