@@ -17,14 +17,17 @@ $query = "SELECT BrukerID FROM `brukere` WHERE Epost = '.$epost.'";
 $result = $db->query($query);
 $db_conn->close_Connection();
 
-if($result->num_rows == 0) {
-    //innlogging finnes ikke 
-    echo 0;
-} 
-else {
+$json_array = array();
+if($result->num_rows > 0) {
     echo "Brukeren finnes";
-    $row = $result->fetch_assoc();
-    echo $row["BrukerID"];
-    //returnerer brukerid .. Mulig å legeg til flere ting fra db her ved behov
+    while($row = $result->fetch_assoc()) {
+        array_push($json_array, $row);
+    }
 }
+else {
+    echo 0;
+}
+
+$json_array = json_encode($json_array);
+echo $json_array;
 ?>
