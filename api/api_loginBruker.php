@@ -11,12 +11,13 @@ $query = "SELECT BrukerID FROM `brukere` WHERE Epost = '".$epost."' AND Passord 
 $result = $db->query($query);
 $db_conn->close_Connection();
 
-if($result->num_rows >= 1) {
+if($result->num_rows == 0) {
+    //innlogging finnes ikke 
+    echo 0;
+} 
+else {
     $row = $result->fetch_assoc();
     echo $row["BrukerID"];
     //returnerer brukerid .. Mulig å legeg til flere ting fra db her ved behov
-}
-else {
-    echo 0;
 }
 ?>
