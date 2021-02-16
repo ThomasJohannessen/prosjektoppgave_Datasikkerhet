@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: application/json');
+
 include "../database.php";
 $db_conn = new Database();
 $db = $db_conn->get_Connection() or die();
