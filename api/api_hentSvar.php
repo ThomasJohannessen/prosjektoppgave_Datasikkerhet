@@ -10,7 +10,8 @@ $db = $db_conn->get_Connection() or die();
 
 $sporsmalid = $_GET['sporsmalid'];
 
-$query = 'SELECT melding, Navn FROM meldinger JOIN brukere ON meldinger.foreleserID = brukere.BrukerID WHERE svarID = '.$sporsmalid.'';
+//$query = 'SELECT melding, Navn FROM meldinger JOIN brukere ON meldinger.foreleserID = brukere.BrukerID WHERE svarID = '.$sporsmalid.'';
+$query = 'SELECT svar FROM meldinger WHERE sporsmalID = '.$sporsmalid.';';
 
 $result = $db->query($query);
 $db_conn->close_Connection();
