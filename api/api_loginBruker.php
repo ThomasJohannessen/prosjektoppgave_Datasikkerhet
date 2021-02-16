@@ -11,11 +11,16 @@ $result = $db->query($query);
 $db_conn->close_Connection();
 
 $json_array = array();
-if($row = $result->fetch_assoc()) {
-    $json_array = json_encode($row);
-    echo $json_array;
+if($result->num_rows >= 1) {
+    $row = $result->fetch_assoc();
+        array_push($json_array, $row);
+        //echo $row["BrukerID"];
+    //returnerer brukerid .. Mulig å legeg til flere ting fra db her ved behov
 }
 else {
-    echo 0;
+    echo "Returnerte 0";
 }
+
+$json_array = json_encode($json_array);
+echo $json_array;
 ?>
