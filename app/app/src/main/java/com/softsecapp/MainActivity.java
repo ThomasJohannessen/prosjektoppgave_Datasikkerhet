@@ -75,8 +75,9 @@ public class MainActivity extends AppCompatActivity {
                    Log.d("OnResponse", String.valueOf(response.code()));
                    return;
                }
+               User userId = response.body().getBruker();
 
-            int userId = response.body().getBrukerid();
+               Log.d("WORKS", String.valueOf(response.code()));
            }
 
            @Override

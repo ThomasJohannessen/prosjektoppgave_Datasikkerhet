@@ -3,12 +3,12 @@ package com.softsecapp;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Response {
-    @SerializedName("0")
+public class User {
+    @SerializedName("BrukerID")
     @Expose
-    private User bruker;
+    private int brukerId;
 
-    public User getBruker() {
-        return bruker;
+    public int getBrukerId() {
+        return brukerId;
     }
 }
