@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
        feilmelding = findViewById(R.id.feilmeldingsBoks);
 
-
-
        Retrofit retrofit = new Retrofit.Builder()
                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                .addConverterFactory(GsonConverterFactory.create())
@@ -66,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
        Call<Response> call = logInService.getlogin(epost_String, passord_String);
 
-
        call.enqueue(new Callback<com.softsecapp.Response>() {
            @Override
            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
@@ -75,9 +72,15 @@ public class MainActivity extends AppCompatActivity {
                    Log.d("OnResponse", String.valueOf(response.code()));
                    return;
                }
-               User userId = response.body().getBruker();
+               String userId = response.body().getBrukerId();
 
-               Log.d("WORKS", String.valueOf(response.code()));
+               feilmelding.setText(userId);
+
+               //int sessionId = Integer.parseInt(userId);
+               //Log.d("WORKS", String.valueOf("id: " + sessionId));
+               Intent intent = new Intent(getBaseContext(), Messages.class);
+               intent.putExtra("EXTRA_SESSION_ID", userId);
+               startActivity(intent);
            }
 
            @Override
@@ -85,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
                feilmelding.setText(t.getMessage());
                Log.d("Debug", String.valueOf(t.getMessage()));
            }
-
-
 
        });
 

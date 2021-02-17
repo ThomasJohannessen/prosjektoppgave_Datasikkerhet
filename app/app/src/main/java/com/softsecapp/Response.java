@@ -4,11 +4,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Response {
-    @SerializedName("0")
+    @SerializedName("BrukerID")
     @Expose
-    private User bruker;
+    private String brukerId;
 
-    public User getBruker() {
-        return bruker;
+    public String getBrukerId() {
+        return brukerId;
     }
 }
