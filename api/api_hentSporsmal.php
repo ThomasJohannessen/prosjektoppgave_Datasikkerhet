@@ -24,6 +24,7 @@ else {
     echo 0;
 }
 
-$json_array = json_encode($json_array);
-echo $json_array;
+//$json_array = json_encode($json_array);
+//echo $json_array;
+echo json_encode($json_array);
 ?>
