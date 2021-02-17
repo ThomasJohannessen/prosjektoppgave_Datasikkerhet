@@ -23,7 +23,7 @@ if(($result->num_rows == 1)&&(password_verify($passord, $password_hash))) {
     $json_array = array();
     $row = $result->fetch_assoc();
     array_push($json_array, $row);
-    echo json_encode($json_array, JSON_FORCE_OBJECT);
+    echo json_encode($json_array);
     //$json_array = json_encode($json_array);
     //echo $json_array;
 }
