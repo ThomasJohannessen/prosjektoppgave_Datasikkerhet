@@ -14,6 +14,3 @@ public interface SendQuestionService {
 }
 
 
-
-//api_sendSporsmal.php?brukerid=11&emnekode=ITF888&sporsmal=test
-

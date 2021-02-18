@@ -57,11 +57,14 @@
 
     <TextView
         android:id="@+id/feilmeldingsBoks"
-        android:layout_width="65dp"
-        android:layout_height="13dp"
+        android:layout_width="321dp"
+        android:layout_height="76dp"
+        android:textColor="#FF0000"
+        android:textSize="10pt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_button" />
+        app:layout_constraintTop_toBottomOf="@+id/login_button"
+        app:layout_constraintVertical_bias="0.27" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

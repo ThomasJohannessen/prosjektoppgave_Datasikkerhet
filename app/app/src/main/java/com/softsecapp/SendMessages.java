@@ -39,10 +39,6 @@ public class SendMessages extends AppCompatActivity {
 
             @Override
             public void onClick(View view){
-
-                //Intent intent = new Intent(getBaseContext(), Messages.class);
-                //intent.putExtra("EXTRA_SESSION_ID", userId);
-                //startActivity(intent);
                 SendMessages(sessionId_String);
             }
 
