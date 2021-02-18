@@ -1,5 +1,6 @@
 package com.softsecapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -13,7 +14,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class Messages extends AppCompatActivity {
-    TextView sessonId;
+    TextView sessionId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,18 +25,19 @@ public class Messages extends AppCompatActivity {
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolBarLayout.setTitle(getTitle());
 
-        sessonId = findViewById(R.id.textView3);
+        sessionId = findViewById(R.id.textView3);
 
-        String sessionId = getIntent().getStringExtra("EXTRA_SESSION_ID");
+        String sessionId_String = getIntent().getStringExtra("EXTRA_SESSION_ID");
 
-        sessonId.setText(sessionId);
+        sessionId.setText(sessionId_String);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(getBaseContext(), SendMessages.class);
+                intent.putExtra("EXTRA_SESSION_ID", sessionId_String);
+                startActivity(intent);
             }
         });
     }

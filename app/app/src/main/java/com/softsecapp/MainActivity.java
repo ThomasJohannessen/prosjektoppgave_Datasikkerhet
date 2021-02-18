@@ -19,7 +19,6 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-
 public class MainActivity extends AppCompatActivity {
 
     Button login_btn;
@@ -39,7 +38,11 @@ public class MainActivity extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                        logIn();
+                        //logIn();
+                String userId = "11";
+                Intent intent = new Intent(getBaseContext(), Messages.class);
+                intent.putExtra("EXTRA_SESSION_ID", userId);
+                startActivity(intent);
             }
         });
     }
@@ -76,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
 
                feilmelding.setText(userId);
 
-               //int sessionId = Integer.parseInt(userId);
-               //Log.d("WORKS", String.valueOf("id: " + sessionId));
                Intent intent = new Intent(getBaseContext(), Messages.class);
                intent.putExtra("EXTRA_SESSION_ID", userId);
                startActivity(intent);
@@ -85,20 +86,10 @@ public class MainActivity extends AppCompatActivity {
 
            @Override
            public void onFailure(Call<Response> call, Throwable t) {
-               feilmelding.setText(t.getMessage());
+               feilmelding.setText("Feil innloggingsinformasjon.");
                Log.d("Debug", String.valueOf(t.getMessage()));
            }
 
        });
-
-
-/*
-        if(Response.getBrukerid() == 0){
-            //sette feilmeldingsBoks til "Noe gikk galt"
-        }
-        else {
-            Intent intent = new Intent(this, Messages.class);
-            startActivity(intent);
-        }*/
    }
 }
