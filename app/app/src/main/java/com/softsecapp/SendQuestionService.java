@@ -6,7 +6,7 @@ import retrofit2.http.Query;
 
 public interface SendQuestionService {
     @GET("api_sendSporsmal.php")
-    Call<Response> sendQuestion(
+    Call<Void> sendQuestion(
             @Query("brukerid") String brukerid,
             @Query("emnekode") String emnekode,
             @Query("sporsmal") String sporsmal

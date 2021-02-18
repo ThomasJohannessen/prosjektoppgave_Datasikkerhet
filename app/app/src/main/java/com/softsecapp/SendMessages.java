@@ -68,27 +68,26 @@ public class SendMessages extends AppCompatActivity {
 
         sendQuestionService = retrofit.create(SendQuestionService.class);
 
-        Call<Response> call = sendQuestionService.sendQuestion(inputText_String,inputSubject, sessionId);
 
-        call.enqueue(new Callback<Response>() {
+        Call<Void> call = sendQuestionService.sendQuestion(sessionId, inputSubject, inputText_String);
+
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+            public void onResponse(Call<Void> call, retrofit2.Response<Void> response) {
                 if (!response.isSuccessful()) {
                     Log.d("OnResponse", String.valueOf(response.code()));
                     return;
                 }
-                String userId = response.body().getBrukerId();
 
                 Intent intent = new Intent(getBaseContext(), Messages.class);
-                intent.putExtra("EXTRA_SESSION_ID", userId);
+                intent.putExtra("EXTRA_SESSION_ID", sessionId);
                 startActivity(intent);
             }
 
             @Override
-            public void onFailure(Call<Response> call, Throwable t) {
+            public void onFailure(Call<Void> call, Throwable t) {
                 Log.d("Debug", String.valueOf(t.getMessage()));
             }
-
         });
     }
 }
