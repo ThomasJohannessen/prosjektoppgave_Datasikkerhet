@@ -11,4 +11,5 @@ public class Response {
     public String getBrukerId() {
         return brukerId;
     }
+
 }

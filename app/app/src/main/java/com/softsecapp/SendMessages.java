@@ -42,7 +42,6 @@ public class SendMessages extends AppCompatActivity {
                 SendMessages(sessionId_String);
             }
 
-
         });
     }
     public void SendMessages(String sessionId){
@@ -53,8 +52,6 @@ public class SendMessages extends AppCompatActivity {
 
         radioButton = (RadioButton) findViewById(selectedBtnId);
         String inputSubject = (String) radioButton.getText();
-
-
 
         Retrofit retrofit = new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

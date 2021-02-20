@@ -1,23 +1,22 @@
 package com.softsecapp;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.Build;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     TextView feilmelding;
     String epost_String;
     String passord_String;
+
 
     private LogInService logInService;
 
@@ -38,11 +38,7 @@ public class MainActivity extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                        //logIn();
-                String userId = "11";
-                Intent intent = new Intent(getBaseContext(), Messages.class);
-                intent.putExtra("EXTRA_SESSION_ID", userId);
-                startActivity(intent);
+                        logIn();
             }
         });
     }
@@ -86,10 +82,11 @@ public class MainActivity extends AppCompatActivity {
 
            @Override
            public void onFailure(Call<Response> call, Throwable t) {
-               feilmelding.setText("Feil innloggingsinformasjon.");
+               feilmelding.setText(t.getMessage());
                Log.d("Debug", String.valueOf(t.getMessage()));
            }
 
        });
+
    }
 }
