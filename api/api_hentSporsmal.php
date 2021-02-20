@@ -10,7 +10,7 @@ $db_conn = new Database();
 
 $db = $db_conn->get_Connection() or die();
 $brukerid = $_GET['brukerid'];
-$query = 'SELECT emnekode, melding, svar FROM meldinger WHERE avsenderID = '.$brukerid.'';
+$query = "SELECT emnekode, melding, svar FROM `meldinger` WHERE avsenderID = '".$brukerid."';"
 $result = $db->query($query);
 $db_conn->close_Connection();
 
@@ -26,5 +26,7 @@ else {
 
 //$json_array = json_encode($json_array);
 //echo $json_array;
-echo json_encode($json_array);
+//echo json_encode($json_array);
+$JSON_object = (object) $json_array;
+echo $JSON_object;
 ?>
