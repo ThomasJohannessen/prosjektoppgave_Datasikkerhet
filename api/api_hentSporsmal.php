@@ -10,7 +10,9 @@ $db_conn = new Database();
 
 $db = $db_conn->get_Connection() or die();
 $brukerid = $_GET['brukerid'];
+echo $brukerid;
 $query = "SELECT emnekode, melding, svar FROM `meldinger` WHERE avsenderID = '".$brukerid."';";
+echo $query;
 $result = $db->query($query);
 $db_conn->close_Connection();
 
