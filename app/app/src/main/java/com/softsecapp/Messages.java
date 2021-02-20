@@ -36,7 +36,7 @@ public class Messages extends AppCompatActivity {
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolBarLayout.setTitle(getTitle());
 
-        messageFeedView = (TextView)findViewById(R.id.messageFeed);
+        messageFeedView = (TextView)findViewById(R.id.msgFeed);
         String sessionId_String = getIntent().getStringExtra("EXTRA_SESSION_ID");
 
         //messageFeedView = findViewById(R.id.feilmeldingsBoks);
@@ -66,14 +66,19 @@ public class Messages extends AppCompatActivity {
                 String content = " ";
 
                 for (Answer answer : answers) {
-                    content += answer.getMelding() + "\n";
-                    content += answer.getSvar() + "\n";
-                    content += answer.getEmnekode() + "\n";
 
-                   // content += System.lineSeparator();
+                    content += answer.getEmnekode() + "\n";
+                    content += answer.getMelding() + "\n";
+                    if (answer.getSvar() != null) {
+                        content += answer.getSvar() + "\n" + "\n";
+                    }
+                    else
+                        content += "ikke besvart" + "\n";
+                    content += "__________"  + "\n";
+
                 }
 
-                messageFeedView.setText(String.valueOf(content));
+                messageFeedView.setText(content);
 
             }
 
