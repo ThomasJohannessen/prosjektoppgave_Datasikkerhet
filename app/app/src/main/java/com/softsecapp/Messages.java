@@ -70,10 +70,10 @@ public class Messages extends AppCompatActivity {
                     content += answer.getEmnekode() + "\n";
                     content += answer.getMelding() + "\n";
                     if (answer.getSvar() != null) {
-                        content += answer.getSvar() + "\n" + "\n";
+                        content += answer.getSvar() + "\n";
                     }
                     else
-                        content += "ikke besvart" + "\n";
+                        content += "Ikke besvart" + "\n";
                     content += "__________"  + "\n";
 
                 }
