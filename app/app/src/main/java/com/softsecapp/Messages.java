@@ -36,10 +36,10 @@ public class Messages extends AppCompatActivity {
         CollapsingToolbarLayout toolBarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolBarLayout.setTitle(getTitle());
 
-        messageFeedView = findViewById(R.id.messageFeed);
+        messageFeedView = (TextView)findViewById(R.id.messageFeed);
         String sessionId_String = getIntent().getStringExtra("EXTRA_SESSION_ID");
 
-        messageFeedView = findViewById(R.id.feilmeldingsBoks);
+        //messageFeedView = findViewById(R.id.feilmeldingsBoks);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -73,7 +73,7 @@ public class Messages extends AppCompatActivity {
                    // content += System.lineSeparator();
                 }
 
-                messageFeedView.setText(content);
+                messageFeedView.setText(String.valueOf(content));
 
             }
 
