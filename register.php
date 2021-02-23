@@ -47,10 +47,6 @@
             header("location: register.php?error=usernametaken");
             exit();
         }
-        if (subjectTaken($subject_id) !== false) {
-            header("location: register.php?error=subjecttaken");
-            exit();
-        }
         if (notSupportedUsertype($user_type) !== false) {
             header("location: register.php?error=usertypenotsupported");
             exit();
@@ -66,6 +62,10 @@
             } else {
                 if (fileVerification($rand_filename) !== false) {
                     header("location: register.php?error=imageerror");
+                    exit();
+                }
+                if (subjectTaken($subject_id) !== false) {
+                    header("location: register.php?error=subjecttaken");
                     exit();
                 }
                 $res = false;
