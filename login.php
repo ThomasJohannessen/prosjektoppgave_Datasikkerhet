@@ -15,7 +15,6 @@
 
     session_start();
     include "database.php";
-    include "logg/logger.php";
     $db = new Database();
     $conn = $db->get_Connection();
 
