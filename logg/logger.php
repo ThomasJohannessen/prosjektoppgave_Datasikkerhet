@@ -20,7 +20,7 @@ class AppLogger {
                 }
 
                 $this->logger->pushHandler(
-                        new GelfHandler(new Gelf\Publisher(new Gelf\Transport\UdpTransport("127.0.0.1", $port))));
+                        new GelfHandler(new Gelf\Publisher(new Gelf\Transport\UdpTransport("127.0.0.1", $port)), Logger::DEBUG));
         }
 
         public function getLogger() {
