@@ -30,7 +30,6 @@
         if (emptyInputLogin($email, $password) !== false) {
             header("location: ../login.php?error=emptyinput");
         }
-
         loginUser($email, $password);
     }
 
@@ -136,6 +135,7 @@
 <a href="gjest/gjestfeed.php" class="homescreen-choice">Logg inn som gjest</a>
 <a href="forgot.php" class="homescreen-choice">Forgot password</a>
 <?php
+    include "logg/logger.php";
     if(isset($_GET["error"])) {
         if($_GET["error"] == "emptyinput") {
             echo "<p>Alle felter må fylles</p>";
@@ -150,6 +150,10 @@
             echo "<p>Noe gikk galt, prøv igjen senere</p>";
         }
         elseif ($_GET["error"] == "none") {
+                    
+            $logger = getLogger();
+            $logger->info("Test");
+            
             echo "<p>Du er nå logget inn</p>";
             echo "<p>Velkommen " . $_SESSION["username"] . "</p>";
         }
