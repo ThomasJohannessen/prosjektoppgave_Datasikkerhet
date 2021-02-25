@@ -15,6 +15,7 @@
 
     session_start();
     include "database.php";
+    include "logg/logger.php";
     $db = new Database();
     $conn = $db->get_Connection();
 
@@ -69,7 +70,6 @@
     }
 
     function loginUser($email, $password) {
-        
         $db = new Database();
         $conn = $db->get_Connection();
         $mailTaken = mailtaken($email);
@@ -99,6 +99,12 @@
                 $_SESSION["subject_id"] = $mailTaken["EmneID"];
                 $_SESSION["user_type"] = $mailTaken["Brukertype"];
                 $_SESSION["study_path"] = $mailTaken["Studieretning"];
+
+                        
+                $logger = getLogger();
+                $logger->info("Test");  
+                $logger->error("Testerror");
+                $logger->debug("testdebug");
 
                 if ($_SESSION['user_type'] == 3){
                     header("location: student/studentside.php");
@@ -135,7 +141,6 @@
 <a href="gjest/gjestfeed.php" class="homescreen-choice">Logg inn som gjest</a>
 <a href="forgot.php" class="homescreen-choice">Forgot password</a>
 <?php
-    include "logg/logger.php";
     if(isset($_GET["error"])) {
         if($_GET["error"] == "emptyinput") {
             echo "<p>Alle felter må fylles</p>";
@@ -150,10 +155,6 @@
             echo "<p>Noe gikk galt, prøv igjen senere</p>";
         }
         elseif ($_GET["error"] == "none") {
-                    
-            $logger = getLogger();
-            $logger->info("Test");
-            
             echo "<p>Du er nå logget inn</p>";
             echo "<p>Velkommen " . $_SESSION["username"] . "</p>";
         }
