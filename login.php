@@ -11,10 +11,10 @@
 <body>
 <?php
 
-require __DIR__.'/../../../composershit/vendor/autoload.php';
+require './composer/vendor/autoload.php';
 use Monolog\Logger;
 use Monolog\Handler\GelfHandler;
-
+use Monolog\Handler\StreamHandler;
     session_start();
     include("database.php");
     include_once("logg/logger.php");

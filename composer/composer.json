@@ -1,0 +1,14 @@
+{
+
+    "require": {
+
+        "monolog/monolog": "^2.2",
+
+        "graylog2/gelf-php": "~1.5"
+
+
+
+    }
+
+}
+

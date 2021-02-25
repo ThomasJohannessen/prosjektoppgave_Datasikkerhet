@@ -1,0 +1,10 @@
+[2021-02-18T16:35:15.317124+00:00] sikkerhet.INFO: First message [] {"user":"tomhnatt"}
+[2021-02-18T16:35:16.268765+00:00] sikkerhet.WARNING: First warning {"brukernavn":"michal","system":"test"} {"user":"tomhnatt"}
+[2021-02-18T16:35:16.463959+00:00] sikkerhet.INFO: Second info [] {"user":"tomhnatt"}
+[2021-02-18T16:35:16.655435+00:00] sikkerhet.ERROR: Big error occured! [] {"user":"tomhnatt"}
+[2021-02-18T16:35:16.846782+00:00] sikkerhet.INFO: Third info [] {"user":"tomhnatt"}
+[2021-02-18T16:36:23.703430+00:00] sikkerhet.INFO: First message [] {"user":"tomhnatt"}
+[2021-02-18T16:36:24.227190+00:00] sikkerhet.WARNING: First warning {"brukernavn":"michal","system":"test"} {"user":"tomhnatt"}
+[2021-02-18T16:36:24.346140+00:00] sikkerhet.INFO: Second info [] {"user":"tomhnatt"}
+[2021-02-18T16:36:24.461317+00:00] sikkerhet.ERROR: Big error occured! [] {"user":"tomhnatt"}
+[2021-02-18T16:36:24.583699+00:00] sikkerhet.INFO: Third info [] {"user":"tomhnatt"}
