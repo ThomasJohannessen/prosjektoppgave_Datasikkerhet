@@ -1,4 +1,5 @@
 <?php
+require __DIR__.'/../../../composershit/vendor/autoload.php';
 use Monolog\Logger;
 use Monolog\Handler\GelfHandler;
 class AppLogger {
@@ -20,7 +21,7 @@ class AppLogger {
                 }
 
                 $this->logger->pushHandler(
-                        new GelfHandler(new Gelf\Publisher(new Gelf\Transport\UdpTransport("127.0.0.1", $port)), Logger::DEBUG));
+                        new GelfHandler(new Gelf\Publisher(new Gelf\Transport\UdpTransport("127.0.0.1", $port))));
         }
 
         public function getLogger() {
