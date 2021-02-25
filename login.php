@@ -15,7 +15,7 @@
 
     session_start();
     include "database.php";
-    include "./../../../composershit/logger.php";
+    include "logg/logger.php";
     $db = new Database();
     $conn = $db->get_Connection();
 
@@ -101,7 +101,8 @@
                 $_SESSION["study_path"] = $mailTaken["Studieretning"];
 
                         
-                $logger = getLogger();
+                $logg = new AppLogger("innlogging");
+                $logger = $logg->getLogger();
                 $logger->info("Test");  
                 $logger->error("Testerror");
                 $logger->debug("testdebug");
