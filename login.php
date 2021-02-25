@@ -100,13 +100,6 @@
                 $_SESSION["user_type"] = $mailTaken["Brukertype"];
                 $_SESSION["study_path"] = $mailTaken["Studieretning"];
 
-                        
-                $logg = new AppLogger("innlogging");
-                $logger = $logg->getLogger();
-                $logger->info("Test");  
-                $logger->error("Testerror");
-                $logger->debug("testdebug");
-
                 if ($_SESSION['user_type'] == 3){
                     header("location: student/studentside.php");
                     exit();
