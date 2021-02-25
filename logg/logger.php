@@ -12,7 +12,7 @@ class AppLogger {
                 $port = 0;
                 switch ($this->$logger->getName()) {
                         case "innlogging":
-                                $port = 1220
+                                $port = 12201;
                                 break;
                         default:
                                 $port = 12210;
