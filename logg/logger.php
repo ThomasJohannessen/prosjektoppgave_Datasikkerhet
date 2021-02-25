@@ -1,5 +1,4 @@
 <?php
-require_once('../../../composershit/vendor/autoload.php');
 use Monolog\Logger;
 use Monolog\Handler\GelfHandler;
 class AppLogger {
@@ -13,7 +12,7 @@ class AppLogger {
                 $port = 0;
                 switch ($this->$logger->getName()) {
                         case "innlogging":
-                                $port = 12201;
+                                $port = 1220
                                 break;
                         default:
                                 $port = 12210;
