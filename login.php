@@ -104,9 +104,11 @@ use Monolog\Handler\GelfHandler;
 
                         
                 $logger = new Logger('sikkerhet');
+                $logger->pushHandler(new StreamHandler(__DIR__. '/test.log', Logger::INFO));
                 $logger->pushHandler(
                     new GelfHandler(new Gelf\Publisher(new Gelf\Transport\UdpTransport("127.0.0.1", 12201))));
                 $logger->debug("testdebug");
+                $logger->info("testdebug");
 
                 if ($_SESSION['user_type'] == 3){
                     header("location: student/studentside.php");
