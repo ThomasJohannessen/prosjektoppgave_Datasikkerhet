@@ -7,7 +7,7 @@ class AppLogger {
         private $logger;
         function __construct(String $group) {
                 $this->logger = new Logger($group);
-                setupLogger();
+                $this->setupLogger();
         }
 
         private function setupLogger() {
