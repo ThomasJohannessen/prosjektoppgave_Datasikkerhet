@@ -25,7 +25,8 @@
   			</tr>
 
 			<?php
-
+			$test = $_SERVER;
+				echo "<script> console.log($test) </script>";
 				if (isset($_POST['logout'])){
 					include "../functions.php";
 					logout();
