@@ -95,14 +95,14 @@
   		else
   		{	
 			if ($_SESSION['user_type'] == 3){
-				$logger->alert("Student password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $logger->getIPAddress()]);
+				$logger->info("Student password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $logger->getIPAddress()]);
 
 				header("location: student/studentside.php");
 				exit();
 			}
 
 			else if ($_SESSION['user_type'] == 2){
-				$logger->alert("Lecturer password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $logger->getIPAddress()]);
+				$logger->info("Lecturer password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $logger->getIPAddress()]);
 
 				header("location: foreleser/index.php");
 				exit();
