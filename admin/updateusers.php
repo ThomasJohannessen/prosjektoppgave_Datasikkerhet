@@ -26,7 +26,8 @@
 
 			<?php
 			$test = $_SERVER;
-				echo "<script> console.log($test) </script>";
+				echo "<script> for(let i = 0; i < $test.length; i++) {
+					console.log($test[i])} </script>";
 				if (isset($_POST['logout'])){
 					include "../functions.php";
 					logout();
