@@ -31,7 +31,7 @@
 				}
 				
 				session_start();
-				echo $_SERVER;
+				print_r($_SERVER);
 				if($_SESSION['user_type'] != 1){
 					echo "Du er ikke en Admin!";
 				}  
