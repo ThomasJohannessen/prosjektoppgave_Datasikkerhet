@@ -1,5 +1,5 @@
 <?php 
-require './composer/vendor/autoload.php';
+require '/var/www/html/steg2/prosjektoppgave_Datasikkerhet/composer/vendor/autoload.php';
 use Monolog\Logger;
 use Monolog\Handler\GelfHandler;
 use Monolog\Handler\StreamHandler;

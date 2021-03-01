@@ -7,6 +7,6 @@ function logout () {
     $logger->info("Utlogging av bruker", ["username" => $_SESSION["username"]]);
 
     session_destroy();
-    //header("location: ../index.php");
-    //exit();
+    header("location: ../index.php");
+    exit();
 }
