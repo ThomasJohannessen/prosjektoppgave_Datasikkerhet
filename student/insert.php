@@ -20,7 +20,7 @@ if($_SESSION['user_type'] == 3){
 
     $logg = new AppLogger("meldinger");
     $logger = $logg->getLogger();
-    $logger->info("User " . $avsenderID . "sent question in subject " . $emnekode . ".", ["message" => $melding]);
+    $logger->info("User with ID: " . $avsenderID . " sent question in subject " . $emnekode . ".", ["message" => $melding]);
 
     $insert = "INSERT INTO `meldinger` (`avsenderID`, `melding`,`emnekode`) VALUES ('$avsenderID', '$melding', '$emnekode')";
 
