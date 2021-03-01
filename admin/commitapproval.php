@@ -3,10 +3,17 @@
 	if($_SESSION['user_type'] == 1)
    	{
 		include "../database.php";
+		include "../AppLogger.php";
+		
 		$db = new Database();
 		$conn = $db->get_Connection();
    		
 		$id = htmlspecialchars(trim($_GET['id']));
+
+		$logg = new AppLogger("brukertilgang");
+        $logger = $logg->getLogger();
+
+		$logger->notify("Admin approved a lecturer", ["Admin" => $_SESSION["user_email"], "Approved lecturer ID" => $id]);
 
 		$qry = mysqli_query($conn,"update brukere set Brukerstatus=1 where BrukerID='$id'");
 

@@ -212,11 +212,17 @@
         $register_user = mysqli_query($conn, $sql_register);
         if ($register_user) {
             header("location: register.php?error=none");
-            $logger->notice("Registrering av bruker", ["username" => $email, "password" => password_hash($password, PASSWORD_DEFAULT), "usertype" => $user_type]);
+
+            $logger->notice("Registrering av bruker vellykket", ["user" => $name, "username" => $email, "password" => password_hash($password, PASSWORD_DEFAULT), "usertype" => $user_type, 
+            "study path" => $study_path, "year" => $year, "subject_id" => $subject_id, "imagePath" => $image]);
+
             exit();
         } else {
             header("location: register.php?error=stmtfailed");
-            $logger->notice("Registrering av bruker", ["username" => $email]);
+
+            $logger->notice("Registrering av bruker feilet", ["user" => $name, "username" => $email, "password" => password_hash($password, PASSWORD_DEFAULT), "usertype" => $user_type, 
+            "study path" => $study_path, "year" => $year, "subject_id" => $subject_id, "imagePath" => $image]);
+            
             exit();
         }
     }
