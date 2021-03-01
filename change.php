@@ -111,9 +111,9 @@
 
 			else if ($_SESSION['user_type'] == 1){
 				$logger->alert("Admin password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed]);
+				header("location: admin/updateusers.php");
 				echo $ip;
-				//header("location: admin/updateusers.php");
-				//exit();
+				exit();
 			}
 
 		}
