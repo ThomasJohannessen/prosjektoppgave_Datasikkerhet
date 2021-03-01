@@ -30,7 +30,7 @@
 
 	$logg = new AppLogger("brukertilgang");
 	$logger = $logg->getLogger();
-	$ip = $logger->getIPAddress();
+	$ip = 15;
 
 	session_start();
 	if(isset($_POST['change']))
