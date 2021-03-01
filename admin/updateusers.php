@@ -31,12 +31,7 @@
 				}
 				
 				session_start();
-				if(!array_key_exists('HTTP_CLIENT_IP', $_SERVER)) {
-					$_SERVER['HTTP_CLIENT_IP'] = false;
-			}
-			if(!array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)) {
-					$_SERVER['HTTP_X_FORWARDED_FOR'] = false;
-			}	
+					
 				print_r($_SERVER);
 				echo "test";
 				echo $_SERVER['REMOTE_ADDR'];
