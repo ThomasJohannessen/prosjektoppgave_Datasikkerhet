@@ -40,7 +40,7 @@
 				print_r($_SERVER);
 				echo "test";
 				echo $_SERVER['REMOTE_ADDR'];
-				if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
+				if(isset($_SERVER['HTTP_CLIENT_IP'])) {
 					echo "is empty bro";
 				}
 				if($_SESSION['user_type'] != 1){

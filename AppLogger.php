@@ -30,16 +30,16 @@ class AppLogger {
 
         public static function getIPAddress() { 
                 $ip; 
-                if(!array_key_exists('HTTP_CLIENT_IP', $_SERVER)) {
+                /*if(!array_key_exists('HTTP_CLIENT_IP', $_SERVER)) {
                         $_SERVER['HTTP_CLIENT_IP'] = false;
                 }
                 if(!array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)) {
                         $_SERVER['HTTP_X_FORWARDED_FOR'] = false;
-                }
+                }*/
 
-                if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+                if (isset($_SERVER['HTTP_CLIENT_IP'])) {
                         $ip = $_SERVER['HTTP_CLIENT_IP'];
-                    } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                    } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                         $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
                     } else {
                         $ip = $_SERVER['REMOTE_ADDR'];
