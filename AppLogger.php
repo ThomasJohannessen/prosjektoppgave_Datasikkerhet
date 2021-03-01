@@ -29,23 +29,25 @@ class AppLogger {
         } 
 
         public static function getIPAddress() { 
-                $ip; 
-                /*if(!array_key_exists('HTTP_CLIENT_IP', $_SERVER)) {
-                        $_SERVER['HTTP_CLIENT_IP'] = false;
-                }
-                if(!array_key_exists('HTTP_X_FORWARDED_FOR', $_SERVER)) {
-                        $_SERVER['HTTP_X_FORWARDED_FOR'] = false;
-                }*/
+                $client  = @$_SERVER['HTTP_CLIENT_IP'];
+                $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+                $remote  = $_SERVER['REMOTE_ADDR'];
 
-                /*if (isset($_SERVER['HTTP_CLIENT_IP'])) {
-                        $ip = $_SERVER['HTTP_CLIENT_IP'];
-                    } elseif (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-                        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-                    } else {
-                        $ip = $_SERVER['REMOTE_ADDR'];
-                    }*/
-                return $_SERVER['REMOTE_ADDR'];  
-        }  
+                if(filter_var($client, FILTER_VALIDATE_IP))
+                {
+                        $ip = $client;
+                }
+                elseif(filter_var($forward, FILTER_VALIDATE_IP))
+                {
+                        $ip = $forward;
+                }
+                else
+                {
+                        $ip = $remote;
+                }
+
+                return $ip;
+                }  
 
         public function getLogger() {
                 return $this->logger;

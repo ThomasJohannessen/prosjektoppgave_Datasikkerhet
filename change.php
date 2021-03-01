@@ -88,7 +88,8 @@
 		$conn = $db->get_Connection();
 		$hashed = password_hash($new1, PASSWORD_DEFAULT);
 		//$ip = (string) AppLogger::getIPAddress();
-		
+		//$ipAddress = $_SERVER['REMOTE_ADDR']?:($_SERVER['HTTP_X_FORWARDED_FOR']?:$_SERVER['HTTP_CLIENT_IP']);
+
 		$sqlUpdate = "UPDATE brukere SET Passord='$hashed' WHERE Epost='$email'";
 
 		if ($conn->query($sqlUpdate) === FALSE)
