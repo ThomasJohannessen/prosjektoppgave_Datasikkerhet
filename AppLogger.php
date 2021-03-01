@@ -12,7 +12,7 @@ class AppLogger {
 
         private function setupLogger() {
                 $port = 0;
-                switch ($this->$logger->getName()) {
+                switch ($this->logger->getName()) {
                         case "innlogging":
                                 $port = 12201;
                                 break;
