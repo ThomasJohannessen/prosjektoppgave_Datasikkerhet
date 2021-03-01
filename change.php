@@ -26,12 +26,17 @@
 		</form>
 <?php
 
+	include "../AppLogger.php";
+
+	$logg = new AppLogger("brukertilgang");
+	$logger = $logg->getLogger();
+
 	session_start();
 	if(isset($_POST['change']))
 	{
 		
 		$email = htmlspecialchars(trim($_POST['email']));
-		
+		$attempt_failed = true;
 		if ($_SESSION['user_email'] == $email) 
 		{
 			$old = htmlspecialchars(trim($_POST['old']));
@@ -39,13 +44,14 @@
 			$new2 = htmlspecialchars(trim($_POST['new2']));
 
 			include "database.php";
+			
 			$db = new Database();
 			$conn = $db->get_Connection();
 		
 			$emailChecker = "SELECT * FROM brukere WHERE Epost='$email'";
 		
 			$resultFromEmailCheck = $conn->query($emailChecker);
-		
+
 			if (mysqli_num_rows($resultFromEmailCheck) > 0) 
 			{
 				$row = $resultFromEmailCheck->fetch_assoc();
@@ -58,8 +64,10 @@
 				}
 				else if ($new1 !== $new2)
 					echo "The two new passwords don't match!";
-				else if ($verify)
-					change($email, $new1, $conn);
+				else if ($verify) {
+					$attempt_failed = false;
+					change($email, $new1, $conn, $logger);
+				}
 				else if (!$verify)
 					echo "The old password is wrong!";
 			}
@@ -68,9 +76,13 @@
 		}
 		else
 			echo "Can't change another user's password. Please write your own email!";
+		if($attempt_failed) {
+			//temp til inputvalidering er implementert
+			$logger->notice("Attempt to change password", ["email" => $_SESSION["user_email"], "ip" => $logger->getIPAddress(), "old_pw_input" => $old, "new1_pw_input" => $new1, "new2_pw_input" => $new2]);	
+		}
 	}
 	
-	function change($email, $new1, $conn)
+	function change($email, $new1, $conn, $logger)
 	{
 		$db = new Database();
 		$conn = $db->get_Connection();
@@ -83,19 +95,26 @@
   		else
   		{	
 			if ($_SESSION['user_type'] == 3){
+				$logger->alert("Student password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $logger->getIPAddress()]);
+
 				header("location: student/studentside.php");
 				exit();
 			}
 
 			else if ($_SESSION['user_type'] == 2){
+				$logger->alert("Lecturer password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $logger->getIPAddress()]);
+
 				header("location: foreleser/index.php");
 				exit();
 			}
 
 			else if ($_SESSION['user_type'] == 1){
+				$logger->alert("Admin password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $logger->getIPAddress()]);
+				
 				header("location: admin/updateusers.php");
 				exit();
 			}
+
 		}
 		
 		$conn->close();

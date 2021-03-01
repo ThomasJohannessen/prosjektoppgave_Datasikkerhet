@@ -26,7 +26,20 @@ class AppLogger {
 
                 $this->logger->pushHandler(
                         new GelfHandler(new Gelf\Publisher(new Gelf\Transport\UdpTransport("127.0.0.1", $port))));
-        }
+        } 
+
+        function getIPAddress() {    
+                if(!emptyempty($_SERVER['HTTP_CLIENT_IP'])) {  
+                        $ip = $_SERVER['HTTP_CLIENT_IP'];  
+                }   
+                elseif (!emptyempty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
+                        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+                }   
+                else{  
+                        $ip = $_SERVER['REMOTE_ADDR'];  
+                }  
+                return $ip;  
+                }  
 
         public function getLogger() {
                 return $this->logger;
