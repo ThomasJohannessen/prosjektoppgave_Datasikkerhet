@@ -204,14 +204,18 @@
             $subject_id = 0;
             $image = "";
         }
-
+        $logg = new AppLogger("brukertilgang");
+        $logger = $logg->getLogger();
+        
         $sql_register = "INSERT INTO `brukere`(`BrukerID`, `Navn`, `Epost`, `Bilde`, `Kull`, `Brukertype`, `Passord`, `EmneID`, `Studieretning`, `Brukerstatus`) VALUES (0, '" . $name . "', '" . $email . "', '" . $image . "', " . $year . ", " . $user_type . ", '" . password_hash($password, PASSWORD_DEFAULT) . "', " . $subject_id . ", '" . $study_path . "', " . $status . ")";
         $register_user = mysqli_query($conn, $sql_register);
         if ($register_user) {
             header("location: register.php?error=none");
+            $logger->notice("Registrering av bruker", ["username" => $email, "password" => password_hash($password, PASSWORD_DEFAULT), "usertype" => $user_type]);
             exit();
         } else {
             header("location: register.php?error=stmtfailed");
+            $logger->notice("Registrering av bruker", ["username" => $email]);
             exit();
         }
     }

@@ -2,7 +2,7 @@
 include "AppLogger.php";
 
 function logout () {
-    $logg = new AppLogger("innlogging");
+    $logg = new AppLogger("brukertilgang");
     $logger = $logg->getLogger();
     $logger->info("Utlogging av bruker", ["username" => $_SESSION["username"]]);
 

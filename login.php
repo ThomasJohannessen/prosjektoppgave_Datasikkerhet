@@ -98,7 +98,7 @@
                 $_SESSION["study_path"] = $mailTaken["Studieretning"];
 
                         
-                $logg = new AppLogger("innlogging");
+                $logg = new AppLogger("brukertilgang");
                 $logger = $logg->getLogger();
                 $logger->info("Innlogging av bruker", ["username" => $email]);
 
