@@ -39,7 +39,7 @@ class AppLogger {
                         $ip = $_SERVER['REMOTE_ADDR'];  
                 }  
                 return $ip;  
-                }  
+        }  
 
         public function getLogger() {
                 return $this->logger;

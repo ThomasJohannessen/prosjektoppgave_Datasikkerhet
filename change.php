@@ -87,7 +87,7 @@
 		$db = new Database();
 		$conn = $db->get_Connection();
 		$hashed = password_hash($new1, PASSWORD_DEFAULT);
-		$ip = $logger->getIPAddress();
+		$ip = $_SERVER['REMOTE_ADDR'];
 		
 		$sqlUpdate = "UPDATE brukere SET Passord='$hashed' WHERE Epost='$email'";
 
