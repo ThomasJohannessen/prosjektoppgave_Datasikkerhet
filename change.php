@@ -78,7 +78,7 @@
 			echo "Can't change another user's password. Please write your own email!";
 		if($attempt_failed) {
 			//temp til inputvalidering er implementert
-			$logger->notice("Attempt to change password", ["email" => $_SESSION["user_email"], "ip" => $logger->getIPAddress(), "old_pw_input" => $old, "new1_pw_input" => $new1, "new2_pw_input" => $new2]);	
+			$logger->notice("Attempt to change password", ["email" => $_SESSION["user_email"], "old_pw_input" => $old, "new1_pw_input" => $new1, "new2_pw_input" => $new2]);	
 		}
 	}
 	
@@ -95,21 +95,21 @@
   		else
   		{	
 			if ($_SESSION['user_type'] == 3){
-				$logger->info("Student password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $logger->getIPAddress()]);
+				$logger->info("Student password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed]);
 
 				header("location: student/studentside.php");
 				exit();
 			}
 
 			else if ($_SESSION['user_type'] == 2){
-				$logger->info("Lecturer password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $logger->getIPAddress()]);
+				$logger->info("Lecturer password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed]);
 
 				header("location: foreleser/index.php");
 				exit();
 			}
 
 			else if ($_SESSION['user_type'] == 1){
-				$logger->alert("Admin password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $logger->getIPAddress()]);
+				$logger->alert("Admin password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed]);
 				
 				header("location: admin/updateusers.php");
 				exit();
