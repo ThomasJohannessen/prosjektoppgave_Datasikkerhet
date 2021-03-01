@@ -10,14 +10,9 @@
 </head>
 <body>
 <?php
-
-require './composer/vendor/autoload.php';
-use Monolog\Logger;
-use Monolog\Handler\GelfHandler;
-use Monolog\Handler\StreamHandler;
+    include("AppLogger.php");
     session_start();
     include("database.php");
-    include_once("logg/logger.php");
     $db = new Database();
     $conn = $db->get_Connection();
 
@@ -103,10 +98,8 @@ use Monolog\Handler\StreamHandler;
                 $_SESSION["study_path"] = $mailTaken["Studieretning"];
 
                         
-                $logger = new Logger('sikkerhet');
-                $logger->pushHandler(new StreamHandler(__DIR__. '/test.log', Logger::INFO));
-                $logger->pushHandler(
-                    new GelfHandler(new Gelf\Publisher(new Gelf\Transport\UdpTransport("127.0.0.1", 12201))));
+                $logg = new AppLogger("innlogging");
+                $logger = $logg->getLogger();
                 $logger->debug("testdebug");
                 $logger->info("testdebug");
 
