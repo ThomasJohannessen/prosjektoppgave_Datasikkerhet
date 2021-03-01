@@ -12,6 +12,7 @@
 
 <?php
     include "database.php";
+    include "AppLogger.php";
     $db = new Database();
     $conn = $db->get_Connection();
 
