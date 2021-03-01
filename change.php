@@ -30,6 +30,7 @@
 
 	$logg = new AppLogger("brukertilgang");
 	$logger = $logg->getLogger();
+	$ip = $logger->getIPAddress();
 
 	session_start();
 	if(isset($_POST['change']))
@@ -110,9 +111,9 @@
 
 			else if ($_SESSION['user_type'] == 1){
 				$logger->alert("Admin password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed]);
-				
-				header("location: admin/updateusers.php");
-				exit();
+				echo $ip;
+				//header("location: admin/updateusers.php");
+				//exit();
 			}
 
 		}
