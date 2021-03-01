@@ -110,7 +110,7 @@
 			}
 
 			else if ($_SESSION['user_type'] == 1){
-				$logger->alert("Admin password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $ip]);
+				$logger->alert("Admin password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $_SERVER['REMOTE_ADDR']]);
 				header("location: admin/updateusers.php");
 				exit();
 			}
