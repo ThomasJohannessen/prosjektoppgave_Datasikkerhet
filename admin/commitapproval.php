@@ -13,7 +13,7 @@
 		$logg = new AppLogger("brukertilgang");
         $logger = $logg->getLogger();
 
-		$logger->notify("Admin approved a lecturer", ["Admin" => $_SESSION["user_email"], "Approved lecturer ID" => $id]);
+		$logger->notice("Admin approved a lecturer", ["Admin" => $_SESSION["user_email"], "Approved lecturer ID" => $id]);
 
 		$qry = mysqli_query($conn,"update brukere set Brukerstatus=1 where BrukerID='$id'");
 
