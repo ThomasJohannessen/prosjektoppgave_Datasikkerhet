@@ -16,6 +16,9 @@ class AppLogger {
                         case "brukertilgang":
                                 $port = 12201;
                                 break;
+                        case "meldinger":
+                                $port = 12202;
+                                break;
                         default:
                                 $port = 12210;
                                 break;

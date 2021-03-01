@@ -3,6 +3,8 @@
 session_start();
 if($_SESSION['user_type'] == 3){
     include "../database.php";
+    include "../AppLogger.php";
+
     $db = new Database();
     $conn = $db->get_Connection();
 
@@ -15,6 +17,10 @@ if($_SESSION['user_type'] == 3){
         exit();
     }
     $emnekode = $_POST['emnekode'];
+
+    $logg = new AppLogger("meldinger");
+    $logger = $logg->getLogger();
+    $logger->info("User " . $avsenderID . "sent question in subject " . $emnekode . ".", ["message" => $melding]);
 
     $insert = "INSERT INTO `meldinger` (`avsenderID`, `melding`,`emnekode`) VALUES ('$avsenderID', '$melding', '$emnekode')";
 
