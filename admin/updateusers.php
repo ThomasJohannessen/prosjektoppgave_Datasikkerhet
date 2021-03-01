@@ -25,15 +25,13 @@
   			</tr>
 
 			<?php
-			$test = $_SERVER;
-				echo "<script> for(let i = 0; i < $test.length; i++) {
-					console.log($test[i])} </script>";
 				if (isset($_POST['logout'])){
 					include "../functions.php";
 					logout();
 				}
 				
 				session_start();
+				echo $_SERVER;
 				if($_SESSION['user_type'] != 1){
 					echo "Du er ikke en Admin!";
 				}  
