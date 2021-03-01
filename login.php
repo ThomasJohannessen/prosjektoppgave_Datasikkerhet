@@ -100,8 +100,7 @@
                         
                 $logg = new AppLogger("innlogging");
                 $logger = $logg->getLogger();
-                $logger->debug("testdebug");
-                $logger->info("testdebug");
+                $logger->info("Innlogging av bruker", ["username" => $email]);
 
                 if ($_SESSION['user_type'] == 3){
                     header("location: student/studentside.php");
