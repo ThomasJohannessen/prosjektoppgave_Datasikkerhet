@@ -28,7 +28,7 @@ class AppLogger {
                         new GelfHandler(new Gelf\Publisher(new Gelf\Transport\UdpTransport("127.0.0.1", $port))));
         } 
 
-        public function getIPAddress() {    
+        public static function getIPAddress() {    
                 if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                         $ip = $_SERVER['HTTP_CLIENT_IP'];
                     } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
