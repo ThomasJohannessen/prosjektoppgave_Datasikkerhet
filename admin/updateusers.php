@@ -31,13 +31,11 @@
 				}
 				
 				session_start();
-					
+
 				print_r($_SERVER);
 				echo "test";
 				echo $_SERVER['REMOTE_ADDR'];
-				if(isset($_SERVER['HTTP_CLIENT_IP'])) {
-					echo "is empty bro";
-				}
+
 				if($_SESSION['user_type'] != 1){
 					echo "Du er ikke en Admin!";
 				}  

@@ -87,7 +87,7 @@
 		$db = new Database();
 		$conn = $db->get_Connection();
 		$hashed = password_hash($new1, PASSWORD_DEFAULT);
-		$ip = (string) AppLogger::getIPAddress();
+		//$ip = (string) AppLogger::getIPAddress();
 		
 		$sqlUpdate = "UPDATE brukere SET Passord='$hashed' WHERE Epost='$email'";
 
@@ -110,7 +110,7 @@
 			}
 
 			else if ($_SESSION['user_type'] == 1){
-				$logger->alert("Admin password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $ip]);
+				$logger->alert("Admin password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed, "ip" => $_SERVER['REMOTE_ADDR']]);
 				header("location: admin/updateusers.php");
 				exit();
 			}
