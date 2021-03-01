@@ -30,7 +30,6 @@
 
 	$logg = new AppLogger("brukertilgang");
 	$logger = $logg->getLogger();
-	$ip = 15;
 
 	session_start();
 	if(isset($_POST['change']))
@@ -88,6 +87,7 @@
 		$db = new Database();
 		$conn = $db->get_Connection();
 		$hashed = password_hash($new1, PASSWORD_DEFAULT);
+		$ip = 15;
 		
 		$sqlUpdate = "UPDATE brukere SET Passord='$hashed' WHERE Epost='$email'";
 
