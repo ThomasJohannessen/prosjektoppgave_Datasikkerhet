@@ -26,7 +26,7 @@
 		</form>
 <?php
 
-	include "../AppLogger.php";
+	include "AppLogger.php";
 
 	$logg = new AppLogger("brukertilgang");
 	$logger = $logg->getLogger();
