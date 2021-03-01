@@ -79,6 +79,12 @@
           }
           else {
 
+            include "../AppLogger.php";
+
+            $logg = new AppLogger("meldinger");
+            $logger = $logg->getLogger();
+            $logger->info("Lecturer with ID: " . $foreleserID . " for subject: " . $emneID ." answered question with ID: " . $messageID . ".", ["answer" => $svar]);
+
             $sql2 = "UPDATE meldinger SET svar = '$svar', foreleserID='$foreleserID' WHERE sporsmalID = $messageID;";
               if (!mysqli_query($conn, $sql2)){
                 echo "Incorrect id";
