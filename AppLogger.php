@@ -26,6 +26,7 @@ class AppLogger {
 
                 $this->logger->pushHandler(
                         new GelfHandler(new Gelf\Publisher(new Gelf\Transport\UdpTransport("127.0.0.1", $port))));
+                $this->logger->pushProcessor(new Monolog\Processor\WebProcessor());
         } 
 
         public static function getIPAddress() { 

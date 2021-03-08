@@ -35,9 +35,6 @@
 				session_start();
 				
 				if($_SESSION['user_type'] != 1){
-					$logg = new AppLogger("brukertilgang");
-					$logger = $logg->getLogger();
-					echo AppLogger::getIPAddress();
 					echo "Du er ikke en Admin!";
 				}  
 				else {
