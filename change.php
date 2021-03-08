@@ -78,7 +78,7 @@
 			echo "Can't change another user's password. Please write your own email!";
 		if($attempt_failed) {
 			//temp til inputvalidering er implementert
-			$logger->notice("Attempt to change password", ["email" => $_SESSION["user_email"], "old_pw_input" => $old, "new1_pw_input" => $new1, "new2_pw_input" => $new2]);	
+			$logger->$logger->pushProcessor(new Monolog\Processor\WebProcessor());
 		}
 	}
 	
