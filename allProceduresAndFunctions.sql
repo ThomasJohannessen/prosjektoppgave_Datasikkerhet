@@ -120,9 +120,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteAMessageAdmin`(IN `Ms_Id_In` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteAMessageAdmin`(IN `Ms_H_In` INT)
 DELETE FROM meldinger
-WHERE sporsmalID = Ms_Id_In ;;
+WHERE sha1(CONCAT(sporsmalID, '3bbbffe76658aece882c7607c02bd18f')) = Ms_H_In ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -193,10 +193,9 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GetAllMessagesWithLecturerPictureAdmin`()
-SELECT meldinger.sporsmalID, meldingView.Hash, brukerView.Navn, meldingView.Epost, meldingView.emnekode, meldingView.melding, meldingView.svar, meldingView.emnenavn, foreleserView.Bilde FROM meldingView, foreleserView, brukerView, meldinger
+SELECT meldingView.Hash, brukerView.Navn, meldingView.Epost, meldingView.emnekode, meldingView.melding, meldingView.svar, meldingView.emnenavn, foreleserView.Bilde FROM meldingView, foreleserView, brukerView
 WHERE meldingView.emnekode = foreleserView.emnekode
-AND meldingView.Epost = brukerView.Epost
-AND meldingView.Hash = sha1(CONCAT(meldinger.sporsmalID, '3bbbffe76658aece882c7607c02bd18f')) ;;
+AND meldingView.Epost = brukerView.Epost ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
