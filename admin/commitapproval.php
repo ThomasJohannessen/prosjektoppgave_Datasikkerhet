@@ -8,14 +8,18 @@
 		$db = new Database();
 		$conn = $db->get_Connection();
    		
-		$id = htmlspecialchars(trim($_GET['id']));
+		$epost = htmlspecialchars(trim($_GET['email']));
+		
+		$sql = "CALL CommitApprovalOfLecturerRequest('$epost')";
+
+		$qry = mysqli_query($conn, $sql);
 
 		$logg = new AppLogger("brukertilgang");
-        $logger = $logg->getLogger();
+		
+		$logger = $logg->getLogger();
 
-		$logger->notice("Admin approved a lecturer", ["Admin" => $_SESSION["user_email"], "Approved_lecturer_ID" => $id]);
-
-		$qry = mysqli_query($conn,"update brukere set Brukerstatus=1 where BrukerID='$id'");
+		$logger->notice("Admin approved a lecturer", ["Admin" => $_SESSION["user_email"], "Approved_lecturer_Email" => $epost]);
+		
 
 		if($qry)
 		{

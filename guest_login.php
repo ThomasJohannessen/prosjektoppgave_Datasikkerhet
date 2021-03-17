@@ -28,11 +28,10 @@
             
             $input = $_POST['guestPincode'];
             
-            $result = $conn->query("SELECT * FROM emne");
+            $result = $conn->query("CALL GetAllSubjectCodesAndPins()");
             $row = $result -> fetch_array(MYSQLI_ASSOC);
 
             if($input == $row["emnePIN"]){
-                //setcookie("guest_pin", $input,time()+3600); 
                 $_SESSION['emnePIN'] = $input;
             }
 

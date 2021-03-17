@@ -15,7 +15,7 @@ if (empty($kommentar)){
 }
 
 else {
-$insert = "INSERT INTO kommentarer (sporsmalID, kommentar) VALUES ('$sporsmalID', '$kommentar');";
+$insert = "CALL CommentOnQuestionAsGuest('$sporsmalID', '$kommentar');";
 
 mysqli_query($conn, $insert);
 

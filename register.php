@@ -105,7 +105,7 @@
         $db = new Database();
         $conn = $db->get_Connection();
 
-        $sql_user_exists = "SELECT * FROM `brukere` WHERE `Epost`= '" . $email . "'";
+        $sql_user_exists = "CALL DoesEmailExistInDb('$email')";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -128,7 +128,7 @@
         $db = new Database();
         $conn = $db->get_Connection();
 
-        $sql_subject_exists = "SELECT * FROM `brukere` WHERE `EmneID`= '" . $subject_id . "'";
+        $sql_subject_exists = "CALL IsSubjectTaken('$subject_id')";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -208,7 +208,9 @@
         $logg = new AppLogger("brukertilgang");
         $logger = $logg->getLogger();
         
-        $sql_register = "INSERT INTO `brukere`(`BrukerID`, `Navn`, `Epost`, `Bilde`, `Kull`, `Brukertype`, `Passord`, `EmneID`, `Studieretning`, `Brukerstatus`) VALUES (0, '" . $name . "', '" . $email . "', '" . $image . "', " . $year . ", " . $user_type . ", '" . password_hash($password, PASSWORD_DEFAULT) . "', " . $subject_id . ", '" . $study_path . "', " . $status . ")";
+        $hashed = password_hash($password, PASSWORD_DEFAULT);
+        
+        $sql_register = "CALL RegisterNewUser('$name', '$email', '$image', '$year', '$user_type', '$hashed', '$subject_id', '$study_path', '$status')";
         $register_user = mysqli_query($conn, $sql_register);
         if ($register_user) {
             header("location: register.php?error=none");
@@ -258,7 +260,7 @@
             <label for="subject">Hvilket fag foreleser du i?</label>
             <select id="subject" name="subject">
                 <?php
-                    $sql = "SELECT * FROM emne";
+                    $sql = 'CALL GetAllSubjectCodesAndPins()';
 
                     $results = mysqli_query($conn, $sql);
 

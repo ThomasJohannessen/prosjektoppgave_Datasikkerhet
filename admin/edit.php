@@ -6,19 +6,19 @@
 		$db = new Database();
 		$conn = $db->get_Connection();
 
-		$id = htmlspecialchars(trim($_GET['id']));
-
-		$qry = mysqli_query($conn,"select * from brukere where BrukerID='$id'");
-
-		$data = mysqli_fetch_array($qry);
-
+		$epost = htmlspecialchars(trim($_GET['epost']));
+		
+		$navn = htmlspecialchars(trim($_GET['navn']));
+			
 
 		if(isset($_POST['update']))
 		{
     			$name = htmlspecialchars(trim($_POST['name']));
     			$email = htmlspecialchars(trim($_POST['email']));
-	
-    			$edit = mysqli_query($conn,"update brukere set Navn='$name', Epost='$email' where BrukerID='$id'");
+			
+			$sql2 = "CALL UpdateAUserAdmin('$name', '$email', '$epost')";
+			
+    			$edit = mysqli_query($conn, $sql2);
 	
     			if($edit)
     			{
@@ -26,8 +26,8 @@
         			header("location:updateusers.php"); 
         			exit;
     			}
-    		else
-        		echo mysqli_error();  	
+    			else
+        			echo mysqli_error();  	
 		}
 	}
 	else
@@ -37,7 +37,7 @@
 <h3>Update Data</h3>
 
 <form method="POST">
-	<input type="text" name="name" value="<?php echo $data['Navn'] ?>" placeholder="New Name" Required>
-  	<input type="text" name="email" value="<?php echo $data['Epost'] ?>" placeholder="New Email" Required>
+	<input type="text" name="name" value="<?php echo $navn ?>" placeholder="New Name" Required>
+  	<input type="text" name="email" value="<?php echo $epost ?>" placeholder="New Email" Required>
   	<input type="submit" name="update" value="Update">
 </form>

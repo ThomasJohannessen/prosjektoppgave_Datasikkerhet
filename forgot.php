@@ -29,7 +29,7 @@
 		$db = new Database();
 		$conn = $db->get_Connection();
 		
-		$sql = "SELECT BrukerID, Passord FROM brukere WHERE Epost='$email'";
+		$sql = "SELECT Epost FROM brukere WHERE Epost='$email'";
 		
 		$result = $conn->query($sql);
 		

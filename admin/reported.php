@@ -38,8 +38,10 @@
 					include "../database.php";
 					$db = new Database();
 					$conn = $db->get_Connection();
+					
+					$sql = "CALL GetAllReportedMessagesAdmin()";
 
-					$records = mysqli_query($conn,"select * from rapportering");
+					$records = mysqli_query($conn, $sql);
 
 					while($data = mysqli_fetch_array($records))
 					{

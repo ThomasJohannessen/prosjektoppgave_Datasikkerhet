@@ -22,9 +22,6 @@
         $email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
         $password = $conn -> real_escape_string(trim(htmlspecialchars($_POST["password"])));
 
-        $sql_register = "SELECT `Navn`, `Brukertype`, `EmneID`, `Studieretning`, `Brukerstatus` FROM `brukere` WHERE `Epost`= '" . $email . "' AND `Passord` = '" . $password . "'";
-        $register_user = mysqli_query($conn, $sql_register);
-
         if (emptyInputLogin($email, $password) !== false) {
             header("location: ../login.php?error=emptyinput");
         }
@@ -47,7 +44,7 @@
         $db = new Database();
         $conn = $db->get_Connection();
 
-        $sql_user_exists = "SELECT * FROM `brukere` WHERE `Epost`= '" . $email . "'";
+        $sql_user_exists = "CALL GetInfoForLogginInAllUsers('$email')";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -90,12 +87,9 @@
             } else {
                 session_start();
 
-                $_SESSION["brukerID"] = $mailTaken["BrukerID"];
                 $_SESSION["user_email"] = $mailTaken["Epost"];
-                $_SESSION["username"] = $mailTaken["Navn"];
-                $_SESSION["subject_id"] = $mailTaken["EmneID"];
+                $_SESSION["subject_id"] = $mailTaken["EmneId"];
                 $_SESSION["user_type"] = $mailTaken["Brukertype"];
-                $_SESSION["study_path"] = $mailTaken["Studieretning"];
 
                         
                 $logg = new AppLogger("brukertilgang");

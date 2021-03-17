@@ -8,7 +8,6 @@ if($_SESSION['user_type'] == 3){
     $db = new Database();
     $conn = $db->get_Connection();
 
-    $avsenderID = $_SESSION['brukerID'];
 
     $melding = $_POST['question'];
 
@@ -17,13 +16,13 @@ if($_SESSION['user_type'] == 3){
         exit();
     }
     $emnekode = $_POST['emnekode'];
+    $email = $_SESSION['user_email'];
 
     $logg = new AppLogger("meldinger");
     $logger = $logg->getLogger();
-    $logger->info("User with ID: " . $avsenderID . " sent question in subject " . $emnekode . ".", ["message" => $melding]);
+    $logger->info("User with email: " . $email . " sent question in subject " . $emnekode . ".", ["message" => $melding]);
 
-    $insert = "INSERT INTO `meldinger` (`avsenderID`, `melding`,`emnekode`) VALUES ('$avsenderID', '$melding', '$emnekode')";
-
+    $insert = "CALL SendQuestionStudent('$email', '$melding', '$emnekode')";
 
     mysqli_query($conn, $insert);
 

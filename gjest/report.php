@@ -15,7 +15,7 @@ if (empty($repcomment)){
 
 else {
 
-    $insert = "INSERT INTO `rapportering` (`meldingID`, `RapportKommentar`, `behandlingStatus`) values ($sporsmalID, '$repcomment', 3);";
+    $insert = "CALL ReportAQuestionAsGuest('$sporsmalID', '$repcomment')";
 
     mysqli_query($conn, $insert);
 

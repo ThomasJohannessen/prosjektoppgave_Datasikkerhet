@@ -48,7 +48,7 @@
 			$db = new Database();
 			$conn = $db->get_Connection();
 		
-			$emailChecker = "SELECT * FROM brukere WHERE Epost='$email'";
+			$emailChecker = "CALL GetEmailAndPassAllUsers('$email')";
 		
 			$resultFromEmailCheck = $conn->query($emailChecker);
 
@@ -90,7 +90,7 @@
 		//$ip = (string) AppLogger::getIPAddress();
 		//$ipAddress = $_SERVER['REMOTE_ADDR']?:($_SERVER['HTTP_X_FORWARDED_FOR']?:$_SERVER['HTTP_CLIENT_IP']);
 
-		$sqlUpdate = "UPDATE brukere SET Passord='$hashed' WHERE Epost='$email'";
+		$sqlUpdate = "CALL ChangePasswordOfAUser('$email', '$hashed')";
 
 		if ($conn->query($sqlUpdate) === FALSE)
   			echo "Error updating password: " . $conn->error;

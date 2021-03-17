@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <nav ><ul class="navbar">
+    <nav><ul class="navbar">
         <li><a href="../login.php">Logg inn</a></li>
         <li><a href="../register.php">Registrer</a></li>
     </nav>
@@ -58,12 +58,12 @@
                 exit;
         }    
         
-        $sql = "SELECT `sporsmalID`, `melding`, `svar`, `Bilde`, `foreleserID` FROM meldinger, brukere WHERE emnekode = '$emneKode' AND meldinger.foreleserID = brukere.BrukerID";
+        $sql = "CALL GuestFeedGetSubjectAndLecturer('$emneKode')";
         
         $result = $conn->query($sql);
 
         echo "<h2>Dette er siden til faget $emneKode</h2>";
-        
+
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 ?>

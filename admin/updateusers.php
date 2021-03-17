@@ -17,7 +17,6 @@
 
 		<table border="2">
   			<tr>
-    				<td>User ID</td>
     				<td>Name</td>
     				<td>Email</td>
     				<td>Update</td>
@@ -25,7 +24,6 @@
   			</tr>
 
 			<?php
-				include "../AppLogger.php";
 
 				if (isset($_POST['logout'])){
 					include "../functions.php";
@@ -42,18 +40,20 @@
 					include "../database.php";
 					$db = new Database();
 					$conn = $db->get_Connection();
-
-					$records = mysqli_query($conn,"select * from brukere");
+					
+					$sql = "CALL GetNameAndEmailOfAllStudentsAndLecturers()";
+					
+					$records = mysqli_query($conn, $sql);
 
 					while($data = mysqli_fetch_array($records))
 					{
 			?>
   			<tr>
-    				<td><?php echo $data['BrukerID']; ?></td>
+
     				<td><?php echo $data['Navn']; ?></td>
     				<td><?php echo $data['Epost']; ?></td>    
-					<td><a href="edit.php?id=<?php echo $data['BrukerID']; ?>">Edit</a></td>
-    				<td><a href="delete.php?id=<?php echo $data['BrukerID']; ?>">Delete</a></td>
+					<td><a href="edit.php?epost=<?php echo $data['Epost']; ?>&navn=<?php echo $data['Navn']; ?>">Edit</a></td>
+    				<td><a href="delete.php?epost=<?php echo $data['Epost']; ?>">Delete</a></td>
   			</tr>	
 			<?php
 					}
