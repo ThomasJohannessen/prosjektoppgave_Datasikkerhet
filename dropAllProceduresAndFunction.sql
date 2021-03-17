@@ -2,6 +2,7 @@ DROP PROCEDURE IF EXISTS `AnswerAQuestionLecturer`;
 DROP PROCEDURE IF EXISTS `ChangePasswordOfAUser`;
 DROP PROCEDURE IF EXISTS `CommentOnQuestionAsGuest`;
 DROP PROCEDURE IF EXISTS `CommitApprovalOfLecturerRequest`;
+DROP PROCEDURE IF EXISTS `DeleteAMessageAdmin`;
 DROP PROCEDURE IF EXISTS `DeleteAUserAdmin`;
 DROP PROCEDURE IF EXISTS `DoesEmailExistInDb`;
 DROP PROCEDURE IF EXISTS `GetAllLecturerRequests`;
