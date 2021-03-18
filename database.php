@@ -4,7 +4,7 @@ class Database {
     private $db_host = "localhost";
     private $db_name = "datasikkerhet_prosjekt";
     private $db_username = "webBruker"; 
-    private $db_password = "webApp123#21"; 
+    private $db_password = "webApp123"; 
     private $conn;
 
     public function get_Connection() {
