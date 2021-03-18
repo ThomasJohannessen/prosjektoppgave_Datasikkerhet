@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.23, for Linux (x86_64)
 --
--- Host: localhost    Database: softsec
+-- Host: localhost    Database: datasikkerhet_prosjekt
 -- ------------------------------------------------------
 -- Server version	8.0.23-0ubuntu0.20.04.1
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
@@ -11,7 +11,7 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping routines for database 'softsec'
+-- Dumping routines for database 'datasikkerhet_prosjekt'
 --
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -48,7 +48,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost`  PROCEDURE `AnswerAQuestionLecturer`(IN `Svr_In` VARCHAR(250), IN `F_Em_In` VARCHAR(200), IN `Spm_Id` VARCHAR(200))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AnswerAQuestionLecturer`(IN `Svr_In` VARCHAR(250), IN `F_Em_In` VARCHAR(200), IN `Spm_Id` VARCHAR(200))
 UPDATE meldinger
 SET svar = Svr_In,
 foreleserID = (SELECT GetUserIdFromEmail(F_Em_In))
@@ -67,7 +67,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost`  PROCEDURE `ChangePasswordOfAUser`(IN `Em_In` VARCHAR(200), IN `Hash_P_In` VARCHAR(200))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ChangePasswordOfAUser`(IN `Em_In` VARCHAR(200), IN `Hash_P_In` VARCHAR(200))
 UPDATE brukere
 SET Passord=Hash_P_In
 WHERE Epost=Em_In ;;
@@ -120,7 +120,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteAMessageAdmin`(IN `Ms_H_In` INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DeleteAMessageAdmin`(IN `Ms_H_In` VARCHAR(200))
 DELETE FROM meldinger
 WHERE sha1(CONCAT(sporsmalID, '3bbbffe76658aece882c7607c02bd18f')) = Ms_H_In ;;
 DELIMITER ;

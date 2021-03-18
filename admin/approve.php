@@ -47,11 +47,43 @@
 					{
 				?>
   				<tr>
-    					<td><?php echo $data['Navn']; ?></td>
-    					<td><?php echo $data['Epost']; ?></td>    
-    					<td><a href="commitapproval.php?email=<?php echo $data['Epost']; ?>">Approve</a></td>
+  					<td><?php echo $data['Epost']; ?></td>
+  					<td><?php echo $data['Navn']; ?></td>
+    					<form method="post">
+	    		    		<input type="hidden" value="<?php echo $data["Epost"]; ?>" name="email"/>
+	    		    		<td><input type="submit" name="approve" value="Approve" /></td>
+	    		    		</form>
   				</tr>	
 				<?php
+					if (isset($_POST['approve'])){
+						include "../AppLogger.php";
+						$db = new Database();
+						$conn = $db->get_Connection();
+	   		
+						$epost = htmlspecialchars(trim($_POST['email']));
+
+
+						$sql = "CALL CommitApprovalOfLecturerRequest('$epost')";
+
+						$qry = mysqli_query($conn, $sql);
+			
+
+						if($qry)
+						{
+							$logg = new AppLogger("brukertilgang");
+			
+							$logger = $logg->getLogger();
+
+							$logger->notice("Admin approved a lecturer", ["Admin" => $_SESSION["user_email"], "Approved_lecturer_Email" => $epost]);
+	    						mysqli_close($conn);
+	    						header("location:approve.php");
+	    						exit;	
+						}
+						else
+	    						echo "Error approving teacher status";
+					
+					}
+						
 					}
 				}
    				else

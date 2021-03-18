@@ -47,9 +47,37 @@
                             echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["Navn"]. "<br>";
                             echo "<img src=\"http://158.39.188.201/steg1/prosjektoppgave_Datasikkerhet/uploads/" . $row["Bilde"] . "\" alt=\"foreleser\">";
 	    		    ?>
-	    		    	<a href="deletemessage.php?id=<?php echo $row['Hash']; ?>">Delete</a>
+	    		    	<form method="post">
+	    		    		<input type="hidden" value="<?php echo $row["Hash"]; ?>" name="messageID"/>
+	    		    		<input type="submit" name="delete" value="Delete" />
+				</form>
+
+
                         </div>
-                    <?php   
+                    <?php
+                    if (isset($_POST['delete'])){  
+                    	
+                    	$id = $_POST['messageID'];
+                    	
+                    	$db = new Database();
+    			$conn = $db->get_Connection();
+    			
+    			echo $id;
+
+        		$sql = "CALL DeleteAMessageAdmin('$id')";
+
+			$del = mysqli_query($conn, $sql);
+
+			if($del)
+			{
+   				mysqli_close($conn);
+    				header("location:adminfeed.php");
+    				exit;	
+			} 
+			else
+ 				echo "Error deleting message";
+            
+          		}   
                     }  
                 }
         } 

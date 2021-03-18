@@ -49,13 +49,62 @@
 					{
 			?>
   			<tr>
-
-    				<td><?php echo $data['Navn']; ?></td>
-    				<td><?php echo $data['Epost']; ?></td>    
-					<td><a href="edit.php?epost=<?php echo $data['Epost']; ?>&navn=<?php echo $data['Navn']; ?>">Edit</a></td>
-    				<td><a href="delete.php?epost=<?php echo $data['Epost']; ?>">Delete</a></td>
+				<form method="post">
+    					<td><input type="text" value="<?php echo $data["Navn"]; ?>" name="name"/></td>
+    					<td><input type="text" value="<?php echo $data["Epost"]; ?>" name="updatedEmail"/></td>
+    					<input type="hidden" value="<?php echo $data["Epost"]; ?>" name="originalEmail"/>
+	    		    		<td><input type="submit" name="update" value="Update" /></td>
+	    		    		<td><input type="submit" name="delete" value="Delete" /></td>
+	    		    	</form>
   			</tr>	
 			<?php
+				if(isset($_POST['update']))
+				{
+					$db = new Database();
+					$conn = $db->get_Connection();
+	    				$name = htmlspecialchars(trim($_POST['name']));
+	    				$email = htmlspecialchars(trim($_POST['updatedEmail']));
+	    				$epost = htmlspecialchars(trim($_POST['originalEmail']));
+					$sql2 = "CALL UpdateAUserAdmin('$name', '$email', '$epost')";
+				
+	    				$edit = mysqli_query($conn, $sql2);
+		
+	    				if($edit)
+	    				{
+						mysqli_close($conn); 
+						header("location:updateusers.php"); 
+						exit;
+	    				}
+	    				else
+						echo mysqli_error();  	
+				}
+				if(isset($_POST['delete']))
+				{
+					include "../AppLogger.php";
+		
+					$db = new Database();
+					$conn = $db->get_Connection();
+
+					$epost = htmlspecialchars(trim($_POST['originalEmail']));
+					
+					$sql = "CALL DeleteAUserAdmin('$epost')";
+
+					$del = mysqli_query($conn, $sql);
+					
+
+					if($del)
+					{
+						$logg = new AppLogger("brukertilgang");
+					
+						$logger = $logg->getLogger();
+
+						$logger->notice("Admin deleted a user", ["Admin" => $_SESSION["user_email"], "Deleted_User_Email" => $epost]);
+			   			mysqli_close($conn);
+			    			header("location:updateusers.php");
+			    			exit;	
+					} else
+			 			echo "Error deleting user";
+				}
 					}
 				}
 			?>
