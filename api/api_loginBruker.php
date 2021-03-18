@@ -15,11 +15,15 @@ $query = "SELECT BrukerID FROM `brukere` WHERE Epost = '".$epost."';";
 $result = $db->query($query);
 $db_conn->close_Connection();
 
+$logg = new AppLogger("app");
+$logger = $logg->getLogger();
+
 $passord_row = $password_result->fetch_assoc();
 $password_hash = $passord_row["Passord"];
     
 if(($result->num_rows == 1)&&(password_verify($passord, $password_hash))) {
-    
+    $logger->info("User logged in", ["eMail" => $epost, "password" => $password_hash]);
+
     $json_array = array();
     $row = $result->fetch_assoc();
     //array_push($json_array, $row);
@@ -29,6 +33,7 @@ if(($result->num_rows == 1)&&(password_verify($passord, $password_hash))) {
     //echo $json_array;
 }
 else {
+    $logger->notify("Failed attempt to log in", ["usernameInput" => $epost, "passwordInput" => $password]);
     echo 0;
 }
 ?>
