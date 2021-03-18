@@ -34,15 +34,16 @@
 	session_start();
 	if(isset($_POST['change']))
 	{
+		include "database.php";
 		
-		$email = htmlspecialchars(trim($_POST['email']));
+		$db = new Database();
+		$conn = $db->get_Connection();
+		
+		$email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
+		
 		$attempt_failed = true;
 		if ($_SESSION['user_email'] == $email) 
 		{
-			include "database.php";
-			
-			$db = new Database();
-			$conn = $db->get_Connection();
 			
 			$old = $conn -> real_escape_string(trim(htmlspecialchars($_POST["old"])));
 			$new1 = $conn -> real_escape_string(trim(htmlspecialchars($_POST["new1"])));
