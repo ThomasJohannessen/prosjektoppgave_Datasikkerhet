@@ -33,7 +33,7 @@
 
     if (isset($_POST['sendbtn'])){
 
-        $pinkode = $_POST['pinkode'];
+        $pinkode = $conn -> real_escape_string(trim(htmlspecialchars($_POST["pinkode"])));
 
         if ($pinkode > 9999 || $pinkode < 1000){
             echo "<h2>Jeg sa firesifret pin....</h2>";

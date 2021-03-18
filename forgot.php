@@ -23,13 +23,13 @@
 	
 	function doesEmailExistInDatabase()
 	{
-		$email = htmlspecialchars(trim($_POST['email']));
 		
 		include "database.php";
 		$db = new Database();
 		$conn = $db->get_Connection();
+		$email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
 		
-		$sql = "SELECT Epost FROM brukere WHERE Epost='$email'";
+		$sql = "CALL GetInfoForLogginInAllUsers('$email')";
 		
 		$result = $conn->query($sql);
 		
@@ -65,7 +65,7 @@
 		
 		if( $retval == true )
 		{	
-			$sqlUpdate = "UPDATE brukere SET Passord='$hashed' WHERE Epost='$email'";
+			$sqlUpdate = "CALL ChangePasswordOfAUser('$email', $hashed')";
 
 			if ($conn->query($sqlUpdate) === FALSE)
   				echo "Error updating record: " . $conn->error;

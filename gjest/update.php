@@ -5,8 +5,8 @@ include "../database.php";
 $db = new Database();
 $conn = $db->get_Connection();
 
-$kommentar = $_POST['comment'];
-$sporsmalID = $_POST['messageID'];
+$kommentar = $conn -> real_escape_string(trim(htmlspecialchars($_POST["comment"])));
+$sporsmalID = $conn -> real_escape_string(trim(htmlspecialchars($_POST["messageID"])));
 
 if (empty($kommentar)){
     echo $sporsmalID;

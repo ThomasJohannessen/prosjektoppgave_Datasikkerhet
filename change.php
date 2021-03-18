@@ -39,14 +39,14 @@
 		$attempt_failed = true;
 		if ($_SESSION['user_email'] == $email) 
 		{
-			$old = htmlspecialchars(trim($_POST['old']));
-			$new1 = htmlspecialchars(trim($_POST['new1']));
-			$new2 = htmlspecialchars(trim($_POST['new2']));
-
 			include "database.php";
 			
 			$db = new Database();
 			$conn = $db->get_Connection();
+			
+			$old = $conn -> real_escape_string(trim(htmlspecialchars($_POST["old"])));
+			$new1 = $conn -> real_escape_string(trim(htmlspecialchars($_POST["new1"])));
+			$new2 = $conn -> real_escape_string(trim(htmlspecialchars($_POST["new2"])));
 		
 			$emailChecker = "CALL GetEmailAndPassAllUsers('$email')";
 		

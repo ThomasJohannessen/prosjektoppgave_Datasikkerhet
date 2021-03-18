@@ -72,8 +72,8 @@
   
         if (isset($_POST['svarbtn'])){  
 
-        $svar = $_POST['svar'];
-        $messageID = $_POST['messageID'];
+        $svar = $conn -> real_escape_string(trim(htmlspecialchars($_POST["svar"])));
+        $messageID = $conn -> real_escape_string(trim(htmlspecialchars($_POST["messageID"])));
 
           if (empty($svar)){
             

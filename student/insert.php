@@ -9,13 +9,13 @@ if($_SESSION['user_type'] == 3){
     $conn = $db->get_Connection();
 
 
-    $melding = $_POST['question'];
+    $melding = $conn -> real_escape_string(trim(htmlspecialchars($_POST["question"])));
 
     if ($melding == ""){
         header("refresh:0.01; url=studentside.php");
         exit();
     }
-    $emnekode = $_POST['emnekode'];
+    $emnekode = $conn -> real_escape_string(trim(htmlspecialchars($_POST["emnekode"])));
     $email = $_SESSION['user_email'];
 
     $logg = new AppLogger("meldinger");

@@ -60,7 +60,7 @@
 						$db = new Database();
 						$conn = $db->get_Connection();
 	   		
-						$epost = htmlspecialchars(trim($_POST['email']));
+						$epost = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
 
 
 						$sql = "CALL CommitApprovalOfLecturerRequest('$epost')";

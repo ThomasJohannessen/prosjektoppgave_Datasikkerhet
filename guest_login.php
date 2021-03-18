@@ -26,7 +26,7 @@
             $db = new Database();
             $conn = $db->get_Connection();
             
-            $input = $_POST['guestPincode'];
+            $input = $conn -> real_escape_string(trim(htmlspecialchars($_POST["guestPincode"])));
             
             $result = $conn->query("CALL GetAllSubjectCodesAndPins()");
             $row = $result -> fetch_array(MYSQLI_ASSOC);

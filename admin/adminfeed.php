@@ -57,10 +57,10 @@
                     <?php
                     if (isset($_POST['delete'])){  
                     	
-                    	$id = $_POST['messageID'];
-                    	
                     	$db = new Database();
     			$conn = $db->get_Connection();
+    			
+    			$id = $conn -> real_escape_string(trim(htmlspecialchars($_POST["messageID"])));
     			
     			echo $id;
 

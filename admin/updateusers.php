@@ -62,9 +62,10 @@
 				{
 					$db = new Database();
 					$conn = $db->get_Connection();
-	    				$name = htmlspecialchars(trim($_POST['name']));
-	    				$email = htmlspecialchars(trim($_POST['updatedEmail']));
-	    				$epost = htmlspecialchars(trim($_POST['originalEmail']));
+	    				$name = $conn -> real_escape_string(trim(htmlspecialchars($_POST["name"])));
+
+	    				$email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["updatedEmail"])));
+	    				$epost = $conn -> real_escape_string(trim(htmlspecialchars($_POST["originalEmail"])));
 					$sql2 = "CALL UpdateAUserAdmin('$name', '$email', '$epost')";
 				
 	    				$edit = mysqli_query($conn, $sql2);
@@ -85,7 +86,7 @@
 					$db = new Database();
 					$conn = $db->get_Connection();
 
-					$epost = htmlspecialchars(trim($_POST['originalEmail']));
+					$epost = $conn -> real_escape_string(trim(htmlspecialchars($_POST["originalEmail"])));
 					
 					$sql = "CALL DeleteAUserAdmin('$epost')";
 
