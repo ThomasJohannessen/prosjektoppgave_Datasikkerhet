@@ -10,8 +10,13 @@ $emnekode = $_GET['emnekode'];
 
 $logg = new AppLogger("app");
 $logger = $logg->getLogger();
+if(empty($sporsmal) || empty($avsender) || empty($emnekode)) {
+    $logger->warning("User tried sending a question with an empty field", ["userID" => $avsender, "subjectCode" => $emnekode, "question" => $sporsmal]);
+}
+else {
+    $logger->info("User sent a question", ["userID" => $avsender, "subjectCode" => $emnekode, "question" => $sporsmal]);
+}
 
-$logger->info("User sent a question", ["userID" => $avsender, "subjectCode" => $emnekode, "question" => $sporsmal]);
 
 
 $query = 'INSERT INTO meldinger(avsenderID, emnekode, melding)
