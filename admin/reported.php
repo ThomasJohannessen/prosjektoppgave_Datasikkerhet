@@ -37,7 +37,7 @@
 
 					include "../database.php";
 					$db = new Database();
-					$conn = $db->get_Connection();
+					$conn = $db->get_Connection("");
 					
 					$sql = "CALL GetAllReportedMessagesAdmin()";
 

@@ -30,7 +30,7 @@
     if($_SESSION['user_type'] == 1){
         
     $db = new Database();
-    $conn = $db->get_Connection();
+    $conn = $db->get_Connection("");
             
     $sql = "CALL GetAllMessagesWithLecturerPictureAdmin()";
     $result = $conn->query($sql);
@@ -58,7 +58,7 @@
                     if (isset($_POST['delete'])){  
                     	
                     	$db = new Database();
-    			$conn = $db->get_Connection();
+    			$conn = $db->get_Connection("");
     			
     			$id = $conn -> real_escape_string(trim(htmlspecialchars($_POST["messageID"])));
     			

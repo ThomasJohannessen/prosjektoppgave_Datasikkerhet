@@ -24,7 +24,7 @@
 
         function checkIfPinExists(){
             $db = new Database();
-            $conn = $db->get_Connection();
+            $conn = $db->get_Connection("guest");
             
             $input = $conn -> real_escape_string(trim(htmlspecialchars($_POST["guestPincode"])));
             

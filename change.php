@@ -37,7 +37,15 @@
 		include "database.php";
 		
 		$db = new Database();
-		$conn = $db->get_Connection();
+		
+		$conn = "";
+		
+		if ($_SESSION['user_type'] == 1)
+			$conn = $db->get_Connection("");
+		if ($_SESSION['user_type'] == 2)
+			$conn = $db->get_Connection("foreleser");
+		if ($_SESSION['user_type'] == 3)
+			$conn = $db->get_Connection("student");
 		
 		$email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
 		
@@ -48,8 +56,16 @@
 			$old = $conn -> real_escape_string(trim(htmlspecialchars($_POST["old"])));
 			$new1 = $conn -> real_escape_string(trim(htmlspecialchars($_POST["new1"])));
 			$new2 = $conn -> real_escape_string(trim(htmlspecialchars($_POST["new2"])));
+			
+			$emailChecker = "";
 		
-			$emailChecker = "CALL GetEmailAndPassAllUsers('$email')";
+			if ($_SESSION['user_type'] == 1)
+				$emailChecker = "CALL GetEmailAndPassAllUsers('$email')";
+			if ($_SESSION['user_type'] == 2)
+				$emailChecker = "CALL GetEmailAndPassAllLecturers('$email')";
+			if ($_SESSION['user_type'] == 3)
+				$emailChecker = "CALL GetEmailAndPassAllStudents('$email')";
+
 		
 			$resultFromEmailCheck = $conn->query($emailChecker);
 
@@ -86,7 +102,7 @@
 	function change($email, $new1, $conn, $logger)
 	{
 		$db = new Database();
-		$conn = $db->get_Connection();
+		$conn = $db->get_Connection("student");
 		$hashed = password_hash($new1, PASSWORD_DEFAULT);
 		//$ip = (string) AppLogger::getIPAddress();
 		//$ipAddress = $_SERVER['REMOTE_ADDR']?:($_SERVER['HTTP_X_FORWARDED_FOR']?:$_SERVER['HTTP_CLIENT_IP']);

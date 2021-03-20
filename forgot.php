@@ -26,10 +26,10 @@
 		
 		include "database.php";
 		$db = new Database();
-		$conn = $db->get_Connection();
+		$conn = $db->get_Connection("guest");
 		$email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
 		
-		$sql = "CALL GetInfoForLogginInAllUsers('$email')";
+		$sql = "CALL DoesEmailExistInDb('$email')";
 		
 		$result = $conn->query($sql);
 		
@@ -49,7 +49,7 @@
 	function generateAndSend($email, $conn)
 	{
 		$db = new Database();
-		$conn = $db->get_Connection();
+		$conn = $db->get_Connection("student");
 		
 		$characters = 8;
 		$validChars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

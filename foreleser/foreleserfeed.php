@@ -35,7 +35,7 @@
     }  
     else{
         $db = new Database();
-        $conn = $db->get_Connection(); 
+        $conn = $db->get_Connection("foreleser"); 
 
         $sql = "CALL GetAllQuestionsForSubjectLecturer('$emneID');";
         

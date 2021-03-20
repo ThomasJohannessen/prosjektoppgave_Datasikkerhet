@@ -6,7 +6,7 @@ if($_SESSION['user_type'] == 3){
     include "../AppLogger.php";
 
     $db = new Database();
-    $conn = $db->get_Connection();
+    $conn = $db->get_Connection("student");
 
 
     $melding = $conn -> real_escape_string(trim(htmlspecialchars($_POST["question"])));

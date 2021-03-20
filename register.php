@@ -14,7 +14,7 @@
     include "database.php";
     include "AppLogger.php";
     $db = new Database();
-    $conn = $db->get_Connection();
+    $conn = $db->get_Connection("guest");
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $status = "";
@@ -103,7 +103,7 @@
 
     function mailTaken($email) {
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
 
         $sql_user_exists = "CALL DoesEmailExistInDb('$email')";
 
@@ -126,7 +126,7 @@
 
     function subjectTaken($subject_id) {
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
 
         $sql_subject_exists = "CALL IsSubjectTaken('$subject_id')";
 
@@ -192,7 +192,7 @@
 
     function createUser($name, $email, $password, &$user_type, $study_path, $year, $subject_id, $image) {
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
 
         if ($user_type === "foreleser") {
             $user_type = 2;

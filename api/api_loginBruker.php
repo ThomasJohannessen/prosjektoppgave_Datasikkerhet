@@ -2,16 +2,16 @@
 header('Content-Type: application/json');
 
 include "../database.php";
-$db_conn = new Database();
+$db_conn = new Database("guest");
 $db = $db_conn->get_Connection() or die();
 
 $epost = $_GET['epost'];
 $passord = $_GET['passord'];
 
-$password_query = "SELECT Passord FROM `brukere` WHERE Epost = '".$epost."';";
+$password_query = "CALL LoginGetPassApi('$epost')";
 $password_result = $db->query($password_query);
 
-$query = "SELECT BrukerID FROM `brukere` WHERE Epost = '".$epost."';";
+$query = "CALL LoginGetIdApi('$epost')";
 $result = $db->query($query);
 $db_conn->close_Connection();
 

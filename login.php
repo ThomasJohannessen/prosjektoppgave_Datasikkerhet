@@ -14,11 +14,11 @@
     session_start();
     include("database.php");
     $db = new Database();
-    $conn = $db->get_Connection();
+    $conn = $db->get_Connection("guest");
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
         $email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
         $password = $conn -> real_escape_string(trim(htmlspecialchars($_POST["password"])));
 
@@ -31,7 +31,7 @@
     function emptyInputLogin ($email, $password) {
         
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
         if (empty($email) || empty($password)) {
             $res = true;
         } else {
@@ -42,7 +42,7 @@
 
     function mailTaken($email) {
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
 
         $sql_user_exists = "CALL GetInfoForLogginInAllUsers('$email')";
 
@@ -65,7 +65,7 @@
 
     function loginUser($email, $password) {
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
         $mailTaken = mailtaken($email);
 
         if ($mailTaken === false) {

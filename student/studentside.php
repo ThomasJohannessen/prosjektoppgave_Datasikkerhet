@@ -13,7 +13,7 @@ if($_SESSION['user_type'] != 3){
 else{
 include "../database.php";
 $db = new Database();
-$conn = $db->get_Connection();
+$conn = $db->get_Connection("student");
 $sql = "CALL GetPictureOfEachLecturerOfEachSubject()";
 
 $results = mysqli_query($conn, $sql);
@@ -71,7 +71,7 @@ while($row = mysqli_fetch_array($results)) {
 
         <select name="emnekode" id="emnevalg" onchange="onChange()">
                 <?php
-                    $conn = $db->get_Connection();
+                    $conn = $db->get_Connection("student");
                     $sql = "CALL GetPictureOfEachLecturerOfEachSubject()";
                     $results = mysqli_query($conn, $sql);
                     while($row = mysqli_fetch_array($results)) {

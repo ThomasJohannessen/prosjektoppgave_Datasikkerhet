@@ -3,7 +3,7 @@
 include "../database.php";
 
 $db = new Database();
-$conn = $db->get_Connection();
+$conn = $db->get_Connection("guest");
 
 $kommentar = $conn -> real_escape_string(trim(htmlspecialchars($_POST["comment"])));
 $sporsmalID = $conn -> real_escape_string(trim(htmlspecialchars($_POST["messageID"])));

@@ -40,7 +40,7 @@
       include "../database.php" ;
 
       $db = new Database();
-      $conn = $db->get_Connection();
+      $conn = $db->get_Connection("foreleser");
       
       $em = $_SESSION['user_email'];
 
@@ -68,7 +68,7 @@
             </div>
 <?php
     $db = new Database();
-    $conn = $db->get_Connection();
+    $conn = $db->get_Connection("foreleser");
   
         if (isset($_POST['svarbtn'])){  
 

@@ -31,7 +31,7 @@
    	$email = $_SESSION['user_email'];
 
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("student");
 
         $sql = "CALL GetMessageFeedStudent('$email')";
 
