@@ -3,8 +3,8 @@
 class Database {
     private $db_host = "localhost";
     private $db_name = "datasikkerhet_prosjekt";
-    private $db_username = "softsec"; 
-    private $db_password = "bullshitbruker99"; 
+    private $db_username = ""; 
+    private $db_password = "";
     private $conn;
     
     public function get_Connection($usertype) {
@@ -19,6 +19,10 @@ class Database {
         else if ($usertype == "guest") {
             $this->db_username = "guest";
             $this->db_password = "t0tallyUn1nv1tedguesT";
+        }
+        else if ($usertype == "admin") {
+            $this->db_username = "softsec";
+            $this->db_password = "bullshitbruker99";
         }
         
         $this->conn = new mysqli($this->db_host, $this->db_username, $this->db_password, $this->db_name);

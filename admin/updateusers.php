@@ -39,7 +39,7 @@
    				
 					include "../database.php";
 					$db = new Database();
-					$conn = $db->get_Connection("");
+					$conn = $db->get_Connection("admin");
 					
 					$sql = "CALL GetNameAndEmailOfAllStudentsAndLecturers()";
 					
@@ -61,7 +61,7 @@
 				if(isset($_POST['update']))
 				{
 					$db = new Database();
-					$conn = $db->get_Connection("");
+					$conn = $db->get_Connection("admin");
 	    				$name = $conn -> real_escape_string(trim(htmlspecialchars($_POST["name"])));
 
 	    				$email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["updatedEmail"])));
@@ -84,7 +84,7 @@
 					include "../AppLogger.php";
 		
 					$db = new Database();
-					$conn = $db->get_Connection("");
+					$conn = $db->get_Connection("admin");
 
 					$epost = $conn -> real_escape_string(trim(htmlspecialchars($_POST["originalEmail"])));
 					

@@ -41,7 +41,7 @@
 		$conn = "";
 		
 		if ($_SESSION['user_type'] == 1)
-			$conn = $db->get_Connection("");
+			$conn = $db->get_Connection("admin");
 		if ($_SESSION['user_type'] == 2)
 			$conn = $db->get_Connection("foreleser");
 		if ($_SESSION['user_type'] == 3)

@@ -19,6 +19,9 @@ class AppLogger {
                         case "meldinger":
                                 $port = 12202;
                                 break;
+                        case "app":
+                                $port = 12203;
+                                break;
                         default:
                                 $port = 12210;
                                 break;
@@ -28,27 +31,6 @@ class AppLogger {
                         new GelfHandler(new Gelf\Publisher(new Gelf\Transport\UdpTransport("127.0.0.1", $port))));
                 $this->logger->pushProcessor(new Monolog\Processor\WebProcessor());
         } 
-
-        public static function getIPAddress() { 
-                $client  = @$_SERVER['HTTP_CLIENT_IP'];
-                $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
-                $remote  = $_SERVER['REMOTE_ADDR'];
-
-                if(filter_var($client, FILTER_VALIDATE_IP))
-                {
-                        $ip = $client;
-                }
-                elseif(filter_var($forward, FILTER_VALIDATE_IP))
-                {
-                        $ip = $forward;
-                }
-                else
-                {
-                        $ip = $remote;
-                }
-
-                return $ip;
-                }  
 
         public function getLogger() {
                 return $this->logger;

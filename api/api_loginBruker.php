@@ -2,6 +2,7 @@
 header('Content-Type: application/json');
 
 include "../database.php";
+include "../AppLogger.php";
 $db_conn = new Database("guest");
 $db = $db_conn->get_Connection() or die();
 
@@ -14,6 +15,9 @@ $password_result = $db->query($password_query);
 $query = "CALL LoginGetIdApi('$epost')";
 $result = $db->query($query);
 $db_conn->close_Connection();
+
+$logg = new AppLogger("app");
+$logger = $logg->getLogger();
 
 $passord_row = $password_result->fetch_assoc();
 $password_hash = $passord_row["Passord"];
@@ -29,6 +33,7 @@ if(($result->num_rows == 1)&&(password_verify($passord, $password_hash))) {
     //echo $json_array;
 }
 else {
+    $logger->notice("Failed attempt to log in", ["usernameInput" => $epost, "passwordInput" => $password]);
     echo 0;
 }
 ?>
