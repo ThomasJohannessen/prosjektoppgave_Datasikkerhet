@@ -74,7 +74,13 @@
 				$row = $resultFromEmailCheck->fetch_assoc();
 				$verify = password_verify($old, $row['Passord']);
 				
-				if ($new1 === $old)
+				$uppercase = preg_match('@[A-Z]@', $new1);
+				$lowercase = preg_match('@[a-z]@', $new1);
+				$number    = preg_match('@[0-9]@', $new1);
+
+				if(!$uppercase || !$lowercase || !$number || strlen($new1) < 8)
+  					echo "Password must contain at least 8 characters with minimum one number, one lowercase and one uppercase letter!.";
+				else if ($new1 === $old)
 					echo "The new password can't be the same as the old one!";
 				else if(empty($new2) || empty($new1)){
 					echo "Fields cant be empty";

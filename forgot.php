@@ -35,7 +35,7 @@
 		
 		
 		if (mysqli_num_rows($result) > 0) 
-			generateAndSend($email, $conn);
+			send($email, $conn);
 		else 
  		{
   			echo "<script>
@@ -45,15 +45,31 @@
 				
 	}
 	
+	function generateRandom()
+	{
+		$characters = 8;
+		$validChars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    		$password = substr(str_shuffle(str_repeat($validChars,ceil($characters/strlen($validChars)) )),1,$characters);
+    		
+    		return $password;
+	}
+	
 
-	function generateAndSend($email, $conn)
+	function send($email, $conn)
 	{
 		$db = new Database();
 		$conn = $db->get_Connection("student");
 		
-		$characters = 8;
-		$validChars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    		$password = substr(str_shuffle(str_repeat($validChars,ceil($characters/strlen($validChars)) )),1,$characters);
+		$password = generateRandom();
+		
+		$uppercase = preg_match('@[A-Z]@', $password);
+		$lowercase = preg_match('@[a-z]@', $password);
+		$number    = preg_match('@[0-9]@', $password);
+
+		while(!$uppercase || !$lowercase || !$number || strlen($password) < 8)
+		{
+  			$password = generateRandom();
+		}
 	
 		$header = "From:forgotten@pass.word \r\n";
 		$header .= "MIME-Version: 1.0\r\n";

@@ -31,6 +31,15 @@
         $subject_id = $conn -> real_escape_string(trim(htmlspecialchars($_POST["subject"])));
         $image = $conn -> real_escape_string(trim(htmlspecialchars($_FILES["photo"]["name"])));
         $ext = pathinfo($image, PATHINFO_EXTENSION);
+        
+        $uppercase = preg_match('@[A-Z]@', $password);
+        $lowercase = preg_match('@[a-z]@', $password);
+        $number = preg_match('@[0-9]@', $password);
+
+	if(!$uppercase || !$lowercase || !$number || strlen($password) < 8){
+            header("location: register.php?error=invalidpassword");
+            exit();
+        }
 
         if (emptyFields($name, $email, $password, $password_confirmed, $user_type, $study_path, $year, $subject_id, $image, $rand_filename) !== false) {
             header("location: register.php?error=missingfields");
@@ -291,6 +300,9 @@
     if(isset($_GET["error"])) {
         if($_GET["error"] == "missingfields") {
             echo "<p>Alle felter må fylles</p>";
+        }
+        elseif ($_GET["error"] == "invalidpassword") {
+            echo "<p>Passordet må være minst 8 karakterer med minst ett tall, en små og en stor bokstav</p>";
         }
         elseif ($_GET["error"] == "invalidemail") {
             echo "<p>Velg et passende email</p>";
