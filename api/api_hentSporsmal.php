@@ -6,11 +6,11 @@ header('Content-Type: application/json');
 
 include "../database.php";
 
-$db_conn = new Database();
+$db_conn = new Database("student");
 
 $db = $db_conn->get_Connection() or die();
 $brukerid = $_GET['brukerid'];
-$query = "SELECT emnekode, melding, svar FROM `meldinger` WHERE avsenderID = '".$brukerid."';";
+$query = "CALL GetAskedMessagesApi('$brukerid')";
 $result = $db->query($query);
 $db_conn->close_Connection();
 

@@ -24,15 +24,14 @@
 
         function checkIfPinExists(){
             $db = new Database();
-            $conn = $db->get_Connection();
+            $conn = $db->get_Connection("guest");
             
-            $input = $_POST['guestPincode'];
+            $input = $conn -> real_escape_string(trim(htmlspecialchars($_POST["guestPincode"])));
             
-            $result = $conn->query("SELECT * FROM emne");
+            $result = $conn->query("CALL GetAllSubjectCodesAndPins()");
             $row = $result -> fetch_array(MYSQLI_ASSOC);
 
             if($input == $row["emnePIN"]){
-                //setcookie("guest_pin", $input,time()+3600); 
                 $_SESSION['emnePIN'] = $input;
             }
 

@@ -3,10 +3,10 @@
 include "../database.php";
 
 $db = new Database();
-$conn = $db->get_Connection();
+$conn = $db->get_Connection("guest");
 
-$kommentar = $_POST['comment'];
-$sporsmalID = $_POST['messageID'];
+$kommentar = $conn -> real_escape_string(trim(htmlspecialchars($_POST["comment"])));
+$sporsmalID = $conn -> real_escape_string(trim(htmlspecialchars($_POST["messageID"])));
 
 if (empty($kommentar)){
     echo $sporsmalID;
@@ -15,7 +15,7 @@ if (empty($kommentar)){
 }
 
 else {
-$insert = "INSERT INTO kommentarer (sporsmalID, kommentar) VALUES ('$sporsmalID', '$kommentar');";
+$insert = "CALL CommentOnQuestionAsGuest('$sporsmalID', '$kommentar');";
 
 mysqli_query($conn, $insert);
 

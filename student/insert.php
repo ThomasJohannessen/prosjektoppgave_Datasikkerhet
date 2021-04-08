@@ -3,21 +3,26 @@
 session_start();
 if($_SESSION['user_type'] == 3){
     include "../database.php";
+    include "../AppLogger.php";
+
     $db = new Database();
-    $conn = $db->get_Connection();
+    $conn = $db->get_Connection("student");
 
-    $avsenderID = $_SESSION['brukerID'];
 
-    $melding = $_POST['question'];
+    $melding = $conn -> real_escape_string(trim(htmlspecialchars($_POST["question"])));
 
     if ($melding == ""){
         header("refresh:0.01; url=studentside.php");
         exit();
     }
-    $emnekode = $_POST['emnekode'];
+    $emnekode = $conn -> real_escape_string(trim(htmlspecialchars($_POST["emnekode"])));
+    $email = $_SESSION['user_email'];
 
-    $insert = "INSERT INTO `meldinger` (`avsenderID`, `melding`,`emnekode`) VALUES ('$avsenderID', '$melding', '$emnekode')";
+    $logg = new AppLogger("meldinger");
+    $logger = $logg->getLogger();
+    $logger->info("User with email: " . $email . " sent question in subject " . $emnekode . ".", ["message" => $melding]);
 
+    $insert = "CALL SendQuestionStudent('$email', '$melding', '$emnekode')";
 
     mysqli_query($conn, $insert);
 

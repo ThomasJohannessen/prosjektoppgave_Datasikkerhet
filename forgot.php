@@ -23,19 +23,19 @@
 	
 	function doesEmailExistInDatabase()
 	{
-		$email = htmlspecialchars(trim($_POST['email']));
 		
 		include "database.php";
 		$db = new Database();
-		$conn = $db->get_Connection();
+		$conn = $db->get_Connection("guest");
+		$email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
 		
-		$sql = "SELECT BrukerID, Passord FROM brukere WHERE Epost='$email'";
+		$sql = "CALL DoesEmailExistInDb('$email')";
 		
 		$result = $conn->query($sql);
 		
 		
 		if (mysqli_num_rows($result) > 0) 
-			generateAndSend($email, $conn);
+			send($email, $conn);
 		else 
  		{
   			echo "<script>
@@ -45,15 +45,31 @@
 				
 	}
 	
-
-	function generateAndSend($email, $conn)
+	function generateRandom()
 	{
-		$db = new Database();
-		$conn = $db->get_Connection();
-		
 		$characters = 8;
 		$validChars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     		$password = substr(str_shuffle(str_repeat($validChars,ceil($characters/strlen($validChars)) )),1,$characters);
+    		
+    		return $password;
+	}
+	
+
+	function send($email, $conn)
+	{
+		$db = new Database();
+		$conn = $db->get_Connection("student");
+		
+		$password = generateRandom();
+		
+		$uppercase = preg_match('@[A-Z]@', $password);
+		$lowercase = preg_match('@[a-z]@', $password);
+		$number    = preg_match('@[0-9]@', $password);
+
+		while(!$uppercase || !$lowercase || !$number || strlen($password) < 8)
+		{
+  			$password = generateRandom();
+		}
 	
 		$header = "From:forgotten@pass.word \r\n";
 		$header .= "MIME-Version: 1.0\r\n";
@@ -65,7 +81,7 @@
 		
 		if( $retval == true )
 		{	
-			$sqlUpdate = "UPDATE brukere SET Passord='$hashed' WHERE Epost='$email'";
+			$sqlUpdate = "CALL ChangePasswordOfAUser('$email', $hashed')";
 
 			if ($conn->query($sqlUpdate) === FALSE)
   				echo "Error updating record: " . $conn->error;

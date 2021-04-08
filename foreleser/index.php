@@ -18,13 +18,13 @@
 
 <?php
 
+
   if (isset($_POST['logout'])){
     include "../functions.php";
     logout();
   }
 
   session_start();
-  $foreleserID = $_SESSION['brukerID'];
   $emneID = $_SESSION['subject_id'];
 
   if (isset($_POST['logout'])){
@@ -40,36 +40,40 @@
       include "../database.php" ;
 
       $db = new Database();
-      $conn = $db->get_Connection();
+      $conn = $db->get_Connection("foreleser");
+      
+      $em = $_SESSION['user_email'];
 
-      $sql = "SELECT * FROM meldinger where svar is null AND emnekode = (SELECT emnekode FROM emne where emnePIN = $emneID)";
+      $sql = "CALL GetAllUnansweredQuestionsForSubjectLecturer('$emneID')";
 
       $result = $conn->query($sql);
+      
         
       if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
           ?>
             <div id="foreleser-spørsmål">
               <?php
+
                 echo $row["emnekode"] . "<br>" . $row["melding"] . "<br>" ;
               ?>
 
               <form  method="POST" autocomplete="off">
                 <input type="text" name="svar" id="field" placeholder="Answer here">
                 <br>
-                <input type="hidden" value="<?php echo $row["sporsmalID"]; ?>" name="messageID" id="msgID" require readonly>
+                <input type="hidden" value="<?php echo $row["Hash"]; ?>" name="messageID" id="msgID" require readonly>
                 <br>
                 <input type="submit" id="svar" value="Svar" name="svarbtn">
               </form>
             </div>
 <?php
     $db = new Database();
-    $conn = $db->get_Connection();
+    $conn = $db->get_Connection("foreleser");
   
         if (isset($_POST['svarbtn'])){  
 
-        $svar = $_POST['svar'];
-        $messageID = $_POST['messageID'];
+        $svar = $conn -> real_escape_string(trim(htmlspecialchars($_POST["svar"])));
+        $messageID = $conn -> real_escape_string(trim(htmlspecialchars($_POST["messageID"])));
 
           if (empty($svar)){
             
@@ -79,7 +83,13 @@
           }
           else {
 
-            $sql2 = "UPDATE meldinger SET svar = '$svar', foreleserID='$foreleserID' WHERE sporsmalID = $messageID;";
+            /include "../AppLogger.php";
+
+            $logg = new AppLogger("meldinger");
+            $logger = $logg->getLogger();
+            $logger->info("Lecturer with Email: " . $em . " for subject: " . $emneID ." answered question with ID: " . $messageID . ".", ["answer" => $svar]);
+            
+            $sql2 = "CALL AnswerAQuestionLecturer('$svar', '$em', '$messageID')";
               if (!mysqli_query($conn, $sql2)){
                 echo "Incorrect id";
               }

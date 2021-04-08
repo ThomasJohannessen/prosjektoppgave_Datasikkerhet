@@ -10,22 +10,17 @@
 </head>
 <body>
 <?php
-
-    
-
+    include("AppLogger.php");
     session_start();
-    include "database.php";
+    include("database.php");
     $db = new Database();
-    $conn = $db->get_Connection();
+    $conn = $db->get_Connection("guest");
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
         $email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
         $password = $conn -> real_escape_string(trim(htmlspecialchars($_POST["password"])));
-
-        $sql_register = "SELECT `Navn`, `Brukertype`, `EmneID`, `Studieretning`, `Brukerstatus` FROM `brukere` WHERE `Epost`= '" . $email . "' AND `Passord` = '" . $password . "'";
-        $register_user = mysqli_query($conn, $sql_register);
 
         if (emptyInputLogin($email, $password) !== false) {
             header("location: ../login.php?error=emptyinput");
@@ -36,7 +31,7 @@
     function emptyInputLogin ($email, $password) {
         
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
         if (empty($email) || empty($password)) {
             $res = true;
         } else {
@@ -47,9 +42,9 @@
 
     function mailTaken($email) {
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
 
-        $sql_user_exists = "SELECT * FROM `brukere` WHERE `Epost`= '" . $email . "'";
+        $sql_user_exists = "CALL GetInfoForLogginInAllUsers('$email')";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -69,9 +64,8 @@
     }
 
     function loginUser($email, $password) {
-        
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
         $mailTaken = mailtaken($email);
 
         if ($mailTaken === false) {
@@ -93,12 +87,14 @@
             } else {
                 session_start();
 
-                $_SESSION["brukerID"] = $mailTaken["BrukerID"];
                 $_SESSION["user_email"] = $mailTaken["Epost"];
-                $_SESSION["username"] = $mailTaken["Navn"];
-                $_SESSION["subject_id"] = $mailTaken["EmneID"];
+                $_SESSION["subject_id"] = $mailTaken["EmneId"];
                 $_SESSION["user_type"] = $mailTaken["Brukertype"];
-                $_SESSION["study_path"] = $mailTaken["Studieretning"];
+
+                        
+                $logg = new AppLogger("brukertilgang");
+                $logger = $logg->getLogger();
+                $logger->info("Innlogging av bruker", ["username" => $email]);
 
                 if ($_SESSION['user_type'] == 3){
                     header("location: student/studentside.php");
@@ -135,7 +131,6 @@
 <a href="gjest/gjestfeed.php" class="homescreen-choice">Logg inn som gjest</a>
 <a href="forgot.php" class="homescreen-choice">Forgot password</a>
 <?php
-    include "logg/logger.php";
     if(isset($_GET["error"])) {
         if($_GET["error"] == "emptyinput") {
             echo "<p>Alle felter må fylles</p>";
@@ -150,10 +145,6 @@
             echo "<p>Noe gikk galt, prøv igjen senere</p>";
         }
         elseif ($_GET["error"] == "none") {
-                    
-            $logger = getLogger();
-            $logger->info("Test");
-            
             echo "<p>Du er nå logget inn</p>";
             echo "<p>Velkommen " . $_SESSION["username"] . "</p>";
         }

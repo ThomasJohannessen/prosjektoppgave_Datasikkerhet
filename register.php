@@ -12,8 +12,9 @@
 
 <?php
     include "database.php";
+    include "AppLogger.php";
     $db = new Database();
-    $conn = $db->get_Connection();
+    $conn = $db->get_Connection("guest");
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $status = "";
@@ -30,6 +31,15 @@
         $subject_id = $conn -> real_escape_string(trim(htmlspecialchars($_POST["subject"])));
         $image = $conn -> real_escape_string(trim(htmlspecialchars($_FILES["photo"]["name"])));
         $ext = pathinfo($image, PATHINFO_EXTENSION);
+        
+        $uppercase = preg_match('@[A-Z]@', $password);
+        $lowercase = preg_match('@[a-z]@', $password);
+        $number = preg_match('@[0-9]@', $password);
+
+	if(!$uppercase || !$lowercase || !$number || strlen($password) < 8){
+            header("location: register.php?error=invalidpassword");
+            exit();
+        }
 
         if (emptyFields($name, $email, $password, $password_confirmed, $user_type, $study_path, $year, $subject_id, $image, $rand_filename) !== false) {
             header("location: register.php?error=missingfields");
@@ -102,9 +112,9 @@
 
     function mailTaken($email) {
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
 
-        $sql_user_exists = "SELECT * FROM `brukere` WHERE `Epost`= '" . $email . "'";
+        $sql_user_exists = "CALL DoesEmailExistInDb('$email')";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -125,9 +135,9 @@
 
     function subjectTaken($subject_id) {
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
 
-        $sql_subject_exists = "SELECT * FROM `brukere` WHERE `EmneID`= '" . $subject_id . "'";
+        $sql_subject_exists = "CALL IsSubjectTaken('$subject_id')";
 
         $stmt = mysqli_stmt_init($conn);
 
@@ -191,7 +201,7 @@
 
     function createUser($name, $email, $password, &$user_type, $study_path, $year, $subject_id, $image) {
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("guest");
 
         if ($user_type === "foreleser") {
             $user_type = 2;
@@ -204,14 +214,26 @@
             $subject_id = 0;
             $image = "";
         }
-
-        $sql_register = "INSERT INTO `brukere`(`BrukerID`, `Navn`, `Epost`, `Bilde`, `Kull`, `Brukertype`, `Passord`, `EmneID`, `Studieretning`, `Brukerstatus`) VALUES (0, '" . $name . "', '" . $email . "', '" . $image . "', " . $year . ", " . $user_type . ", '" . password_hash($password, PASSWORD_DEFAULT) . "', " . $subject_id . ", '" . $study_path . "', " . $status . ")";
+        $logg = new AppLogger("brukertilgang");
+        $logger = $logg->getLogger();
+        
+        $hashed = password_hash($password, PASSWORD_DEFAULT);
+        
+        $sql_register = "CALL RegisterNewUser('$name', '$email', '$image', '$year', '$user_type', '$hashed', '$subject_id', '$study_path', '$status')";
         $register_user = mysqli_query($conn, $sql_register);
         if ($register_user) {
             header("location: register.php?error=none");
+
+            $logger->notice("Registrering av bruker vellykket", ["user" => $name, "username" => $email, "password" => password_hash($password, PASSWORD_DEFAULT), "usertype" => $user_type, 
+            "study path" => $study_path, "year" => $year, "subject_id" => $subject_id, "imagePath" => $image]);
+
             exit();
         } else {
             header("location: register.php?error=stmtfailed");
+
+            $logger->notice("Registrering av bruker feilet", ["user" => $name, "username" => $email, "password" => password_hash($password, PASSWORD_DEFAULT), "usertype" => $user_type, 
+            "study path" => $study_path, "year" => $year, "subject_id" => $subject_id, "imagePath" => $image]);
+            
             exit();
         }
     }
@@ -247,7 +269,7 @@
             <label for="subject">Hvilket fag foreleser du i?</label>
             <select id="subject" name="subject">
                 <?php
-                    $sql = "SELECT * FROM emne";
+                    $sql = 'CALL GetAllSubjectCodesAndPins()';
 
                     $results = mysqli_query($conn, $sql);
 
@@ -278,6 +300,9 @@
     if(isset($_GET["error"])) {
         if($_GET["error"] == "missingfields") {
             echo "<p>Alle felter må fylles</p>";
+        }
+        elseif ($_GET["error"] == "invalidpassword") {
+            echo "<p>Passordet må være minst 8 karakterer med minst ett tall, en små og en stor bokstav</p>";
         }
         elseif ($_GET["error"] == "invalidemail") {
             echo "<p>Velg et passende email</p>";

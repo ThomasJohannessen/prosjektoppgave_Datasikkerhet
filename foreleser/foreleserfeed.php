@@ -30,15 +30,14 @@
     session_start();
     $emneID = $_SESSION['subject_id'];
 
-
     if($_SESSION['user_type'] != 2){
         echo "Du er ikke en foreleser!";
     }  
     else{
         $db = new Database();
-        $conn = $db->get_Connection(); 
+        $conn = $db->get_Connection("foreleser"); 
 
-        $sql = "SELECT * FROM meldinger WHERE emnekode = (SELECT emnekode FROM emne where emnePIN = $emneID);";
+        $sql = "CALL GetAllQuestionsForSubjectLecturer('$emneID');";
         
         $result = $conn->query($sql);
         

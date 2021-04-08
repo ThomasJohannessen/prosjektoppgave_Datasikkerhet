@@ -3,10 +3,10 @@
 include "../database.php";
 
 $db = new Database();
-$conn = $db->get_Connection();
+$conn = $db->get_Connection("guest");
 
-$repcomment = $_POST['repcomment']; 
-$sporsmalID = $_POST['sporsmalID'];
+$repcomment = $conn -> real_escape_string(trim(htmlspecialchars($_POST["repcomment"])));
+$sporsmalID = $conn -> real_escape_string(trim(htmlspecialchars($_POST["sporsmalID"])));
 
 if (empty($repcomment)){
     header("refresh:0.01; url=gjestfeed.php");
@@ -15,7 +15,7 @@ if (empty($repcomment)){
 
 else {
 
-    $insert = "INSERT INTO `rapportering` (`meldingID`, `RapportKommentar`, `behandlingStatus`) values ($sporsmalID, '$repcomment', 3);";
+    $insert = "CALL ReportAQuestionAsGuest('$sporsmalID', '$repcomment')";
 
     mysqli_query($conn, $insert);
 
