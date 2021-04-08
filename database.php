@@ -3,8 +3,10 @@
 class Database {
     private $db_host = "localhost";
     private $db_name = "datasikkerhet_prosjekt";
+
     private $db_username = ""; 
     private $db_password = "";
+
     private $conn;
     
     public function get_Connection($usertype) {

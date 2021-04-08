@@ -19,6 +19,7 @@ else {
 
 $query = "CALL SendQuestionStudentApi('$avsender', '$emnekode', '$sporsmal')";
 
+
 $db->query($query);
 $db_conn->close_Connection();
 die();

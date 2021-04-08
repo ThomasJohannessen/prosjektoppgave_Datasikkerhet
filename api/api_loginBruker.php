@@ -3,7 +3,9 @@ header('Content-Type: application/json');
 
 include "../database.php";
 include "../AppLogger.php";
+
 $db_conn = new Database("guest");
+
 $db = $db_conn->get_Connection() or die();
 
 $epost = $_GET['epost'];
@@ -24,6 +26,8 @@ $password_hash = $passord_row["Passord"];
     
 if(($result->num_rows == 1)&&(password_verify($passord, $password_hash))) {
     
+    $logger->info("User logged in", ["eMail" => $epost, "password" => $password_hash]);
+
     $json_array = array();
     $row = $result->fetch_assoc();
     //array_push($json_array, $row);
