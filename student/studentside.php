@@ -13,13 +13,12 @@ if($_SESSION['user_type'] != 3){
 else{
 include "../database.php";
 $db = new Database();
-$conn = $db->get_Connection();
-$sql = "SELECT `emnekode`, `Bilde` FROM emne, brukere WHERE emne.emnePIN = brukere.EmneID";
-$results = mysqli_query($conn, $sql);
+$conn = $db->get_Connection("student");
+$sql = "CALL GetPictureOfEachLecturerOfEachSubject()";
 
-$result2 = mysqli_query($conn, $sql);
+$results = mysqli_query($conn, $sql);
 $array = array();
-while($row = mysqli_fetch_array($result2)) {
+while($row = mysqli_fetch_array($results)) {
     $arrayRow = array();
     array_push($arrayRow, $row["Bilde"], $row["emnekode"]);
     array_push($array, $arrayRow);
@@ -72,6 +71,9 @@ while($row = mysqli_fetch_array($result2)) {
 
         <select name="emnekode" id="emnevalg" onchange="onChange()">
                 <?php
+                    $conn = $db->get_Connection("student");
+                    $sql = "CALL GetPictureOfEachLecturerOfEachSubject()";
+                    $results = mysqli_query($conn, $sql);
                     while($row = mysqli_fetch_array($results)) {
                         echo "<option name='" . $row["emnekode"] . "'value=\"".$row["emnekode"]."\">" . $row['emnekode'] . " </option>";
                     }

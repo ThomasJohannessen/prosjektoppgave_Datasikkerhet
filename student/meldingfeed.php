@@ -27,12 +27,13 @@
     
     if($_SESSION['user_type'] == 3)
    	{
-        $brukerId = $_SESSION['brukerID'];
+   	
+   	$email = $_SESSION['user_email'];
 
         $db = new Database();
-        $conn = $db->get_Connection();
+        $conn = $db->get_Connection("student");
 
-        $sql = "SELECT `melding`, `svar`, `Bilde`, `foreleserID` FROM meldinger, brukere WHERE `avsenderID` = $brukerId AND meldinger.foreleserID = brukere.BrukerID";
+        $sql = "CALL GetMessageFeedStudent('$email')";
 
         $result = $conn->query($sql);
 
@@ -44,8 +45,10 @@
         <?php
             echo "<b>Emnekode - </b>" . $row["emnekode"] . "<br>" . "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"] . "<br>";
             echo "<img src=\"http://158.39.188.201/steg1/prosjektoppgave_Datasikkerhet/uploads/" . $row["Bilde"] . "\" alt=\"foreleser\">";
-
-            $sql_image = "SELECT `Bilde` FROM `brukere` WHERE `foreleserID`= '" . $row["foreleserID"] . "'";
+            
+            $em = $row["Epost"];
+            
+            $sql_image = "CALL GetPictureOfALecturer('$em')";
             $image = mysqli_query($conn, $sql_image);
 
             if ($row = mysqli_fetch_assoc($image)) {

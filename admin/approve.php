@@ -19,7 +19,6 @@
 
 		<table border="2">
   			<tr>
-    				<td>User ID</td>
     				<td>Name</td>
     				<td>Email</td>
     				<td>Approve</td>
@@ -38,20 +37,53 @@
    				{
 					include "../database.php";
 					$db = new Database();
-					$conn = $db->get_Connection();
+					$conn = $db->get_Connection("admin");
+					
+					$sql = "CALL GetAllLecturerRequests()";
 
-					$records = mysqli_query($conn,"select * from brukere where (Brukertype='2' and Brukerstatus = '0')");
+					$records = mysqli_query($conn, $sql);
 
 					while($data = mysqli_fetch_array($records))
 					{
 				?>
   				<tr>
-    					<td><?php echo $data['BrukerID']; ?></td>
-    					<td><?php echo $data['Navn']; ?></td>
-    					<td><?php echo $data['Epost']; ?></td>    
-    					<td><a href="commitapproval.php?id=<?php echo $data['BrukerID']; ?>">Approve</a></td>
+  					<td><?php echo $data['Epost']; ?></td>
+  					<td><?php echo $data['Navn']; ?></td>
+    					<form method="post">
+	    		    		<input type="hidden" value="<?php echo $data["Epost"]; ?>" name="email"/>
+	    		    		<td><input type="submit" name="approve" value="Approve" /></td>
+	    		    		</form>
   				</tr>	
 				<?php
+					if (isset($_POST['approve'])){
+						include "../AppLogger.php";
+						$db = new Database();
+						$conn = $db->get_Connection("admin");
+	   		
+						$epost = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
+
+
+						$sql = "CALL CommitApprovalOfLecturerRequest('$epost')";
+
+						$qry = mysqli_query($conn, $sql);
+			
+
+						if($qry)
+						{
+							$logg = new AppLogger("brukertilgang");
+			
+							$logger = $logg->getLogger();
+
+							$logger->notice("Admin approved a lecturer", ["Admin" => $_SESSION["user_email"], "Approved_lecturer_Email" => $epost]);
+	    						mysqli_close($conn);
+	    						header("location:approve.php");
+	    						exit;	
+						}
+						else
+	    						echo "Error approving teacher status";
+					
+					}
+						
 					}
 				}
    				else

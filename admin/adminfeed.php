@@ -30,9 +30,9 @@
     if($_SESSION['user_type'] == 1){
         
     $db = new Database();
-    $conn = $db->get_Connection();
+    $conn = $db->get_Connection("admin");
             
-    $sql = "SELECT `sporsmalID`, `avsenderID`, `melding`, `svar`, `Bilde`, `Navn`, `foreleserID` FROM meldinger, brukere WHERE meldinger.avsenderID = brukere.BrukerID OR meldinger.foreleserID = brukere.BrukerID";
+    $sql = "CALL GetAllMessagesWithLecturerPictureAdmin()";
     $result = $conn->query($sql);
             
             if ($result->num_rows > 0) {
@@ -47,9 +47,37 @@
                             echo "<b>Spørmål - </b>" . $row["melding"] . "<br>" . "<b>Svar - </b>" .$row["svar"]  . "<br>" . "<b>Skrevet av - </b>" .$row["Navn"]. "<br>";
                             echo "<img src=\"http://158.39.188.201/steg1/prosjektoppgave_Datasikkerhet/uploads/" . $row["Bilde"] . "\" alt=\"foreleser\">";
 	    		    ?>
-			        <a href="deletemessage.php?id=<?php echo $row['sporsmalID']; ?>">Delete</a>
+	    		    	<form method="post">
+	    		    		<input type="hidden" value="<?php echo $row["Hash"]; ?>" name="messageID"/>
+	    		    		<input type="submit" name="delete" value="Delete" />
+				</form>
+
+
                         </div>
-                    <?php   
+                    <?php
+                    if (isset($_POST['delete'])){  
+                    	
+                    	$db = new Database();
+    			$conn = $db->get_Connection("admin");
+    			
+    			$id = $conn -> real_escape_string(trim(htmlspecialchars($_POST["messageID"])));
+    			
+    			echo $id;
+
+        		$sql = "CALL DeleteAMessageAdmin('$id')";
+
+			$del = mysqli_query($conn, $sql);
+
+			if($del)
+			{
+   				mysqli_close($conn);
+    				header("location:adminfeed.php");
+    				exit;	
+			} 
+			else
+ 				echo "Error deleting message";
+            
+          		}   
                     }  
                 }
         } 

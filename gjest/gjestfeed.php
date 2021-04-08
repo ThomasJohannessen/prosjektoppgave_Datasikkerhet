@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <nav ><ul class="navbar">
+    <nav><ul class="navbar">
         <li><a href="../login.php">Logg inn</a></li>
         <li><a href="../register.php">Registrer</a></li>
     </nav>
@@ -28,12 +28,12 @@
     include "../database.php" ;
 
     $db = new Database();
-    $conn = $db->get_Connection();
+    $conn = $db->get_Connection("guest");
 
 
     if (isset($_POST['sendbtn'])){
 
-        $pinkode = $_POST['pinkode'];
+        $pinkode = $conn -> real_escape_string(trim(htmlspecialchars($_POST["pinkode"])));
 
         if ($pinkode > 9999 || $pinkode < 1000){
             echo "<h2>Jeg sa firesifret pin....</h2>";
@@ -58,12 +58,12 @@
                 exit;
         }    
         
-        $sql = "SELECT `sporsmalID`, `melding`, `svar`, `Bilde`, `foreleserID` FROM meldinger, brukere WHERE emnekode = '$emneKode' AND meldinger.foreleserID = brukere.BrukerID";
+        $sql = "CALL GuestFeedGetSubjectAndLecturer('$emneKode')";
         
         $result = $conn->query($sql);
 
         echo "<h2>Dette er siden til faget $emneKode</h2>";
-        
+
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
                 ?>
