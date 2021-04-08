@@ -24,6 +24,7 @@ $passord_row = $password_result->fetch_assoc();
 $password_hash = $passord_row["Passord"];
     
 if(($result->num_rows == 1)&&(password_verify($passord, $password_hash))) {
+    
     $logger->info("User logged in", ["eMail" => $epost, "password" => $password_hash]);
 
     $json_array = array();
