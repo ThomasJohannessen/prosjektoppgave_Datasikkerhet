@@ -70,6 +70,10 @@
             if (empty($name) || empty($email) || empty($password) || empty($password_confirmed) || empty($user_type) || empty($user_type) || empty($subject_id) || empty($image)) {
                 $res = true;
             } else {
+                if (subjectTaken($subject_id) !== false) {
+                    header("location: register.php?error=subjecttaken");
+                    exit();
+                }
                 if (fileVerification($rand_filename) !== false) {
                     header("location: register.php?error=imageerror");
                     exit();
