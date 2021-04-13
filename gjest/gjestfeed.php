@@ -41,7 +41,7 @@
         }
   
         
-        $sql = "CALL GuestFeedGetSubjectAndLecturer('$emneKode')";
+        $sql = "CALL GuestFeedGetSubjectAndLecturer('$pinkode')";
         
         $result = $conn->query($sql);
 
