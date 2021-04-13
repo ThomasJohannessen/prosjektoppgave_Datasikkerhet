@@ -457,8 +457,8 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `GuestFeedGetSubjectAndLecturer`(IN `Emn_In` VARCHAR(10))
-SELECT `Hash`, meldingView.`melding`, meldingView.`svar`, `Bilde`, foreleserView.Epost, meldinger.sporsmalID FROM meldingView, foreleserView, meldinger WHERE meldingView.emnekode = Emn_In 
-AND foreleserView.emnekode = meldingView.emnekode AND `Hash`= sha1(CONCAT(meldinger.sporsmalID, '3bbbffe76658aece882c7607c02bd18f')) AND meldingView.svar IS NOT NULL ;;
+SELECT `Hash`, meldingView.`melding`, meldingView.`svar`, `Bilde`, foreleserView.Epost, meldinger.sporsmalID FROM meldingView, foreleserView, meldinger 
+WHERE meldingView.emnekode = (SELECT emnekode from emne where emnePIN = Emn_In) AND foreleserView.emnekode = meldingView.emnekode AND `Hash`= sha1(CONCAT(meldinger.sporsmalID, '3bbbffe76658aece882c7607c02bd18f')) AND meldingView.svar IS NOT NULL ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
