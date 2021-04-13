@@ -39,30 +39,12 @@
             echo "<h2>Jeg sa firesifret pin....</h2>";
             exit;
         }
-
-        switch($pinkode) {
-            case 1032 : 
-                $emneKode = "ITF885";
-                break;
-            case 1033 : 
-                $emneKode = "ITF886";
-                break;
-            case 1034 : 
-                $emneKode = "ITF887";
-                break;
-            case 1035 : 
-                $emneKode = "ITF888";
-                break;
-            default:
-                echo "<h2>Denne pin-koden eksisterer ikke!</h2>";
-                exit;
-        }    
+  
+        $sql = "SELECT `sporsmalID`, `melding`, `svar`, `Bilde`, `foreleserID` from meldinger INNER JOIN brukere ON meldinger.foreleserID = brukere.BrukerID where emnekode = (SELECT emnekode from emne where emnePIN = '$pinkode')";
         
-        $sql = "SELECT `sporsmalID`, `melding`, `svar`, `Bilde`, `foreleserID` FROM meldinger, brukere WHERE emnekode = '$emneKode' AND meldinger.foreleserID = brukere.BrukerID";
         
         $result = $conn->query($sql);
 
-        echo "<h2>Dette er siden til faget $emneKode</h2>";
         
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
