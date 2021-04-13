@@ -43,7 +43,7 @@
     function mailTaken($email) {
         $db = new Database();
         $conn = $db->get_Connection("guest");
-
+        sleep(2);
         $sql_user_exists = "CALL GetInfoForLogginInAllUsers('$email')";
 
         $stmt = mysqli_stmt_init($conn);

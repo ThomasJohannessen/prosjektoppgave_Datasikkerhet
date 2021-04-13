@@ -83,7 +83,7 @@
           }
           else {
 
-            /include "../AppLogger.php";
+            include "../AppLogger.php";
 
             $logg = new AppLogger("meldinger");
             $logger = $logg->getLogger();
