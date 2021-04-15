@@ -127,7 +127,7 @@
         $user = $result->fetch_assoc();
 
         if (!$user) {
-            header("location: register.php?error=stmtfailed");
+           // header("location: register.php?error=stmtfailed");
             exit();
         }
 
@@ -151,7 +151,7 @@
         $user = $result->fetch_assoc();
 
         if (!$user) {
-            header("location: register.php?error=stmtfailed");
+            //header("location: register.php?error=stmtfailed");
             exit();
         }
 
