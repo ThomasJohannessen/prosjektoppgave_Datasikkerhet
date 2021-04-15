@@ -93,10 +93,13 @@
               $logger->info("Lecturer with Email: " . $em . " for subject: " . $emneID . " answered question with ID: " . $messageID . ".", ["answer" => $svar]);
 
 
-              $sql2 = "CALL AnswerAQuestionLecturer('$svar', '$em', '$messageID')";
-              if (!mysqli_query($conn, $sql2)){
+              $stmt2 = $conn->prepare("CALL AnswerAQuestionLecturer(?, ?, ?)");
+              $stmt2->bind_param("sss", $svar, $em, $messageID);
+
+              if (!$stmt2->execute()) {
                   echo "Incorrect id";
               }
+
               header("refresh:0.01; url=index.php");
               exit;
           }
