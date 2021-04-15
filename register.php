@@ -138,21 +138,22 @@ function subjectTaken($subject_id) {
     $db = new Database();
     $conn = $db->get_Connection("guest");
 
-    $stmt = $conn->prepare("CALL IsSubjectTaken(?)");
-    $stmt->bind_param("i", $subject_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
+    $sql_subject_exists = "CALL IsSubjectTaken('$subject_id')";
 
-    if ($user != null) {
-        header("location: register.php?error=subjecttaken");
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql_subject_exists)) {
+        header("location: register.php?error=subjecttaken1");
         exit();
     }
 
-    if ($user == null) {
-        return false;
+    $subject_exists = mysqli_query($conn, $sql_subject_exists);
+
+    if ($row = mysqli_fetch_assoc($subject_exists)) {
+        return $row;
     } else {
-        return true;
+        $res = false;
+        return $res;
     }
 }
 
