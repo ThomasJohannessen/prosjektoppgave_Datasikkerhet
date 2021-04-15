@@ -29,7 +29,12 @@
 		$conn = $db->get_Connection("guest");
 		$email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
 		
-		$sql = "CALL DoesEmailExistInDb('$email')";
+		$sql = "CALL DoesEmailExistInDb(?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
 		
 		$result = $conn->query($sql);
 		
@@ -81,7 +86,12 @@
 		
 		if( $retval == true )
 		{	
-			$sqlUpdate = "CALL ChangePasswordOfAUser('$email', $hashed')";
+			$sqlUpdate = "CALL ChangePasswordOfAUser(?, ?)";
+			    $stmt = $conn->prepare($sqlUpdate);
+			    $stmt->bind_param("ss", $email, $hashed);
+			    $stmt->execute();
+			    $result = $stmt->get_result();
+			    $user = $result->fetch_assoc();
 
 			if ($conn->query($sqlUpdate) === FALSE)
   				echo "Error updating record: " . $conn->error;

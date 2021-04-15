@@ -15,10 +15,17 @@ if (empty($kommentar)){
 }
 
 else {
-$insert = "CALL CommentOnQuestionAsGuest('$sporsmalID', '$kommentar');";
+$insert = "CALL CommentOnQuestionAsGuest(?, ?);";
 
 mysqli_query($conn, $insert);
 
+    if (!mysqli_stmt_prepare($conn, $insert)) {
+        header("location: register.php?error=stmtfailed");
+        exit();
+    } else {
+        mysqli_stmt_bind_param($conn, "is", $sporsmalID, $kommentar);
+        mysqli_stmt_execute($conn);
+    }
 header("refresh:0; url=gjestfeed.php");
 exit();
 

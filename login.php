@@ -44,8 +44,12 @@
         $db = new Database();
         $conn = $db->get_Connection("guest");
         sleep(2);
-        $sql_user_exists = "CALL GetInfoForLogginInAllUsers('$email')";
-
+        $sql_user_exists = "CALL GetInfoForLogginInAllUsers('?')";
+            $stmt = $conn->prepare($sql_user_exists);
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc();
         $stmt = mysqli_stmt_init($conn);
 
         if (!mysqli_stmt_prepare($stmt, $sql_user_exists)) {

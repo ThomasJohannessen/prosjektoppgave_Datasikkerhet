@@ -41,7 +41,12 @@
 					$db = new Database();
 					$conn = $db->get_Connection("admin");
 					
-					$sql = "CALL GetNameAndEmailOfAllStudentsAndLecturers()";
+					$sql = "CALL GetNameAndEmailOfAllStudentsAndLecturers(?)";
+                        $stmt = $conn->prepare($sql);
+                        $stmt->bind_param("s", $email);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        $user = $result->fetch_assoc();
 					
 					$records = mysqli_query($conn, $sql);
 
@@ -58,56 +63,57 @@
 	    		    	</form>
   			</tr>	
 			<?php
-				if(isset($_POST['update']))
-				{
-					$db = new Database();
-					$conn = $db->get_Connection("admin");
-	    				$name = $conn -> real_escape_string(trim(htmlspecialchars($_POST["name"])));
+				if(isset($_POST['update'])) {
+                    $db = new Database();
+                    $conn = $db->get_Connection("admin");
+                    $name = $conn->real_escape_string(trim(htmlspecialchars($_POST["name"])));
 
-	    				$email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["updatedEmail"])));
-	    				$epost = $conn -> real_escape_string(trim(htmlspecialchars($_POST["originalEmail"])));
-					$sql2 = "CALL UpdateAUserAdmin('$name', '$email', '$epost')";
-				
-	    				$edit = mysqli_query($conn, $sql2);
-		
-	    				if($edit)
-	    				{
-						mysqli_close($conn); 
-						header("location:updateusers.php"); 
-						exit;
-	    				}
-	    				else
-						echo mysqli_error();  	
-				}
-				if(isset($_POST['delete']))
-				{
-					include "../AppLogger.php";
-		
-					$db = new Database();
-					$conn = $db->get_Connection("admin");
+                    $email = $conn->real_escape_string(trim(htmlspecialchars($_POST["updatedEmail"])));
+                    $epost = $conn->real_escape_string(trim(htmlspecialchars($_POST["originalEmail"])));
+                    $sql2 = "CALL UpdateAUserAdmin(?, ?, ?)";
 
-					$epost = $conn -> real_escape_string(trim(htmlspecialchars($_POST["originalEmail"])));
-					
-					$sql = "CALL DeleteAUserAdmin('$epost')";
+                    $edit = mysqli_query($conn, $sql2);
 
-					$del = mysqli_query($conn, $sql);
-					
+                    if ($edit) {
+                        mysqli_close($conn);
+                        header("location:updateusers.php");
+                        exit;
+                    } elseif (!$edit) {
+                        echo mysqli_error();
+                    } else {
+                        mysqli_stmt_bind_param($edit, "sss", $name, $email, $epost);
+                        mysqli_stmt_execute($edit);
+                    }
+                    if (isset($_POST['delete'])) {
+                        include "../AppLogger.php";
 
-					if($del)
-					{
-						$logg = new AppLogger("brukertilgang");
-					
-						$logger = $logg->getLogger();
+                        $db = new Database();
+                        $conn = $db->get_Connection("admin");
 
-						$logger->notice("Admin deleted a user", ["Admin" => $_SESSION["user_email"], "Deleted_User_Email" => $epost]);
-			   			mysqli_close($conn);
-			    			header("location:updateusers.php");
-			    			exit;	
-					} else
-			 			echo "Error deleting user";
-				}
-					}
-				}
+                        $epost = $conn->real_escape_string(trim(htmlspecialchars($_POST["originalEmail"])));
+
+                        $sql = "CALL DeleteAUserAdmin(?)";
+
+                        $del = mysqli_query($conn, $sql);
+
+
+                        if ($del) {
+                            $logg = new AppLogger("brukertilgang");
+
+                            $logger = $logg->getLogger();
+
+                            $logger->notice("Admin deleted a user", ["Admin" => $_SESSION["user_email"], "Deleted_User_Email" => $epost]);
+                            mysqli_close($conn);
+                            header("location:updateusers.php");
+                            exit;
+                        } elseif (!$del) {
+                            echo "Error deleting user";
+                        } else {
+                            mysqli_stmt_bind_param($del, "s", $epost);
+                            mysqli_stmt_execute($del);
+                        }
+                    }
+                }}}
 			?>
 		</table>
 	</body>

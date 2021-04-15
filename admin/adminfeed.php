@@ -64,7 +64,18 @@
     			
     			echo $id;
 
-        		$sql = "CALL DeleteAMessageAdmin('$id')";
+        		$sql = "CALL DeleteAMessageAdmin(?)";
+
+        		$stmt = mysqli_stmt_init($conn);
+
+        		if (!mysqli_stmt_prepare($stmt, $sql)) {
+        		    header("location: register.php?error=stmtfailed");
+        		    exit();
+        		} else {
+        		    mysqli_stmt_bind_param($stmt, "s", $id);
+        		    mysqli_stmt_execute($stmt);
+        		}
+
 
 			$del = mysqli_query($conn, $sql);
 

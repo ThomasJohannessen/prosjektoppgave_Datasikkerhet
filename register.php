@@ -118,13 +118,16 @@
         $db = new Database();
         $conn = $db->get_Connection("guest");
         sleep(2);
-        $sql_user_exists = "CALL DoesEmailExistInDb('$email')";
+        $sql_user_exists = "CALL DoesEmailExistInDb(?)";
 
         $stmt = mysqli_stmt_init($conn);
 
         if (!mysqli_stmt_prepare($stmt, $sql_user_exists)) {
             header("location: register.php?error=stmtfailed");
             exit();
+        }else {
+            mysqli_stmt_bind_param($stmt, "s", $email);
+            mysqli_stmt_execute($stmt);
         }
 
         $user_exists = mysqli_query($conn, $sql_user_exists);
@@ -141,9 +144,12 @@
         $db = new Database();
         $conn = $db->get_Connection("guest");
 
-        $sql_subject_exists = "CALL IsSubjectTaken('$subject_id')";
-
-        $stmt = mysqli_stmt_init($conn);
+        $sql_subject_exists = "CALL IsSubjectTaken(?)";
+            $stmt = $conn->prepare($sql_subject_exists);
+            $stmt->bind_param("s", $subject_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc();
 
         if (!mysqli_stmt_prepare($stmt, $sql_subject_exists)) {
             header("location: register.php?error=stmtfailed");
@@ -223,8 +229,11 @@
         
         $hashed = password_hash($password, PASSWORD_DEFAULT);
         
-        $sql_register = "CALL RegisterNewUser('$name', '$email', '$image', '$year', '$user_type', '$hashed', '$subject_id', '$study_path', '$status')";
+        $sql_register = "CALL RegisterNewUser(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $register_user = mysqli_query($conn, $sql_register);
+
+        $stmt = mysqli_stmt_init($conn);
+
         if ($register_user) {
             header("location: register.php?error=none");
 
@@ -232,13 +241,16 @@
             "study path" => $study_path, "year" => $year, "subject_id" => $subject_id, "imagePath" => $image]);
 
             exit();
-        } else {
+        } elseif (!$register_user) {
             header("location: register.php?error=stmtfailed");
 
             $logger->notice("Registrering av bruker feilet", ["user" => $name, "username" => $email, "password" => password_hash($password, PASSWORD_DEFAULT), "usertype" => $user_type, 
             "study path" => $study_path, "year" => $year, "subject_id" => $subject_id, "imagePath" => $image]);
             
             exit();
+        } else {
+            mysqli_stmt_bind_param($conn, "sssssssss", $name, $email, $image, $year, $user_type, $hashed, $subject_id, $study_path, $status);
+            mysqli_stmt_execute($conn);
         }
     }
 ?>

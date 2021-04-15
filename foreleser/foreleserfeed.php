@@ -37,7 +37,12 @@
         $db = new Database();
         $conn = $db->get_Connection("foreleser"); 
 
-        $sql = "CALL GetAllQuestionsForSubjectLecturer('$emneID');";
+        $sql = "CALL GetAllQuestionsForSubjectLecturer(?);";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $emneID);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc();
         
         $result = $conn->query($sql);
         

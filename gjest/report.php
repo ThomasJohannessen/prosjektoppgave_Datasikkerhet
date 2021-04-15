@@ -15,7 +15,17 @@ if (empty($repcomment)){
 
 else {
 
-    $insert = "CALL ReportAQuestionAsGuest('$sporsmalID', '$repcomment')";
+    $insert = "CALL ReportAQuestionAsGuest(?, ?)";
+
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($insert, $stmt)) {
+        header("location: register.php?error=stmtfailed");
+        exit();
+    }else {
+        mysqli_stmt_bind_param($insert, "ss", $sporsmalID, $repcomment);
+        mysqli_stmt_execute($insert);
+    }
 
     mysqli_query($conn, $insert);
 
