@@ -33,13 +33,12 @@
         $db = new Database();
         $conn = $db->get_Connection("student");
 
-        $sql = "CALL GetMessageFeedStudent(?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("s", $email);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $user = $result->fetch_assoc();
-        $result = $conn->query($sql);
+
+        $stmt = $conn->prepare("CALL GetMessageFeedStudent(?)");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
 
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
