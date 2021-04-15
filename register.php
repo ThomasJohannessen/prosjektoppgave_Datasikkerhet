@@ -78,10 +78,6 @@ function emptyFields($name, $email, $password, $password_confirmed, $user_type, 
                 header("location: register.php?error=imageerror");
                 exit();
             }
-            if (subjectTaken($subject_id) !== false) {
-                header("location: register.php?error=subjecttaken");
-                exit();
-            }
             $res = false;
         }
     } elseif ($user_type === "student") {
@@ -142,21 +138,22 @@ function subjectTaken($subject_id) {
     $db = new Database();
     $conn = $db->get_Connection("guest");
 
-    $stmt = $conn->prepare("CALL IsSubjectTaken(?)");
-    $stmt->bind_param("i", $subject_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
+    $sql_subject_exists = "CALL IsSubjectTaken('$subject_id')";
 
-    if ($user != null) {
+    $stmt = mysqli_stmt_init($conn);
+
+    if (!mysqli_stmt_prepare($stmt, $sql_subject_exists)) {
         header("location: register.php?error=subjecttaken");
         exit();
     }
 
-    if ($user == null) {
-        return false;
+    $subject_exists = mysqli_query($conn, $sql_subject_exists);
+
+    if ($row = mysqli_fetch_assoc($subject_exists)) {
+        return $row;
     } else {
-        return true;
+        $res = false;
+        return $res;
     }
 }
 
