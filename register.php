@@ -232,6 +232,7 @@
         $sql_register = "CALL RegisterNewUser(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $register_user = mysqli_query($conn, $sql_register);
 
+        $stmt = mysqli_stmt_init($conn);
 
         if ($register_user) {
             header("location: register.php?error=none");
@@ -248,8 +249,8 @@
             
             exit();
         } else {
-            mysqli_stmt_bind_param($register_user, "sssssssss", $name, $email, $image, $year, $user_type, $hashed, $subject_id, $study_path, $status);
-            mysqli_stmt_execute($register_user);
+            mysqli_stmt_bind_param($conn, "sssssssss", $name, $email, $image, $year, $user_type, $hashed, $subject_id, $study_path, $status);
+            mysqli_stmt_execute($conn);
         }
     }
 ?>
