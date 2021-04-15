@@ -88,12 +88,13 @@
 
                         $epost = $conn->real_escape_string(trim(htmlspecialchars($_POST["originalEmail"])));
 
-                        $stmt2 = $conn->prepare("CALL DeleteAUserAdmin(?)");
-                        $stmt2->bind_param("s", $epost);
+                        $sql = "CALL DeleteAUserAdmin('$epost')";
+
+                        $del = mysqli_query($conn, $sql);
 
 
-
-                        if ($stmt2->execute()) {
+                        if($del)
+                        {
                             $logg = new AppLogger("brukertilgang");
 
                             $logger = $logg->getLogger();
@@ -102,11 +103,11 @@
                             mysqli_close($conn);
                             header("location:updateusers.php");
                             exit;
-                        } else {
+                        } else
                             echo "Error deleting user";
                         }
                     }
-                }}}
+                }}
 			?>
 		</table>
 	</body>
