@@ -93,10 +93,10 @@
               $logger->info("Lecturer with Email: " . $em . " for subject: " . $emneID . " answered question with ID: " . $messageID . ".", ["answer" => $svar]);
 
 
-              $stmt = $conn->prepare("CALL AnswerAQuestionLecturer(?, ?, ?)");
-              $stmt->bind_param("ssi", $svar, $em, $messageID);
+              $stmt2 = $conn->prepare("CALL AnswerAQuestionLecturer(?, ?, ?)");
+              $stmt2->bind_param("ssi", $svar, $em, $messageID);
 
-              if (!$stmt->execute()) {
+              if (!$stmt2->execute()) {
                   echo "Incorrect id";
               }else{
 
