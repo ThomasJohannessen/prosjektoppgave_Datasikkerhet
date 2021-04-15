@@ -28,18 +28,16 @@
 		$db = new Database();
 		$conn = $db->get_Connection("guest");
 		$email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
-		
-		$sql = "CALL DoesEmailExistInDb(?)";
-        $stmt = $conn->prepare($sql);
+
+
+        $stmt = $conn->prepare("CALL DoesEmailExistInDb(?)");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
 		
-		$result = $conn->query($sql);
 		
-		
-		if (mysqli_num_rows($result) > 0) 
+		if ($user)
 			send($email, $conn);
 		else 
  		{
@@ -85,15 +83,11 @@
 		$hashed = password_hash($password, PASSWORD_DEFAULT);
 		
 		if( $retval == true )
-		{	
-			$sqlUpdate = "CALL ChangePasswordOfAUser(?, ?)";
-			    $stmt = $conn->prepare($sqlUpdate);
-			    $stmt->bind_param("ss", $email, $hashed);
-			    $stmt->execute();
-			    $result = $stmt->get_result();
-			    $user = $result->fetch_assoc();
+		{
+            $stmt = $conn->prepare("CALL ChangePasswordOfAUser(?, ?)");
+            $stmt->bind_param("ss", $email, $hashed);
 
-			if ($conn->query($sqlUpdate) === FALSE)
+            if (!$stmt->execute())
   				echo "Error updating record: " . $conn->error;
   			else
   			{
