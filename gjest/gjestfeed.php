@@ -40,16 +40,13 @@
             exit;
         }
   
-        
-        $sql = "CALL GuestFeedGetSubjectAndLecturer(?)";
 
-        $stmt = $conn->prepare($sql);
+
+        $stmt = $conn->prepare("CALL GuestFeedGetSubjectAndLecturer(?)");
         $stmt->bind_param("s", $pinkode);
         $stmt->execute();
+        $result = $stmt->get_result();
 
-
-        
-        $result = $conn->query($sql);
 
         echo "<h2>Dette er siden til faget $pinkode</h2>";
 
