@@ -63,34 +63,22 @@
 						$epost = $conn -> real_escape_string(trim(htmlspecialchars($_POST["email"])));
 
 
-						$sql = "CALL CommitApprovalOfLecturerRequest(?)";
+                        $stmt2 = $conn->prepare("CALL CommitApprovalOfLecturerRequest(?)");
+                        $stmt2->bind_param("s", $epost);
 
-                        $stmt = mysqli_stmt_init($conn);
-
-                        if (!mysqli_stmt_prepare($stmt, $sql)) {
+                        if (!$stmt2->execute()) {
                             header("location: register.php?error=stmtfailed");
                             exit();
                         } else {
-                            mysqli_stmt_bind_param($stmt, "s", $epost);
-                            mysqli_stmt_execute($stmt);
+                            $logg = new AppLogger("brukertilgang");
+
+                            $logger = $logg->getLogger();
+
+                            $logger->notice("Admin approved a lecturer", ["Admin" => $_SESSION["user_email"], "Approved_lecturer_Email" => $epost]);
+                            mysqli_close($conn);
+                            header("location:approve.php");
+                            exit;
                         }
-
-                        $qry = mysqli_query($conn, $sql);
-
-						if($qry)
-						{
-							$logg = new AppLogger("brukertilgang");
-			
-							$logger = $logg->getLogger();
-
-							$logger->notice("Admin approved a lecturer", ["Admin" => $_SESSION["user_email"], "Approved_lecturer_Email" => $epost]);
-	    						mysqli_close($conn);
-	    						header("location:approve.php");
-	    						exit;	
-						}
-						else
-	    						echo "Error approving teacher status";
-					
 					}
 						
 					}
