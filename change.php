@@ -72,11 +72,11 @@
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $result = $stmt->get_result();
+            $user = $result->fetch_assoc();
 
-
-			if ($result->fetch_assoc() != null)
+			if ($user != null)
 			{
-				$verify = password_verify($old, $result['Passord']);
+				$verify = password_verify($old, $user['Passord']);
 				
 				$uppercase = preg_match('@[A-Z]@', $new1);
 				$lowercase = preg_match('@[a-z]@', $new1);
