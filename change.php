@@ -61,33 +61,22 @@
 		
 			if ($_SESSION['user_type'] == 1)
 				$emailChecker = "CALL GetEmailAndPassAllUsers(?)";
-                    $stmt = $conn->prepare($emailChecker);
-                    $stmt->bind_param("s", $email);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $user = $result->fetch_assoc();
-			if ($_SESSION['user_type'] == 2)
+
+			elseif ($_SESSION['user_type'] == 2)
 				$emailChecker = "CALL GetEmailAndPassAllLecturers(?)";
-                    $stmt = $conn->prepare($emailChecker);
-                    $stmt->bind_param("s", $email);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $user = $result->fetch_assoc();
-			if ($_SESSION['user_type'] == 3)
+
+			elseif ($_SESSION['user_type'] == 3)
 				$emailChecker = "CALL GetEmailAndPassAllStudents(?)";
-                    $stmt = $conn->prepare($emailChecker);
-                    $stmt->bind_param("s", $email);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $user = $result->fetch_assoc();
 
-		
-			$resultFromEmailCheck = $conn->query($emailChecker);
+            $stmt = $conn->prepare($emailChecker);
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-			if (mysqli_num_rows($resultFromEmailCheck) > 0) 
+
+			if ($result->fetch_assoc() != null)
 			{
-				$row = $resultFromEmailCheck->fetch_assoc();
-				$verify = password_verify($old, $row['Passord']);
+				$verify = password_verify($old, $result['Passord']);
 				
 				$uppercase = preg_match('@[A-Z]@', $new1);
 				$lowercase = preg_match('@[a-z]@', $new1);
@@ -104,7 +93,7 @@
 					echo "The two new passwords don't match!";
 				else if ($verify) {
 					$attempt_failed = false;
-					change($email, $new1, $conn, $logger);
+					change($email, $new1, $logger);
 				}
 				else if (!$verify)
 					echo "The old password is wrong!";
@@ -120,7 +109,7 @@
 		}
 	}
 	
-	function change($email, $new1, $conn, $logger)
+	function change($email, $new1, $logger)
 	{
 		$db = new Database();
 		$conn = $db->get_Connection("student");
@@ -131,11 +120,10 @@
 		$sqlUpdate = "CALL ChangePasswordOfAUser(?, ?)";
 		    $stmt = $conn->prepare($sqlUpdate);
 		    $stmt->bind_param("ss", $email, $hashed);
-		    $stmt->execute();
-		    $result = $stmt->get_result();
-		    $user = $result->fetch_assoc();
 
-		if ($conn->query($sqlUpdate) === FALSE)
+
+
+		if (!$stmt->execute())
   			echo "Error updating password: " . $conn->error;
   		else
   		{	
