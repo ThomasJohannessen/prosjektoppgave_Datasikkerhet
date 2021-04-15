@@ -93,7 +93,7 @@
 					echo "The two new passwords don't match!";
 				else if ($verify) {
 					$attempt_failed = false;
-					change($email, $new1, $logger);
+					change($email, $new1, $conn, $logger);
 				}
 				else if (!$verify)
 					echo "The old password is wrong!";
@@ -109,7 +109,7 @@
 		}
 	}
 	
-	function change($email, $new1, $logger)
+	function change($email, $new1, $conn, $logger)
 	{
 	    echo "1";
 		$db = new Database();
