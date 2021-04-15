@@ -64,16 +64,13 @@
     			
     			echo $id;
 
-        		$sql = "CALL DeleteAMessageAdmin(?)";
 
-        		$stmt = mysqli_stmt_init($conn);
+        		$stmt2 = $conn->prepare("CALL DeleteAMessageAdmin(?");
+        		$stmt2->bind_param("s", $id);
 
-        		if (!mysqli_stmt_prepare($stmt, $sql)) {
+        		if ($stmt2->execute()) {
         		    header("location: register.php?error=stmtfailed");
         		    exit();
-        		} else {
-        		    mysqli_stmt_bind_param($stmt, "s", $id);
-        		    mysqli_stmt_execute($stmt);
         		}
 
 
