@@ -47,19 +47,20 @@
 
 
 
-            $stmt = $conn->prepare("CALL GetInfoForLogginInAllUsers('?')");
-            $stmt->bind_param("s", $email);
-            $stmt->execute();
-            $result = $stmt->get_result();
+        $stmt = $conn->prepare("CALL GetInfoForLogginInAllUsers(?)");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
 
 
-        if (!$result) {
+        if (!$user) {
             header("location: register.php?error=stmtfailed");
             exit();
         }
 
-        if ($row = $result->fetch_assoc()) {
-            return $row;
+        if (!$user=null) {
+            return $user;
         } else {
             $res = false;
             return $res;
