@@ -44,9 +44,9 @@
         $sql = "CALL GuestFeedGetSubjectAndLecturer(?)";
 
         $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $pinkode);
+        $stmt->execute();
 
-            mysqli_stmt_bind_param($stmt, "s", $pinkode);
-            mysqli_stmt_execute($stmt);
 
         
         $result = $conn->query($sql);
