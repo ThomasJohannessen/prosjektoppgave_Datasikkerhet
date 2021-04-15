@@ -58,56 +58,55 @@
                 </form>
             </tr>
             <?php
-            if(isset($_POST['update']))
-            {
+            if(isset($_POST['update'])) {
                 $db = new Database();
                 $conn = $db->get_Connection("admin");
-                $name = $conn -> real_escape_string(trim(htmlspecialchars($_POST["name"])));
+                $name = $conn->real_escape_string(trim(htmlspecialchars($_POST["name"])));
 
-                $email = $conn -> real_escape_string(trim(htmlspecialchars($_POST["updatedEmail"])));
-                $epost = $conn -> real_escape_string(trim(htmlspecialchars($_POST["originalEmail"])));
-                $sql2 = "CALL UpdateAUserAdmin('$name', '$email', '$epost')";
+                $email = $conn->real_escape_string(trim(htmlspecialchars($_POST["updatedEmail"])));
+                $epost = $conn->real_escape_string(trim(htmlspecialchars($_POST["originalEmail"])));
 
-                $edit = mysqli_query($conn, $sql2);
+                $stmt2 = $conn->prepare("CALL UpdateAUserAdmin(?, ?, ?)");
+                $stmt2->bind_param("sss", $name, $email, $epost);
 
-                if($edit)
-                {
+
+
+                if ($stmt2->execute()) {
                     mysqli_close($conn);
                     header("location:updateusers.php");
                     exit;
-                }
-                else
+                } else {
                     echo mysqli_error();
-            }
-            if(isset($_POST['delete']))
-            {
-                include "../AppLogger.php";
-
-                $db = new Database();
-                $conn = $db->get_Connection("admin");
-
-                $epost = $conn -> real_escape_string(trim(htmlspecialchars($_POST["originalEmail"])));
-
-                $sql = "CALL DeleteAUserAdmin('$epost')";
-
-                $del = mysqli_query($conn, $sql);
+                }
 
 
-                if($del)
-                {
-                    $logg = new AppLogger("brukertilgang");
+                if (isset($_POST['delete'])) {
+                    include "../AppLogger.php";
 
-                    $logger = $logg->getLogger();
+                    $db = new Database();
+                    $conn = $db->get_Connection("admin");
 
-                    $logger->notice("Admin deleted a user", ["Admin" => $_SESSION["user_email"], "Deleted_User_Email" => $epost]);
-                    mysqli_close($conn);
-                    header("location:updateusers.php");
-                    exit;
-                } else
-                    echo "Error deleting user";
-            }
-        }
-    }
+                    $epost = $conn->real_escape_string(trim(htmlspecialchars($_POST["originalEmail"])));
+
+                    $stmt3 = $conn->prepare("CALL DeleteAUserAdmin(?)");
+                    $stmt3->bind_param("s", $epost);
+
+
+
+                    if ($stmt3->execute()) {
+                        $logg = new AppLogger("brukertilgang");
+
+                        $logger = $logg->getLogger();
+
+                        $logger->notice("Admin deleted a user", ["Admin" => $_SESSION["user_email"], "Deleted_User_Email" => $epost]);
+                        mysqli_close($conn);
+                        header("location:updateusers.php");
+                        exit;
+                    } else {
+                        echo "Error deleting user";
+                    }
+                }
+            }}}
     ?>
 </table>
 </body>
