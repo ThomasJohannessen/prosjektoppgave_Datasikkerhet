@@ -20,10 +20,7 @@ else {
     $prep = $conn->prepare($insert);
     $prep->bind_param("ss", $sporsmalID,  $repcomment);
 
-    if(!$prep->execute()) {
-        header("location: register.php?error=stmtfailed");
-        exit();
-    }
+    $prep->execute();
 
     header("refresh:0.01; url=gjestfeed.php");  
     exit();  
