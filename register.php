@@ -132,9 +132,9 @@ function mailTaken($email) {
     }
 
     if ($user == null) {
-        return true;
-    } else {
         return false;
+    } else {
+        return true;
     }
 }
 
