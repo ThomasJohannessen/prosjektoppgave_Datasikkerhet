@@ -46,7 +46,7 @@
 
 
       $stmt = $conn->prepare("CALL GetAllUnansweredQuestionsForSubjectLecturer(?)");
-      $stmt->bind_param("s", $emneID);
+      $stmt->bind_param("i", $emneID);
       $stmt->execute();
       $result = $stmt->get_result();
 
