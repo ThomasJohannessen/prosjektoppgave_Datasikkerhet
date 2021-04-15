@@ -17,17 +17,13 @@ else {
 
     $insert = "CALL ReportAQuestionAsGuest(?, ?)";
 
-    $stmt = mysqli_stmt_init($conn);
+    $prep = $conn->prepare($insert);
+    $prep->bind_param("ss", $sporsmalID,  $repcomment);
 
-    if (!mysqli_stmt_prepare($insert, $stmt)) {
+    if(!$prep->execute()) {
         header("location: register.php?error=stmtfailed");
         exit();
-    }else {
-        mysqli_stmt_bind_param($insert, "ss", $sporsmalID, $repcomment);
-        mysqli_stmt_execute($insert);
     }
-
-    mysqli_query($conn, $insert);
 
     header("refresh:0.01; url=gjestfeed.php");  
     exit();  
