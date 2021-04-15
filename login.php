@@ -55,7 +55,7 @@
 
 
         if (!$user) {
-            header("location: register.php?error=stmtfailed");
+            header("location: login.php?error=wronglogin");
             exit();
         }
 

@@ -22,16 +22,16 @@ if($_SESSION['user_type'] == 3){
     $logger = $logg->getLogger();
     $logger->info("User with email: " . $email . " sent question in subject " . $emnekode . ".", ["message" => $melding]);
 
-    $insert = "CALL SendQuestionStudent(?, ?, ?)";
 
-    mysqli_query($conn, $insert);
 
-    if (!mysqli_stmt_prepare($conn, $insert)) {
+    $stmt = $conn->prepare("CALL SendQuestionStudent(?, ?, ?)");
+    $stmt->bind_param("sss", $email, $melding, $emnekode);
+
+
+
+    if (!$stmt->execute()) {
         header("location: register.php?error=stmtfailed");
         exit();
-    } else {
-        mysqli_stmt_bind_param($conn, "sss", $email, $melding, $emnekode);
-        mysqli_stmt_execute($conn);
     }
 
 
