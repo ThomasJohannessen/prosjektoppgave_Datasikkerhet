@@ -111,7 +111,6 @@
 	
 	function change($email, $new1, $conn, $logger)
 	{
-	    echo "1";
 		$db = new Database();
 		$conn = $db->get_Connection("student");
 		$hashed = password_hash($new1, PASSWORD_DEFAULT);
@@ -131,8 +130,8 @@
 			if ($_SESSION['user_type'] == 3){
 				$logger->info("Student password changed!", ["email" => $_SESSION["user_email"], "new_pw" => $hashed]);
 
-				//header("location: student/studentside.php");
-				//exit();
+				header("location: student/studentside.php");
+				exit();
 			}
 
 			else if ($_SESSION['user_type'] == 2){
