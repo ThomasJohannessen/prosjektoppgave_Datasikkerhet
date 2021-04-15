@@ -65,10 +65,10 @@
     			echo $id;
 
 
-        		$stmt2 = $conn->prepare("CALL DeleteAMessageAdmin(?");
+        		$stmt2 = $conn->prepare("CALL DeleteAMessageAdmin(?)");
         		$stmt2->bind_param("s", $id);
 
-        		if ($stmt2->execute()) {
+        		if (!$stmt2->execute()) {
         		    header("location: register.php?error=stmtfailed");
         		    exit();
         		}
