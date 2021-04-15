@@ -474,7 +474,7 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `IsSubjectTaken`(IN `Em_Pn_In` INT)
-SELECT * FROM gjestPin WHERE emnePin = Em_Pn_In ;;
+SELECT * FROM foreleserView WHERE emnekode = (SELECT emnekode from emne where emnePIN = Em_Pn_In) ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
