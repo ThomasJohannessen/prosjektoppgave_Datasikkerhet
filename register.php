@@ -149,7 +149,7 @@ function subjectTaken($subject_id) {
     $user = $result->fetch_assoc();
 
     if ($user != null) {
-        header("location: register.php?error=stmtfailed");
+        header("location: register.php?error=subjecttaken");
         exit();
     }
 
