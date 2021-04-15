@@ -214,9 +214,10 @@ function createUser($name, $email, $password, &$user_type, $study_path, $year, $
 
     $hashed = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql_register = "CALL RegisterNewUser('$name', '$email', '$image', '$year', '$user_type', '$hashed', '$subject_id', '$study_path', '$status')";
-    $register_user = mysqli_query($conn, $sql_register);
-    if ($register_user) {
+    $stmt2 = $conn->prepare("CALL RegisterNewUser(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt2->bind_param("sssiisisi", $name, $email, $image, $year, $user_type, $hashed, $subject_id, $study_path, $status);
+
+    if ($stmt2->execute()){
         header("location: register.php?error=none");
 
         $logger->notice("Registrering av bruker vellykket", ["user" => $name, "username" => $email, "password" => password_hash($password, PASSWORD_DEFAULT), "usertype" => $user_type,
@@ -224,7 +225,7 @@ function createUser($name, $email, $password, &$user_type, $study_path, $year, $
 
         exit();
     } else {
-        header("location: register.php?error=stmtfailed1");
+        header("location: register.php?error=stmtfailed");
 
         $logger->notice("Registrering av bruker feilet", ["user" => $name, "username" => $email, "password" => password_hash($password, PASSWORD_DEFAULT), "usertype" => $user_type,
             "study path" => $study_path, "year" => $year, "subject_id" => $subject_id, "imagePath" => $image]);
