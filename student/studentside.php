@@ -43,7 +43,7 @@ while($row = mysqli_fetch_array($results)) {
         let test = <?php echo json_encode($array); ?>;
         for(let i = 0; i < test.length; i++) {
             if(test[i][1] == select.value){
-                img.src = "http://158.39.188.201/steg1/prosjektoppgave_Datasikkerhet/uploads/" + test[i][0];
+                img.src = "http://158.39.188.201/steg2/prosjektoppgave_Datasikkerhet/uploads/" + test[i][0];
                 break;
             }
         }
