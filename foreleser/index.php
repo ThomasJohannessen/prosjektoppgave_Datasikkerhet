@@ -44,14 +44,12 @@
       
       $em = $_SESSION['user_email'];
 
-      $sql = "CALL GetAllUnansweredQuestionsForSubjectLecturer(?)";
-          $stmt = $conn->prepare($sql);
-          $stmt->bind_param("ss", $emneID);
-          $stmt->execute();
-          $result = $stmt->get_result();
-          $user = $result->fetch_assoc();
 
-      $result = $conn->query($sql);
+      $stmt = $conn->prepare("CALL GetAllUnansweredQuestionsForSubjectLecturer(?)");
+      $stmt->bind_param("s", $emneID);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
       
         
       if ($result->num_rows > 0) {
@@ -94,12 +92,13 @@
               $logger = $logg->getLogger();
               $logger->info("Lecturer with Email: " . $em . " for subject: " . $emneID . " answered question with ID: " . $messageID . ".", ["answer" => $svar]);
 
-              $sql2 = "CALL AnswerAQuestionLecturer(?, ?, ?)";
-              if (!mysqli_query($conn, $sql2)) {
+
+              $stmt = $conn->prepare("CALL AnswerAQuestionLecturer(?, ?, ?)");
+              $stmt->bind_param("ssi", $svar, $em, $messageID);
+
+              if (!$stmt->execute()) {
                   echo "Incorrect id";
-              } else {
-                  mysqli_stmt_bind_param($sql2, "ssi", $svar, $em, $messageID);
-                  mysqli_stmt_execute($sql2);
+              }else{
 
                   header("refresh:0.01; url=index.php");
                   exit;
