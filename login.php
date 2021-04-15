@@ -59,7 +59,7 @@
             exit();
         }
 
-        if (!$user=null) {
+        if (!$user==null) {
             return $user;
         } else {
             $res = false;
