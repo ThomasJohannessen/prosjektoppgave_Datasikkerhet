@@ -26,13 +26,7 @@ if($_SESSION['user_type'] == 3){
 
     $stmt = $conn->prepare("CALL SendQuestionStudent(?, ?, ?)");
     $stmt->bind_param("sss", $email, $melding, $emnekode);
-
-
-
-    if (!$stmt->execute()) {
-        header("location: register.php?error=stmtfailed");
-        exit();
-    }
+    $stmt->execute();
 
 
     header("refresh:.01; url=studentside.php");
