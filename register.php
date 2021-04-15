@@ -233,7 +233,7 @@ function createUser($name, $email, $password, &$user_type, $study_path, $year, $
 
         exit();
     } else {
-        header("location: register.php?error=stmtfailed");
+        header("location: register.php?error=stmtfailed1");
 
         $logger->notice("Registrering av bruker feilet", ["user" => $name, "username" => $email, "password" => password_hash($password, PASSWORD_DEFAULT), "usertype" => $user_type,
             "study path" => $study_path, "year" => $year, "subject_id" => $subject_id, "imagePath" => $image]);
