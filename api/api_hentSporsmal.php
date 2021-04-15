@@ -10,7 +10,12 @@ $db_conn = new Database("student");
 
 $db = $db_conn->get_Connection() or die();
 $brukerid = $_GET['brukerid'];
-$query = "CALL GetAskedMessagesApi('$brukerid')";
+$query = "CALL GetAskedMessagesApi(?)";
+    $stmt = $db_conn->prepare($query);
+    $stmt->bind_param("i", $brukerid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
 $result = $db->query($query);
 $db_conn->close_Connection();
 

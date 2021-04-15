@@ -33,8 +33,12 @@
         $db = new Database();
         $conn = $db->get_Connection("student");
 
-        $sql = "CALL GetMessageFeedStudent('$email')";
-
+        $sql = "CALL GetMessageFeedStudent(?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $user = $result->fetch_assoc();
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -48,7 +52,12 @@
             
             $em = $row["Epost"];
             
-            $sql_image = "CALL GetPictureOfALecturer('$em')";
+            $sql_image = "CALL GetPictureOfALecturer(?)";
+                $stmt = $conn->prepare($sql_image);
+                $stmt->bind_param("s", $em);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $user = $result->fetch_assoc();
             $image = mysqli_query($conn, $sql_image);
 
             if ($row = mysqli_fetch_assoc($image)) {

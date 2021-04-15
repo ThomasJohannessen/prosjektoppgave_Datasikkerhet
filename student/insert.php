@@ -22,9 +22,17 @@ if($_SESSION['user_type'] == 3){
     $logger = $logg->getLogger();
     $logger->info("User with email: " . $email . " sent question in subject " . $emnekode . ".", ["message" => $melding]);
 
-    $insert = "CALL SendQuestionStudent('$email', '$melding', '$emnekode')";
+    $insert = "CALL SendQuestionStudent(?, ?, ?)";
 
     mysqli_query($conn, $insert);
+
+    if (!mysqli_stmt_prepare($conn, $insert)) {
+        header("location: register.php?error=stmtfailed");
+        exit();
+    } else {
+        mysqli_stmt_bind_param($conn, "sss", $email, $melding, $emnekode);
+        mysqli_stmt_execute($conn);
+    }
 
 
     header("refresh:.01; url=studentside.php");

@@ -60,11 +60,26 @@
 			$emailChecker = "";
 		
 			if ($_SESSION['user_type'] == 1)
-				$emailChecker = "CALL GetEmailAndPassAllUsers('$email')";
+				$emailChecker = "CALL GetEmailAndPassAllUsers(?)";
+                    $stmt = $conn->prepare($emailChecker);
+                    $stmt->bind_param("s", $email);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $user = $result->fetch_assoc();
 			if ($_SESSION['user_type'] == 2)
-				$emailChecker = "CALL GetEmailAndPassAllLecturers('$email')";
+				$emailChecker = "CALL GetEmailAndPassAllLecturers(?)";
+                    $stmt = $conn->prepare($emailChecker);
+                    $stmt->bind_param("s", $email);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $user = $result->fetch_assoc();
 			if ($_SESSION['user_type'] == 3)
-				$emailChecker = "CALL GetEmailAndPassAllStudents('$email')";
+				$emailChecker = "CALL GetEmailAndPassAllStudents(?)";
+                    $stmt = $conn->prepare($emailChecker);
+                    $stmt->bind_param("s", $email);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $user = $result->fetch_assoc();
 
 		
 			$resultFromEmailCheck = $conn->query($emailChecker);
@@ -113,7 +128,12 @@
 		//$ip = (string) AppLogger::getIPAddress();
 		//$ipAddress = $_SERVER['REMOTE_ADDR']?:($_SERVER['HTTP_X_FORWARDED_FOR']?:$_SERVER['HTTP_CLIENT_IP']);
 
-		$sqlUpdate = "CALL ChangePasswordOfAUser('$email', '$hashed')";
+		$sqlUpdate = "CALL ChangePasswordOfAUser(?, ?)";
+		    $stmt = $conn->prepare($sqlUpdate);
+		    $stmt->bind_param("ss", $email, $hashed);
+		    $stmt->execute();
+		    $result = $stmt->get_result();
+		    $user = $result->fetch_assoc();
 
 		if ($conn->query($sqlUpdate) === FALSE)
   			echo "Error updating password: " . $conn->error;
