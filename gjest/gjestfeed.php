@@ -44,13 +44,12 @@
         $sql = "CALL GuestFeedGetSubjectAndLecturer(?)";
 
         $stmt = mysqli_stmt_init($conn);
+        mysqli_stmt_bind_param($stmt, "s", $pinkode);
+        mysqli_stmt_execute($stmt);
 
         if (!mysqli_stmt_prepare($stmt, $sql)) {
             header("location: register.php?error=stmtfailed");
             exit();
-        }else {
-            mysqli_stmt_bind_param($stmt, "i", $pinkode);
-            mysqli_stmt_execute($stmt);
         }
         
         $result = $conn->query($sql);
