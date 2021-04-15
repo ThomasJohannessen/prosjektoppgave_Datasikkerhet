@@ -19,13 +19,10 @@ $insert = "CALL CommentOnQuestionAsGuest(?, ?);";
 
     $prep = $conn->prepare($insert);
     $prep->bind_param("ss", $sporsmalID,  $kommentar);
+    $prep->execute();
 
-    if($prep->execute()) {
-        header("location: register.php?error=stmtfailed");
-        exit();
-    }
-header("refresh:0; url=gjestfeed.php");
-exit();
+    header("refresh:0; url=gjestfeed.php");
+    exit();
 
 }
 
