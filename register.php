@@ -144,22 +144,19 @@
         $db = new Database();
         $conn = $db->get_Connection("guest");
 
-        $sql_subject_exists = "CALL IsSubjectTaken(?)";
-            $stmt = $conn->prepare($sql_subject_exists);
-            $stmt->bind_param("s", $subject_id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $user = $result->fetch_assoc();
+        $stmt = $conn->prepare("CALL IsSubjectTaken(?)");
+        $stmt->bind_param("i", $subject_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
 
-        if (!mysqli_stmt_prepare($stmt, $sql_subject_exists)) {
+        if (!$user) {
             header("location: register.php?error=stmtfailed");
             exit();
         }
 
-        $subject_exists = mysqli_query($conn, $sql_subject_exists);
-
-        if ($row = mysqli_fetch_assoc($subject_exists)) {
-            return $row;
+        if ($user) {
+            return $user;
         } else {
             $res = false;
             return $res;
