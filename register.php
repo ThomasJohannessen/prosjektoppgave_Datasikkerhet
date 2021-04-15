@@ -126,13 +126,12 @@ function mailTaken($email) {
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-    if ($user) {
+    if ($user != null) {
         header("location: register.php?error=stmtfailed");
         exit();
     }
 
-
-    if (!$user) {
+    if ($user == null) {
         return true;
     } else {
         return false;
