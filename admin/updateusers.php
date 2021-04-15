@@ -69,20 +69,21 @@
 
                     $email = $conn->real_escape_string(trim(htmlspecialchars($_POST["updatedEmail"])));
                     $epost = $conn->real_escape_string(trim(htmlspecialchars($_POST["originalEmail"])));
-                    $sql2 = "CALL UpdateAUserAdmin(?, ?, ?)";
 
-                    $edit = mysqli_query($conn, $sql2);
+                    $stmt2 = $conn->prepare("CALL UpdateAUserAdmin(?, ?, ?)");
+                    $stmt2->bind_param("sss", $name, $email, $epost);
 
-                    if ($edit) {
+
+
+                    if ($stmt2->execute()) {
                         mysqli_close($conn);
                         header("location:updateusers.php");
                         exit;
-                    } elseif (!$edit) {
-                        echo mysqli_error();
                     } else {
-                        mysqli_stmt_bind_param($edit, "sss", $name, $email, $epost);
-                        mysqli_stmt_execute($edit);
+                        echo mysqli_error();
                     }
+
+
                     if (isset($_POST['delete'])) {
                         include "../AppLogger.php";
 
