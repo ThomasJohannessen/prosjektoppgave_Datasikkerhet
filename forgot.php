@@ -37,7 +37,7 @@
         $user = $result->fetch_assoc();
 		
 		
-		if ($user)
+		if ($user != null)
 			send($email, $conn);
 		else 
  		{
