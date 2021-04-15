@@ -118,19 +118,22 @@ function mailTaken($email) {
     $db = new Database();
     $conn = $db->get_Connection("guest");
     sleep(2);
-    $sql_user_exists = "CALL DoesEmailExistInDb('$email')";
 
-    $stmt = mysqli_stmt_init($conn);
 
-    if (!mysqli_stmt_prepare($stmt, $sql_user_exists)) {
+    $stmt = $conn->prepare("CALL DoesEmailExistInDb(?)");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    if (!$user) {
         header("location: register.php?error=stmtfailed");
         exit();
     }
 
-    $user_exists = mysqli_query($conn, $sql_user_exists);
 
-    if ($row = mysqli_fetch_assoc($user_exists)) {
-        return $row;
+    if ($user) {
+        return $user;
     } else {
         $res = false;
         return $res;
