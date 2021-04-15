@@ -49,7 +49,7 @@
             header("location: register.php?error=stmtfailed");
             exit();
         }else {
-            mysqli_stmt_bind_param($stmt, "s", $pinkode);
+            mysqli_stmt_bind_param($stmt, "i", $pinkode);
             mysqli_stmt_execute($stmt);
         }
         
