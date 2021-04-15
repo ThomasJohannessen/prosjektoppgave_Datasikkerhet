@@ -39,12 +39,9 @@
 
         $sql = "CALL GetAllQuestionsForSubjectLecturer(?);";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ss", $emneID);
+            $stmt->bind_param("i", $emneID);
             $stmt->execute();
             $result = $stmt->get_result();
-            $user = $result->fetch_assoc();
-        
-        $result = $conn->query($sql);
         
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
