@@ -13,12 +13,7 @@ $passord = $_GET['passord'];
 
 //$password_query = "CALL LoginGetPassApi('$epost')";
 
-$stmt = $db->prepare("CALL LoginGetPassApi(?)");
-$stmt->bind_param("s", $epost);
-$stmt->execute();
-$result = $stmt->get_result();
-$db_conn->close_Connection();
-$db = $db_conn->get_Connection("guest") or die();
+
 //$password_result = $db->query($password_query);
 
 //$query = "CALL LoginGetIdApi('$epost')";
@@ -30,6 +25,15 @@ $result = $stmt->get_result();
 
 
 $db_conn->close_Connection();
+
+$db = $db_conn->get_Connection("guest") or die();
+
+$stmt = $db->prepare("CALL LoginGetPassApi(?)");
+$stmt->bind_param("s", $epost);
+$stmt->execute();
+$result = $stmt->get_result();
+$db_conn->close_Connection();
+
 
 $logg = new AppLogger("app");
 $logger = $logg->getLogger();
