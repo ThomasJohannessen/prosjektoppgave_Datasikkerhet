@@ -21,7 +21,7 @@ $query = "CALL SendQuestionStudentApi(?, ?, ?)";
 
 
 $prep = $db->prepare($query);
-$prep->bind_param("iss", $avsender, $emnekode, $sporsmal);
+$prep->bind_param("iss", $avsender, $sporsmal, $emnekode);
 
 $prep->execute();
 
