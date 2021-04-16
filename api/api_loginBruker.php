@@ -22,10 +22,10 @@ $result = $stmt->get_result();
 
 //$query = "CALL LoginGetIdApi('$epost')";
 
-$stmt = $db->prepare("CALL LoginGetIdApi(?)");
-$stmt->bind_param("s", $epost);
-$stmt->execute();
-$result = $stmt->get_result();
+$stmt2 = $db->prepare("CALL LoginGetIdApi(?)");
+$stmt2->bind_param("s", $epost);
+$stmt2->execute();
+$result = $stmt2->get_result();
 
 
 $db_conn->close_Connection();
