@@ -20,7 +20,7 @@ $result = $stmt->get_result();
 
 //$password_result = $db->query($password_query);
 
-$query = "CALL LoginGetIdApi('$epost')";
+//$query = "CALL LoginGetIdApi('$epost')";
 
 $stmt = $db->prepare("CALL LoginGetIdApi(?)");
 $stmt->bind_param("s", $epost);
