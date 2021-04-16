@@ -17,7 +17,13 @@ else {
     $logger->info("User sent a question", ["userID" => $avsender, "subjectCode" => $emnekode, "question" => $sporsmal]);
 }
 
-$query = "CALL SendQuestionStudentApi('$avsender', '$emnekode', '$sporsmal')";
+$query = "CALL SendQuestionStudentApi(?, ?, ?)";
+
+
+$prep = $db->prepare($query);
+$prep->bind_param("sss", $avsender, $emnekode, $sporsmal);
+
+$prep->execute();
 
 
 $db->query($query);
