@@ -52,6 +52,6 @@ if(($result->num_rows == 1)&&(password_verify($passord, $password_hash))) {
 }
 else {
     $logger->notice("Failed attempt to log in", ["usernameInput" => $epost, "passwordInput" => $passord]);
-    echo 0;
+    echo "fail";
 }
 ?>
