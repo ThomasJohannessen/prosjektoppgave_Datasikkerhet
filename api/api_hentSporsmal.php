@@ -6,9 +6,9 @@ header('Content-Type: application/json');
 
 include "../database.php";
 
-$db_conn = new Database("student");
+$db_conn = new Database();
 
-$db = $db_conn->get_Connection() or die();
+$db = $db_conn->get_Connection("student") or die();
 $brukerid = $_GET['brukerid'];
 
 
