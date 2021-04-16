@@ -28,6 +28,7 @@ if($result->num_rows > 0) {
 else {
     echo 0;
 }
+$myObj = "";
 $myObj->message = $json_array;
 //$json_array = json_encode($json_array);
 //echo $json_array;
