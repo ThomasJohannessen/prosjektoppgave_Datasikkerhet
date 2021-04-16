@@ -47,7 +47,7 @@ if(($result1->num_rows == 1)&&(password_verify($passord, $password_hash))) {
     $logger->info("User logged in", ["eMail" => $epost, "password" => $password_hash]);
 
     $json_array = array();
-    $row = $result2->fetch_assoc();
+    $row = $result1->fetch_assoc();
     //array_push($json_array, $row);
     echo json_encode($row);
     //echo json_encode($json_array);
