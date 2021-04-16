@@ -4,24 +4,36 @@ header('Content-Type: application/json');
 include "../database.php";
 include "../AppLogger.php";
 
-$db_conn = new Database("guest");
+$db_conn = new Database();
 
-$db = $db_conn->get_Connection() or die();
+$db = $db_conn->get_Connection("student") or die();
 
 $epost = $_GET['epost'];
 $passord = $_GET['passord'];
 
-$password_query = "CALL LoginGetPassApi('$epost')";
-$password_result = $db->query($password_query);
+//$password_query = "CALL LoginGetPassApi('$epost')";
+
+$stmt = $db->prepare("CALL LoginGetPassApi(?)");
+$stmt->bind_param("s", $epost);
+$stmt->execute();
+$result = $stmt->get_result();
+
+//$password_result = $db->query($password_query);
 
 $query = "CALL LoginGetIdApi('$epost')";
-$result = $db->query($query);
+
+$stmt = $db->prepare("CALL LoginGetIdApi(?)");
+$stmt->bind_param("s", $epost);
+$stmt->execute();
+$result = $stmt->get_result();
+
+
 $db_conn->close_Connection();
 
 $logg = new AppLogger("app");
 $logger = $logg->getLogger();
 
-$passord_row = $password_result->fetch_assoc();
+$passord_row = $result->fetch_assoc();
 $password_hash = $passord_row["Passord"];
     
 if(($result->num_rows == 1)&&(password_verify($passord, $password_hash))) {
