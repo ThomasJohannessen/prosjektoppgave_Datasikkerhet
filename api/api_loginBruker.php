@@ -4,9 +4,9 @@ header('Content-Type: application/json');
 include "../database.php";
 include "../AppLogger.php";
 
-$db_conn = new Database("guest");
+$db_conn = new Database();
 
-$db = $db_conn->get_Connection() or die();
+$db = $db_conn->get_Connection("guest") or die();
 
 $epost = $_GET['epost'];
 $passord = $_GET['passord'];
