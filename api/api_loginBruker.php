@@ -17,15 +17,16 @@ $stmt = $db->prepare("CALL LoginGetPassApi(?)");
 $stmt->bind_param("s", $epost);
 $stmt->execute();
 $result = $stmt->get_result();
-
+$db_conn->close_Connection();
+$db = $db_conn->get_Connection("guest") or die();
 //$password_result = $db->query($password_query);
 
 //$query = "CALL LoginGetIdApi('$epost')";
 
-$stmt2 = $db->prepare("CALL LoginGetIdApi(?)");
-$stmt2->bind_param("s", $epost);
-$stmt2->execute();
-$result = $stmt2->get_result();
+$stmt = $db->prepare("CALL LoginGetIdApi(?)");
+$stmt->bind_param("s", $epost);
+$stmt->execute();
+$result = $stmt->get_result();
 
 
 $db_conn->close_Connection();
