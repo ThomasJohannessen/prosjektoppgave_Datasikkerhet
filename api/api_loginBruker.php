@@ -6,7 +6,7 @@ include "../AppLogger.php";
 
 $db_conn = new Database();
 
-$db = $db_conn->get_Connection("student") or die();
+$db = $db_conn->get_Connection("guest") or die();
 
 $epost = $_GET['epost'];
 $passord = $_GET['passord'];
