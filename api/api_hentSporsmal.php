@@ -10,9 +10,13 @@ $db_conn = new Database("student");
 
 $db = $db_conn->get_Connection() or die();
 $brukerid = $_GET['brukerid'];
-$query = "CALL GetAskedMessagesApi('$brukerid')";
 
-$result = $db->query($query);
+
+    $stmt = $db->prepare("CALL GetAskedQuestionsApi(?)");
+    $stmt->bind_param("i", $brukerid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
 $db_conn->close_Connection();
 
 $json_array = array();
