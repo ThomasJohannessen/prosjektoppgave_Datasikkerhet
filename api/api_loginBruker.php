@@ -36,7 +36,8 @@ $logger = $logg->getLogger();
 
 $passord_row = $result->fetch_assoc();
 $password_hash = $passord_row["Passord"];
-
+echo password_verify($passord, $password_hash);
+echo $password_hash;
 if(($result->num_rows == 1)&&(password_verify($passord, $password_hash))) {
 
     $logger->info("User logged in", ["eMail" => $epost, "password" => $password_hash]);
