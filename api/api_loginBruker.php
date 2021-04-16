@@ -4,41 +4,28 @@ header('Content-Type: application/json');
 include "../database.php";
 include "../AppLogger.php";
 
-$db_conn = new Database();
+$db_conn = new Database("guest");
 
-$db = $db_conn->get_Connection("guest") or die();
+$db = $db_conn->get_Connection() or die();
 
 $epost = $_GET['epost'];
 $passord = $_GET['passord'];
 
-//$password_query = "CALL LoginGetPassApi('$epost')";
+$password_query = "CALL LoginGetPassApi('$epost')";
+$password_result = $db->query($password_query);
 
-$stmt = $db->prepare("CALL LoginGetPassApi(?)");
-$stmt->bind_param("s", $epost);
-$stmt->execute();
-$result = $stmt->get_result();
-$db_conn->close_Connection();
-$db = $db_conn->get_Connection("guest") or die();
-//$password_result = $db->query($password_query);
-
-//$query = "CALL LoginGetIdApi('$epost')";
-
-$stmt = $db->prepare("CALL LoginGetIdApi(?)");
-$stmt->bind_param("s", $epost);
-$stmt->execute();
-$result = $stmt->get_result();
-
-
+$query = "CALL LoginGetIdApi('$epost')";
+$result = $db->query($query);
 $db_conn->close_Connection();
 
 $logg = new AppLogger("app");
 $logger = $logg->getLogger();
 
-$passord_row = $result->fetch_assoc();
+$passord_row = $password_result->fetch_assoc();
 $password_hash = $passord_row["Passord"];
-    
+
 if(($result->num_rows == 1)&&(password_verify($passord, $password_hash))) {
-    
+
     $logger->info("User logged in", ["eMail" => $epost, "password" => $password_hash]);
 
     $json_array = array();
@@ -50,7 +37,7 @@ if(($result->num_rows == 1)&&(password_verify($passord, $password_hash))) {
     //echo $json_array;
 }
 else {
-    $logger->notice("Failed attempt to log in", ["usernameInput" => $epost, "passwordInput" => $passord]);
+    $logger->notice("Failed attempt to log in", ["usernameInput" => $epost, "passwordInput" => $password]);
     echo 0;
 }
 ?>
